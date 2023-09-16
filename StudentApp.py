@@ -5,6 +5,7 @@ import boto3
 from config import *
 
 app = Flask(__name__, static_folder='static')
+app.secret_key = '123456'
 
 # AWS S3 configuration
 bucket = custombucket
