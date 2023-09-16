@@ -103,6 +103,7 @@ def student_dashboard():
         cursor.close()
 
         if student:
+            print(student)
             # Render the student dashboard page with the student's information
             return render_template('student_dashboard.html', student=student)
     
