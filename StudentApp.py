@@ -117,8 +117,12 @@ def student_dashboard():
             Home_Address = student[9]
             Personal_emailAddress = student[10]
 
-            student_image_url = f"https://{bucket}.s3.amazonaws.com/student-id-{Stud_ID}_image_file"
-
+            student_image_file_name_in_s3 = "student-id-" + str(student_id) + "_image_file"
+            student_image_url = s3.meta.client.generate_presigned_url(
+                'get_object',
+                Params={'Bucket': bucket, 'Key': student_image_file_name_in_s3},
+                ExpiresIn=3600  # Set an appropriate expiration time
+            )
             
             # Render the student dashboard page with the student's information
             return render_template('student_dashboard.html', Stud_name=Stud_name, Stud_ID=Stud_ID, NRIC_Number=NRIC_Number, Gender=Gender, Programme_of_Study=Programme_of_Study, CGPA=CGPA, TARUMT_emailAddress=TARUMT_emailAddress, Mobile_number=Mobile_number, Intern_batch=Intern_batch, Home_Address=Home_Address, Personal_emailAddress=Personal_emailAddress,student_image_url=student_image_url)
@@ -129,4 +133,4 @@ def student_dashboard():
 
 if __name__ == '__main__':
     app.run(host='0.0.0.0', port=80, debug=True)
-    
+
