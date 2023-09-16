@@ -67,5 +67,43 @@ def student_sign_up():
 
     return render_template('student_sign_up.html')
 
+@app.route('/login', methods=['POST'])
+def login():
+    if request.method == 'POST':
+        # Get the entered student ID and IC number from the form
+        student_id = request.form['username']
+        ic_number = request.form['password']
+
+        # Query the database to check if the student ID and IC number match
+        cursor = db_conn.cursor()
+        cursor.execute("SELECT * FROM Student WHERE Stud_ID = %s AND NRIC_Number = %s", (student_id, ic_number))
+        student = cursor.fetchone()
+        cursor.close()
+
+        if student:
+            # Student credentials are valid, redirect to the student dashboard
+            return redirect(url_for('student_dashboard', student_id=student_id))
+        else:
+            # Invalid credentials, display an error message
+            return render_template('login.html', error='Invalid username or password')
+
+    return render_template('login.html')
+
+@app.route('/student_dashboard/<student_id>')
+def student_dashboard(student_id):
+    # Query the database to retrieve the student's information
+    cursor = db_conn.cursor()
+    cursor.execute("SELECT * FROM Student WHERE Stud_ID = %s", (student_id,))
+    student = cursor.fetchone()
+    cursor.close()
+
+    if student:
+        # Render the student dashboard page with the student's information
+        return render_template('student_dashboard.html', student=student)
+    else:
+        # Handle the case where the student ID is not found
+        return render_template('error.html', message='Student not found')
+
+
 if __name__ == '__main__':
     app.run(host='0.0.0.0', port=80, debug=True)
