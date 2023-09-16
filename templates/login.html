@@ -83,31 +83,27 @@
                                     <!-- Login Form -->
                                     <form id="loginForm" action="/login" method="POST">
                                         <!-- Select Login Type -->
-                                        <div class="form-group">
-                                            <label for="loginType">Login As:</label>
-                                            <select class="form-control" id="loginType" name="loginType" required>
-                                                <option value="student">Student</option>
-                                                <option value="lecturer">Lecturer</option>
-                                                <option value="company">Company</option>
-                                                <option value="admin">Admin</option>
-                                            </select>
-                                        </div>
-                                        <!-- End Login Type -->
-
+                                        <!-- ... (existing login form code) ... -->
+                                        
                                         <!-- Username and Password -->
                                         <div class="form-group">
-                                            <label for="username">Username:</label>
-                                            <input type="text" class="form-control" name="username" id="username" placeholder="Username" required>
+                                            <label for="username">Student ID:</label>
+                                            <input type="text" class="form-control" name="username" id="username" placeholder="Student ID" required>
                                         </div>
                                         <div class="form-group">
-                                            <label for="password">Password:</label>
-                                            <input type="password" class="form-control" name="password" id="password" placeholder="Password" required>
+                                            <label for="password">IC Number:</label>
+                                            <input type="password" class="form-control" name="password" id="password" placeholder="IC Number" required>
                                         </div>
                                         <!-- End Username and Password -->
-                                        
+                                    
                                         <div class="form-group mt-3">
-                                            <button type="button" class="main-green-button" onclick="login()">Login</button>
+                                            <button type="submit" class="main-green-button">Login</button>
                                         </div>
+                                    
+                                        <!-- Display error message if login fails -->
+                                        {% if error %}
+                                        <p class="text-danger">{{ error }}</p>
+                                        {% endif %}
                                     </form>
                                     <!-- End Login Form -->
 
