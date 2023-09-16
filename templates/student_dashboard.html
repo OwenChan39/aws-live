@@ -120,6 +120,15 @@
         .edit-button:hover {
             background-color: #1e8c8b;
         }
+
+        .student-profile img {
+            max-width: 200px;
+            width: 100%;
+            height: auto;
+            border-radius: 50%;
+            margin-bottom: 20px;
+        }
+
     </style>
 </head>
 
@@ -156,7 +165,7 @@
     <div class="content">
         <!-- Student Profile -->
         <div class="student-profile">
-            <img src="{{ student_image_url }}" alt="Student Profile Picture">
+            <img src="{{ student_image_url }}" alt="Student Profile Picture" class="rounded-circle">
             <div class="student-info">
                 <div class="student-info-box">
                     <span>Name:</span> {{ Stud_name }}
