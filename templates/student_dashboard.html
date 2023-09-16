@@ -1,0 +1,224 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@300;400;600;700;800&display=swap" rel="stylesheet">
+
+    <title>Student Profile - SEO Dream</title>
+
+    <!-- Bootstrap core CSS -->
+    <link href="vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- Additional CSS Files -->
+    <link rel="stylesheet" href="assets/css/fontawesome.css">
+    <link rel="stylesheet" href="assets/css/templatemo-seo-dream.css">
+    <link rel="stylesheet" href="assets/css/animated.css">
+    <link rel="stylesheet" href="assets/css/owl.css">
+    <style>
+        /* Add custom CSS styles for your student profile page */
+        /* Example styles for the sidebar */
+        .sidebar {
+            width: 250px;
+            background-color: #333; /* Change this color to match your design */
+            color: #fff;
+            position: fixed;
+            height: 100%;
+            overflow: auto;
+        }
+
+        .sidebar a {
+            padding: 15px;
+            text-decoration: none;
+            font-size: 18px;
+            color: #fff;
+            display: block;
+        }
+
+        .sidebar a:hover {
+            background-color: #555;
+        }
+
+        /* Example styles for the main content */
+        .content {
+            margin-left: 250px;
+            padding: 20px;
+        }
+
+        /* Header styles */
+        .header {
+            background-color: #33ccc5; /* Change this color to match your design */
+            color: #fff;
+            padding: 10px 0;
+            text-align: center;
+        }
+
+        .header h1 {
+            margin: 0;
+        }
+
+        .sign-out-link {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            color: #fff;
+            text-decoration: none;
+            font-weight: bold;
+        }
+
+        /* Student Profile styles */
+        .student-profile {
+            background-color: #f2f2f2;
+            padding: 20px;
+            border-radius: 10px;
+            text-align: center;
+        }
+
+        .student-profile img {
+            max-width: 200px;
+            border-radius: 50%;
+            margin-bottom: 20px;
+        }
+
+        .student-info {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            grid-gap: 20px;
+            text-align: left;
+            padding: 20px;
+        }
+
+        .student-info-box {
+            background-color: #fff;
+            padding: 15px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .student-info-box span {
+            font-weight: bold;
+            color: #555;
+        }
+
+        /* Edit Button styles */
+        .edit-button {
+            background-color: #33ccc5;
+            color: #fff;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            text-decoration: none;
+            cursor: pointer;
+            margin-top: 20px;
+        }
+
+        .edit-button:hover {
+            background-color: #1e8c8b;
+        }
+    </style>
+</head>
+
+<body>
+    <!-- ***** Preloader Start ***** -->
+    <div id="js-preloader" class="js-preloader">
+        <div class="preloader-inner">
+            <span class="dot"></span>
+            <div class="dots">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+        </div>
+    </div>
+    <!-- ***** Preloader End ***** -->
+
+    <!-- ***** Header Start ***** -->
+    <div class="header">
+        <h1>Student Profile</h1>
+        <a href="index.html" class="sign-out-link">Sign Out</a>
+    </div>
+    <!-- ***** Header End ***** -->
+
+    <!-- ***** Student Profile Start ***** -->
+    <div class="sidebar">
+        <a href="student_dashboard.html">Student Profile</a>
+        <a href="student_company_jobs_posting.html">Job Postings</a>
+        <a href="#">Upload Documents</a>
+        <!-- Add more navigation links as needed -->
+        <!-- <a href="#">Link 4</a> -->
+    </div>
+
+    <div class="content">
+        <!-- Student Profile -->
+        <div class="student-profile">
+            <img src="assets/images/default-profile-pic.jpg" alt="Student Profile Picture">
+            <div class="student-info">
+                <div class="student-info-box">
+                    <span>Name:</span> [Student Name]
+                </div>
+                <div class="student-info-box">
+                    <span>ID:</span> [Student ID]
+                </div>
+                <div class="student-info-box">
+                    <span>NRIC Number:</span> [NRIC Number]
+                </div>
+                <div class="student-info-box">
+                    <span>Gender:</span> [Gender]
+                </div>
+                <div class="student-info-box">
+                    <span>Programme of Study:</span> [Programme of Study]
+                </div>
+                <div class="student-info-box">
+                    <span>CGPA:</span> [CGPA]
+                </div>
+                <div class="student-info-box">
+                    <span>TARUMT Email:</span> [Student Email]
+                </div>
+                <div class="student-info-box">
+                    <span>Mobile Number:</span> [Mobile Number]
+                </div>
+                <div class="student-info-box">
+                    <span>Intern Batch:</span> [Intern Batch]
+                </div>
+                <div class="student-info-box">
+                    <span>Home Address:</span> [Home Address]
+                </div>
+                <div class="student-info-box">
+                    <span>Personal Email:</span> [Personal Email]
+                </div>
+            </div>
+            <a href="student_edit_profile.html" class="edit-button">Edit Profile</a>
+            
+            <!-- Add the Upload Resume button below the Edit Profile button -->
+            <a href="upload_resume.html" class="edit-button">Upload Resume</a>
+        </div>
+    </div>
+    <!-- ***** Student Profile End ***** -->
+
+    <!-- ... (remaining HTML code) ... -->
+
+    <footer>
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-12">
+                    <!-- Add your footer content here -->
+                    <!-- ... -->
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Scripts -->
+    <script src="vendor/jquery/jquery.min.js"></script>
+    <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+    <script src="assets/js/owl-carousel.js"></script>
+    <script src="assets/js/animation.js"></script>
+    <script src="assets/js/imagesloaded.js"></script>
+    <script src="assets/js/custom.js"></script>
+</body>
+
+</html>
