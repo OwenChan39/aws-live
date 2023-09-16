@@ -117,7 +117,7 @@ def student_dashboard():
             Home_Address = student[9]
             Personal_emailAddress = student[10]
 
-            student_image_url = f"https://{bucket}.s3.{region}.amazonaws.com/student-id-{Stud_ID}_image_file"
+            student_image_url = f"https://{bucket}.s3.amazonaws.com/student-id-{Stud_ID}_image_file"
 
             
             # Render the student dashboard page with the student's information
@@ -129,3 +129,4 @@ def student_dashboard():
 
 if __name__ == '__main__':
     app.run(host='0.0.0.0', port=80, debug=True)
+    
