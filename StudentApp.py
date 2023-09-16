@@ -103,9 +103,8 @@ def student_dashboard():
         cursor.close()
 
         if student:
-            print("Student data fetched:", student)  # Add this line for debugging
             # Render the student dashboard page with the student's information
-            return render_template('student_dashboard.html', student=student)
+            return render_template('student_dashboard.html', Stud_name=student['Stud_name'], Stud_ID=student['Stud_ID'], NRIC_Number=student['NRIC_Number'], Gender=student['Gender'], Programme_of_Study=student['Programme_of_Study'], CGPA=student['CGPA'], TARUMT_emailAddress=student['TARUMT_emailAddress'],Mobile_number=student['Mobile_number'], Intern_batch=student['Intern_batch'],Home_Address=student['Home_Address'],Personal_emailAddress=student['Personal_emailAddress'])
     
     # If the student is not logged in, redirect to the login page
     return redirect(url_for('login'))
