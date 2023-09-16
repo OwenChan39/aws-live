@@ -103,11 +103,26 @@ def student_dashboard():
         cursor.close()
 
         if student:
+            print("Student data fetched:", student)  # Add this line for debugging
+            # Access the elements of the tuple by their indices
+            Stud_name = student[1]
+            Stud_ID = student[2]
+            NRIC_Number = student[3]
+            Gender = student[4]
+            Programme_of_Study = student[5]
+            CGPA = student[6]
+            TARUMT_emailAddress = student[7]
+            Mobile_number = student[8]
+            Intern_batch = student[9]
+            Home_Address = student[10]
+            Personal_emailAddress = student[11]
+            
             # Render the student dashboard page with the student's information
-            return render_template('student_dashboard.html', Stud_name=student[1], Stud_ID=student[2], NRIC_Number=student[3], Gender=student[4], Programme_of_Study=student[5], CGPA=student[6], TARUMT_emailAddress=student[7], Mobile_number=student[8], Intern_batch=student[9], Home_Address=student[10], Personal_emailAddress=student[11])
-    
+            return render_template('student_dashboard.html', Stud_name=Stud_name, Stud_ID=Stud_ID, NRIC_Number=NRIC_Number, Gender=Gender, Programme_of_Study=Programme_of_Study, CGPA=CGPA, TARUMT_emailAddress=TARUMT_emailAddress, Mobile_number=Mobile_number, Intern_batch=Intern_batch, Home_Address=Home_Address, Personal_emailAddress=Personal_emailAddress)
+
     # If the student is not logged in, redirect to the login page
     return redirect(url_for('login'))
+
 
 if __name__ == '__main__':
     app.run(host='0.0.0.0', port=80, debug=True)
