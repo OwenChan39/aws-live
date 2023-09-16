@@ -1,7 +1,6 @@
-customhost = "database-1.cjt34xregnow.us-east-1.rds.amazonaws.com"
+customhost = "assignment.csewlekqj9mb.us-east-1.rds.amazonaws.com"
 customuser = "aws_user"
 custompass = "Bait3273"
 customdb = "student"
-custombucket = "owenchanweiwen-assignment"
+custombucket = "assignment-itp"
 customregion = "us-east-1"
-
