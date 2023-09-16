@@ -13,14 +13,14 @@
     <title>SEO Dream - Creative SEO HTML5 Template by TemplateMo</title>
 
     <!-- Bootstrap core CSS -->
-    <link href="vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+    <link href="{{ url_for('static', filename='vendor/bootstrap/css/bootstrap.min.css') }}" rel="stylesheet">
 
 
     <!-- Additional CSS Files -->
-    <link rel="stylesheet" href="assets/css/fontawesome.css">
-    <link rel="stylesheet" href="assets/css/templatemo-seo-dream.css">
-    <link rel="stylesheet" href="assets/css/animated.css">
-    <link rel="stylesheet" href="assets/css/owl.css">
+    <link href="{{ url_for('static', filename='assets/css/fontawesome.css') }}" rel="stylesheet">
+    <link href="{{ url_for('static', filename='assets/css/templatemo-seo-dream.css') }}" rel="stylesheet">
+    <link href="{{ url_for('static', filename='assets/css/animated.css') }}" rel="stylesheet">
+    <link href="{{ url_for('static', filename='assets/css/owl.css') }}" rel="stylesheet">
 <!--
 
 TemplateMo 563 SEO Dream
@@ -54,7 +54,7 @@ https://templatemo.com/tm-563-seo-dream
           <nav class="main-nav">
             <!-- ***** Logo Start ***** -->
             <a href="index.html" class="logo">
-              <h4>SEO Dream <img src="assets/images/logo-icon.png" alt=""></h4>
+              <h4>SEO Dream <img src="{{ url_for('static', filename='assets/images/logo-icon.png') }}" alt=""></h4>
             </a>
             <!-- ***** Logo End ***** -->
             <!-- ***** Menu Start ***** -->
@@ -99,7 +99,7 @@ https://templatemo.com/tm-563-seo-dream
             </div>
             <div class="col-lg-6">
               <div class="right-image wow fadeInRight" data-wow-duration="1s" data-wow-delay="0.5s">
-                <img src="assets/images/banner-right-image.png" alt="">
+                <img src="{{ url_for('static', filename='assets/images/banner-right-image.png') }}" alt="">
               </div>
             </div>
           </div>
@@ -121,12 +121,11 @@ https://templatemo.com/tm-563-seo-dream
   </footer>
 
   <!-- Scripts -->
-  <script src="vendor/jquery/jquery.min.js"></script>
-  <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
-  <script src="assets/js/owl-carousel.js"></script>
-  <script src="assets/js/animation.js"></script>
-  <script src="assets/js/imagesloaded.js"></script>
-  <script src="assets/js/custom.js"></script>
-
+  <script src="{{ url_for('static', filename='vendor/jquery/jquery.min.js') }}"></script>
+  <script src="{{ url_for('static', filename='vendor/bootstrap/js/bootstrap.bundle.min.js') }}"></script>
+  <script src="{{ url_for('static', filename='assets/js/owl-carousel.js') }}"></script>
+  <script src="{{ url_for('static', filename='assets/js/animation.js') }}"></script>
+  <script src="{{ url_for('static', filename='assets/js/imagesloaded.js') }}"></script>
+  <script src="{{ url_for('static', filename='assets/js/custom.js') }}"></script>
 </body>
 </html>
