@@ -159,37 +159,37 @@
             <img src="{{ url_for('static', filename='assets/images/default-profile-pic.jpg') }}" alt="Student Profile Picture">
             <div class="student-info">
                 <div class="student-info-box">
-                    <span>Name:</span> [Student Name]
+                    <span>Name:</span> {{ student.Stud_name }}
                 </div>
                 <div class="student-info-box">
-                    <span>ID:</span> [Student ID]
+                    <span>ID:</span> {{ student.Stud_ID }}
                 </div>
                 <div class="student-info-box">
-                    <span>NRIC Number:</span> [NRIC Number]
+                    <span>NRIC Number:</span> {{ student.NRIC_Number }}
                 </div>
                 <div class="student-info-box">
-                    <span>Gender:</span> [Gender]
+                    <span>Gender:</span> {{ student.Gender }}
                 </div>
                 <div class="student-info-box">
-                    <span>Programme of Study:</span> [Programme of Study]
+                    <span>Programme of Study:</span> {{ student.Programme_of_Study }}
                 </div>
                 <div class="student-info-box">
-                    <span>CGPA:</span> [CGPA]
+                    <span>CGPA:</span> {{ student.CGPA }}
                 </div>
                 <div class="student-info-box">
-                    <span>TARUMT Email:</span> [Student Email]
+                    <span>TARUMT Email:</span> {{ student.TARUMT_emailAddress }}
                 </div>
                 <div class="student-info-box">
-                    <span>Mobile Number:</span> [Mobile Number]
+                    <span>Mobile Number:</span> {{ student.Mobile_number }}
                 </div>
                 <div class="student-info-box">
-                    <span>Intern Batch:</span> [Intern Batch]
+                    <span>Intern Batch:</span> {{ student.Intern_batch }}
                 </div>
                 <div class="student-info-box">
-                    <span>Home Address:</span> [Home Address]
+                    <span>Home Address:</span> {{ student.Home_Address }}
                 </div>
                 <div class="student-info-box">
-                    <span>Personal Email:</span> [Personal Email]
+                    <span>Personal Email:</span> {{ student.Personal_emailAddress }}
                 </div>
             </div>
             <a href="student_edit_profile.html" class="edit-button">Edit Profile</a>
