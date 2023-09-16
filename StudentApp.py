@@ -1,4 +1,4 @@
-from flask import Flask, render_template, request, redirect, url_for
+from flask import Flask, render_template, request, redirect, url_for,session, flash
 from pymysql import connections
 import os
 import boto3
@@ -82,28 +82,31 @@ def login():
 
         if student:
             # Student credentials are valid, redirect to the student dashboard
-            return redirect(url_for('student_dashboard', student_id=student_id))
+            session['student_id'] = student_id
+            return redirect(url_for('student_dashboard'))
         else:
             # Invalid credentials, display an error message
-            return render_template('login.html', error='Invalid username or password')
+            flash('Invalid username or password', 'error')
 
     return render_template('login.html')
 
-@app.route('/student_dashboard/<student_id>')
-def student_dashboard(student_id):
-    # Query the database to retrieve the student's information
-    cursor = db_conn.cursor()
-    cursor.execute("SELECT * FROM Student WHERE Stud_ID = %s", (student_id,))
-    student = cursor.fetchone()
-    cursor.close()
+@app.route('/student_dashboard')
+def student_dashboard():
+    # Check if student is logged in by checking if student_id is in the session
+    if 'student_id' in session:
+        student_id = session['student_id']
+        # Query the database to retrieve the student's information
+        cursor = db_conn.cursor()
+        cursor.execute("SELECT * FROM Student WHERE Stud_ID = %s", (student_id,))
+        student = cursor.fetchone()
+        cursor.close()
 
-    if student:
-        # Render the student dashboard page with the student's information
-        return render_template('student_dashboard.html', student=student)
-    else:
-        # Handle the case where the student ID is not found
-        return render_template('error.html', message='Student not found')
-
+        if student:
+            # Render the student dashboard page with the student's information
+            return render_template('student_dashboard.html', student=student)
+    
+    # If the student is not logged in, redirect to the login page
+    return redirect(url_for('login'))
 
 if __name__ == '__main__':
     app.run(host='0.0.0.0', port=80, debug=True)
