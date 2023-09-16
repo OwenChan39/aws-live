@@ -116,9 +116,12 @@ def student_dashboard():
             Intern_batch = student[8]
             Home_Address = student[9]
             Personal_emailAddress = student[10]
+
+            student_image_url = f"https://{bucket}.s3.{region}.amazonaws.com/student-id-{Stud_ID}_image_file"
+
             
             # Render the student dashboard page with the student's information
-            return render_template('student_dashboard.html', Stud_name=Stud_name, Stud_ID=Stud_ID, NRIC_Number=NRIC_Number, Gender=Gender, Programme_of_Study=Programme_of_Study, CGPA=CGPA, TARUMT_emailAddress=TARUMT_emailAddress, Mobile_number=Mobile_number, Intern_batch=Intern_batch, Home_Address=Home_Address, Personal_emailAddress=Personal_emailAddress)
+            return render_template('student_dashboard.html', Stud_name=Stud_name, Stud_ID=Stud_ID, NRIC_Number=NRIC_Number, Gender=Gender, Programme_of_Study=Programme_of_Study, CGPA=CGPA, TARUMT_emailAddress=TARUMT_emailAddress, Mobile_number=Mobile_number, Intern_batch=Intern_batch, Home_Address=Home_Address, Personal_emailAddress=Personal_emailAddress,student_image_url=student_image_url)
 
     # If the student is not logged in, redirect to the login page
     return redirect(url_for('login'))
