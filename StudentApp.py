@@ -103,7 +103,7 @@ def student_dashboard():
         cursor.close()
 
         if student:
-            print(student)
+            print("Student data fetched:", student)  # Add this line for debugging
             # Render the student dashboard page with the student's information
             return render_template('student_dashboard.html', student=student)
     
