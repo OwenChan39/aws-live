@@ -82,7 +82,7 @@ def login():
 
         if student:
             # Student credentials are valid, redirect to the student dashboard
-            return redirect(url_for('student_dashboard', student_id=student_id))
+            return render_template('student_dashboard', student_id=student_id))
         else:
             # Invalid credentials, display an error message
             return render_template('login.html', error='Invalid username or password')
