@@ -104,7 +104,7 @@ def student_dashboard():
 
         if student:
             # Render the student dashboard page with the student's information
-            return render_template('student_dashboard.html', Stud_name=student['Stud_name'], Stud_ID=student['Stud_ID'], NRIC_Number=student['NRIC_Number'], Gender=student['Gender'], Programme_of_Study=student['Programme_of_Study'], CGPA=student['CGPA'], TARUMT_emailAddress=student['TARUMT_emailAddress'],Mobile_number=student['Mobile_number'], Intern_batch=student['Intern_batch'],Home_Address=student['Home_Address'],Personal_emailAddress=student['Personal_emailAddress'])
+            return render_template('student_dashboard.html', Stud_name=student[1], Stud_ID=student[2], NRIC_Number=student[3], Gender=student[4], Programme_of_Study=student[5], CGPA=student[6], TARUMT_emailAddress=student[7], Mobile_number=student[8], Intern_batch=student[9], Home_Address=student[10], Personal_emailAddress=student[11])
     
     # If the student is not logged in, redirect to the login page
     return redirect(url_for('login'))
