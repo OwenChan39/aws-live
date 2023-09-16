@@ -12,13 +12,14 @@
     <title>Student Profile - SEO Dream</title>
 
     <!-- Bootstrap core CSS -->
-    <link href="vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+    <link href="{{ url_for('static', filename='vendor/bootstrap/css/bootstrap.min.css') }}" rel="stylesheet">
 
     <!-- Additional CSS Files -->
-    <link rel="stylesheet" href="assets/css/fontawesome.css">
-    <link rel="stylesheet" href="assets/css/templatemo-seo-dream.css">
-    <link rel="stylesheet" href="assets/css/animated.css">
-    <link rel="stylesheet" href="assets/css/owl.css">
+    <link href="{{ url_for('static', filename='assets/css/fontawesome.css') }}" rel="stylesheet">
+    <link href="{{ url_for('static', filename='assets/css/templatemo-seo-dream.css') }}" rel="stylesheet">
+    <link href="{{ url_for('static', filename='assets/css/animated.css') }}" rel="stylesheet">
+    <link href="{{ url_for('static', filename='assets/css/owl.css') }}" rel="stylesheet">
+
     <style>
         /* Add custom CSS styles for your student profile page */
         /* Example styles for the sidebar */
@@ -155,7 +156,7 @@
     <div class="content">
         <!-- Student Profile -->
         <div class="student-profile">
-            <img src="assets/images/default-profile-pic.jpg" alt="Student Profile Picture">
+            <img src="{{ url_for('static', filename='assets/images/default-profile-pic.jpg') }}" alt="Student Profile Picture">
             <div class="student-info">
                 <div class="student-info-box">
                     <span>Name:</span> [Student Name]
@@ -213,12 +214,12 @@
     </footer>
 
     <!-- Scripts -->
-    <script src="vendor/jquery/jquery.min.js"></script>
-    <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
-    <script src="assets/js/owl-carousel.js"></script>
-    <script src="assets/js/animation.js"></script>
-    <script src="assets/js/imagesloaded.js"></script>
-    <script src="assets/js/custom.js"></script>
+    <script src="{{ url_for('static', filename='vendor/jquery/jquery.min.js') }}"></script>
+    <script src="{{ url_for('static', filename='vendor/bootstrap/js/bootstrap.bundle.min.js') }}"></script>
+    <script src="{{ url_for('static', filename='assets/js/owl-carousel.js') }}"></script>
+    <script src="{{ url_for('static', filename='assets/js/animation.js') }}"></script>
+    <script src="{{ url_for('static', filename='assets/js/imagesloaded.js') }}"></script>
+    <script src="{{ url_for('static', filename='assets/js/custom.js') }}"></script>
 </body>
 
 </html>
