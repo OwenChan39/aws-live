@@ -124,15 +124,19 @@ def student_dashboard():
                 ExpiresIn=3600  # Set an appropriate expiration time
             )
 
-            student_image_file_name_in_s3 = "student-id-" + str(student_id) + "_image_file"
-            student_image_url = s3.meta.client.generate_presigned_url(
-                'get_object',
-                Params={'Bucket': bucket, 'Key': student_image_file_name_in_s3},
-                ExpiresIn=3600  # Set an appropriate expiration time
-            )
+            # Check if the student has uploaded a resume
+            resume_filename = f"student-{student_id}-resume.pdf"  # Adjust the filename format as needed
 
-            # Set student_resume_url to None to indicate no resume is uploaded
-            student_resume_url = None
+            # Check if the resume file exists in S3
+            s3_resume_object = s3.Bucket(bucket).Object(resume_filename)
+            if s3_resume_object and s3_resume_object.content_length > 0:
+                student_resume_url = s3.meta.client.generate_presigned_url(
+                    'get_object',
+                    Params={'Bucket': bucket, 'Key': resume_filename},
+                    ExpiresIn=3600  # Set an appropriate expiration time
+                )
+            else:
+                student_resume_url = None  # Set to None if no resume is uploaded
 
             # Render the student dashboard page with the student's information and resume URL
             return render_template('student_dashboard.html', Stud_name=Stud_name, Stud_ID=Stud_ID, NRIC_Number=NRIC_Number, Gender=Gender, Programme_of_Study=Programme_of_Study, CGPA=CGPA, TARUMT_emailAddress=TARUMT_emailAddress, Mobile_number=Mobile_number, Intern_batch=Intern_batch, Home_Address=Home_Address, Personal_emailAddress=Personal_emailAddress, student_image_url=student_image_url, student_resume_url=student_resume_url)
