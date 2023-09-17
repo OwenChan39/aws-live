@@ -130,6 +130,19 @@ def student_dashboard():
     # If the student is not logged in, redirect to the login page
     return redirect(url_for('login'))
 
+def update_student_profile(student_id, cgpa, mobile_number, home_address, personal_email):
+    cursor = db_conn.cursor()
+    update_sql = "UPDATE Student SET CGPA=%s, Mobile_number=%s, Home_Address=%s, Personal_emailAddress=%s WHERE Stud_ID=%s"
+    try:
+        cursor.execute(update_sql, (cgpa, mobile_number, home_address, personal_email, student_id))
+        db_conn.commit()
+        return True  # Profile updated successfully
+    except Exception as e:
+        db_conn.rollback()
+        return str(e)  # Error updating profile
+    finally:
+        cursor.close()
+
 @app.route('/student_profile_edit', methods=['GET', 'POST'])
 def student_profile_edit():
     if 'student_id' in session:
@@ -177,7 +190,7 @@ def student_profile_edit():
 
                 return redirect(url_for('student_dashboard'))
 
-            return render_template('try_student_update.html', student=student)
+            return render_template('student_profile_edit.html', student=student)
 
     return redirect(url_for('login'))
 
