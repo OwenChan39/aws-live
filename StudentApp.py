@@ -130,11 +130,24 @@ def student_dashboard():
     # If the student is not logged in, redirect to the login page
     return redirect(url_for('login'))
 
-def update_student_profile(student_id, cgpa, mobile_number, home_address, personal_email):
+def update_student_profile(student_id, updates):
     cursor = db_conn.cursor()
-    update_sql = "UPDATE Student SET CGPA=%s, Mobile_number=%s, Home_Address=%s, Personal_emailAddress=%s WHERE Stud_ID=%s"
+    update_sql = "UPDATE Student SET "
+    update_values = []
+
+    for field, value in updates.items():
+        if value is not None:
+            update_sql += f"{field} = %s, "
+            update_values.append(value)
+
+    # Remove the trailing comma and space
+    update_sql = update_sql.rstrip(', ')
+
+    update_sql += " WHERE Stud_ID = %s"
+    update_values.append(student_id)
+
     try:
-        cursor.execute(update_sql, (cgpa, mobile_number, home_address, personal_email, student_id))
+        cursor.execute(update_sql, tuple(update_values))
         db_conn.commit()
         return True  # Profile updated successfully
     except Exception as e:
@@ -155,38 +168,28 @@ def student_profile_edit():
         if student:
             if request.method == 'POST':
                 updated_fields = request.form.getlist('update_fields[]')
+                updates = {}
 
                 if 'cgpa' in updated_fields:
                     new_cgpa = request.form.get('cgpa')
-                    if new_cgpa:
-                        if update_student_profile(student_id, new_cgpa, None, None, None) is True:
-                            flash('CGPA updated successfully', 'success')
-                        else:
-                            flash('Error updating CGPA', 'error')
+                    updates['CGPA'] = new_cgpa
 
                 if 'mobile' in updated_fields:
                     new_mobile_number = request.form.get('mobileNumber')
-                    if new_mobile_number:
-                        if update_student_profile(student_id, None, new_mobile_number, None, None) is True:
-                            flash('Mobile Number updated successfully', 'success')
-                        else:
-                            flash('Error updating Mobile Number', 'error')
+                    updates['Mobile_number'] = new_mobile_number
 
                 if 'address' in updated_fields:
                     new_home_address = request.form.get('homeAddress')
-                    if new_home_address:
-                        if update_student_profile(student_id, None, None, new_home_address, None) is True:
-                            flash('Home Address updated successfully', 'success')
-                        else:
-                            flash('Error updating Home Address', 'error')
+                    updates['Home_Address'] = new_home_address
 
                 if 'email' in updated_fields:
                     new_personal_email = request.form.get('personalEmail')
-                    if new_personal_email:
-                        if update_student_profile(student_id, None, None, None, new_personal_email) is True:
-                            flash('Personal Email updated successfully', 'success')
-                        else:
-                            flash('Error updating Personal Email', 'error')
+                    updates['Personal_emailAddress'] = new_personal_email
+
+                if update_student_profile(student_id, updates) is True:
+                    flash('Profile updated successfully', 'success')
+                else:
+                    flash('Error updating profile', 'error')
 
                 return redirect(url_for('student_dashboard'))
 
