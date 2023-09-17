@@ -8,7 +8,6 @@ from werkzeug.utils import secure_filename
 
 app = Flask(__name__, static_folder='static')
 app.secret_key = '123456'
-app.config['ALLOW_PRIMARY_DOCUMENTS_SUBMISSION'] = True  # Set to True to allow submission initially
 
 # AWS S3 configuration
 bucket = custombucket
@@ -70,6 +69,32 @@ def student_sign_up():
             cursor.close()
 
     return render_template('student_sign_up.html')
+
+@app.route("/lecturer_sign_up", methods=['GET', 'POST'])
+def lecturer_sign_up():
+    if request.method == 'POST':
+        # Get form data from the POST request
+        full_name = request.form['full_name']
+        staff_id = request.form['staff_id']
+        email = request.form['email']
+        ic = request.form['ic']
+        position = request.form['position']
+
+        # Insert lecturer data into the database
+        insert_sql = "INSERT INTO Lecturer (Lect_name, Lect_ID, Lect_emailAddress, Lect_IC, Lect_Position) VALUES (%s, %s, %s, %s, %s)"
+        cursor = db_conn.cursor()
+        
+        try:
+            cursor.execute(insert_sql, (full_name, staff_id, email, ic, position))
+            db_conn.commit()
+
+            return render_template('signup_success.html', name=full_name)
+        except Exception as e:
+            return str(e)
+        finally:
+            cursor.close()
+
+    return render_template('lecturer_sign_up.html')
 
 @app.route('/login', methods=['POST'], endpoint='login_student')
 def login():
@@ -286,13 +311,7 @@ def upload_documents():
         if 'student_id' in session:
             student_id = session['student_id']
 
-        # Check if primary documents submission is allowed
-        if not app.config['ALLOW_PRIMARY_DOCUMENTS_SUBMISSION']:
-            flash('Primary documents submission is closed. Contact administrator for assistance.', 'error')
-            return redirect(url_for('student_upload_documents_page'))
-
         # Handle combined submission (Letter of Indemnity, Company Acceptance Letter, Parent's Acknowledgment Form)
-        submitted_documents = []
         for field_name in ['letter_of_indemnity', 'company_acceptance_letter', 'parents_acknowledgment_form']:
             if field_name in request.files:
                 file = request.files[field_name]
@@ -300,16 +319,8 @@ def upload_documents():
                     # Construct the S3 object key with the desired naming convention
                     s3_object_key = f"student-{student_id}-{field_name}.pdf"
                     s3.Bucket(bucket).put_object(Key=s3_object_key, Body=file)
-                    submitted_documents.append(field_name)
 
-        # Check if all three primary documents have been submitted
-        if len(submitted_documents) == 3:
-            # Update the session variable to indicate that primary documents have been submitted
-            app.config['ALLOW_PRIMARY_DOCUMENTS_SUBMISSION'] = False
-            flash('Primary documents submitted successfully.', 'success')
-        else:
-            flash('Please upload all three primary documents.', 'error')
-
+        # Redirect to a success page or render a success message
         return redirect(url_for('student_upload_documents_page'))
     
 
