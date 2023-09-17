@@ -141,7 +141,7 @@ def lecturer_dashboard():
     if 'username' in session and 'role' in session and session['role'] == 'lecturer':
         lecturer_username = session['username']
         cursor = db_conn.cursor()
-        cursor.execute("SELECT LecturerName FROM Lecturer WHERE Lect_name = %s", (lecturer_username,))
+        cursor.execute("SELECT Lect_name FROM Lecturer WHERE Lect_name = %s", (lecturer_username,))
         lecturer = cursor.fetchone()
 
         if lecturer:
