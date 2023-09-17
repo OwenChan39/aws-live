@@ -212,11 +212,16 @@
 
             <!-- Add the Upload Resume button below the Edit Profile button -->
             {% if student_resume_url %}
+                <!-- Resume exists, so display the "View Resume" button -->
                 <p><a href="{{ student_resume_url }}" target="_blank">View Resume</a></p>
             {% else %}
-                <!-- Display a message or button for uploading a resume -->
-                <p>No resume uploaded. <a href="{{ url_for('upload_resume') }}">Upload Resume</a></p>
+                <!-- Resume does not exist, so display the "Upload Resume" form -->
+                <form action="/upload_resume" method="POST" enctype="multipart/form-data">
+                    <input type="file" name="resume_file" accept=".pdf, .doc, .docx">
+                    <input type="submit" class="edit-button" value="Upload Resume">
+                </form>
             {% endif %}
+        
 
     </div>
     <!-- ***** Student Profile End ***** -->
