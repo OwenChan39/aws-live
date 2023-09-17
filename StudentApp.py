@@ -133,7 +133,7 @@ def login():
     return render_template('login.html')
 
 @app.route("/lecturer_dashboard")
-def login():
+def lecturer_dashboard():
     return render_template('lecturer_dashboard.html')
 
 @app.route('/student_dashboard', methods=['GET', 'POST'])
