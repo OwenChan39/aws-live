@@ -172,7 +172,7 @@
                     <td>{{ student[1] }}</td>
                     <td>
                         {% if student_files[student[0]]['letter_of_indemnity']['url'] %}
-                        <a href="{{ student_files[student[0]][letter_of_indemnity']['url'] }}" class="download-button">Download</a>
+                        <a href="{{ student_files[student[0]]['letter_of_indemnity']['url'] }}" class="download-button">Download</a>
                         {% else %}
                         (X)
                         {% endif %}
