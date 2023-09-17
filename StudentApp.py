@@ -438,23 +438,26 @@ def view_student_progress():
 
                 try:
                     s3_client = boto3.client('s3', region_name=region)
-                    presigned_url = s3_client.generate_presigned_url(
-                        'get_object',
-                        Params={'Bucket': bucket, 'Key': file_key},
-                        ExpiresIn=3600
-                    )
+                    s3_object = s3_client.head_object(Bucket=bucket, Key=file_key)
+
+                    if 'ContentLength' in s3_object:
+                        # File exists, generate a presigned URL
+                        presigned_url = s3_client.generate_presigned_url(
+                            'get_object',
+                            Params={'Bucket': bucket, 'Key': file_key},
+                            ExpiresIn=3600
+                        )
                 except NoCredentialsError:
                     flash('S3 credentials are missing or incorrect.', 'error')
 
+                # Update the status to 'Completed' (green color) if a file exists,
+                # otherwise set it to 'X' (or any other indicator)
+                status = {'text': 'X' if presigned_url is None else 'Completed', 'status': 'completed' if presigned_url is not None else 'pending'}
+
                 student_files.setdefault(student_id, {})[file_name] = {'url': presigned_url}
-
-                # Update the status to 'Completed' (green color) if a file exists
-                if presigned_url:
-                    status['text'] = 'Completed'
-                    status['status'] = 'completed'
-
-            # Store the status in the student_files dictionary
-            student_files[student_id]['Status'] = status
+                
+                # Store the status in the student_files dictionary
+                student_files[student_id]['Status'] = status
 
         cursor.close()
 
