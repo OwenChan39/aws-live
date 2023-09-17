@@ -397,7 +397,18 @@ def upload_final_report():
 @app.route('/studentdatabase', methods=['GET'])
 def student_database():
     cursor = db_conn.cursor()
-    cursor.execute("SELECT Stud_ID, Stud_name, Gender, Programme_of_Study, Intern_batch, Personal_emailAddress FROM Student")
+
+    # Get the search query from the URL parameter
+    query = request.args.get('query', '')
+
+    # Use the search query to filter the student data
+    if query:
+        # Execute a SQL query to retrieve matching students
+        cursor.execute("SELECT Stud_ID, Stud_name, Gender, Programme_of_Study, Intern_batch, Personal_emailAddress FROM Student WHERE Stud_name LIKE %s OR Stud_ID LIKE %s", ('%' + query + '%', '%' + query + '%'))
+    else:
+        # If no query provided, retrieve all students
+        cursor.execute("SELECT Stud_ID, Stud_name, Gender, Programme_of_Study, Intern_batch, Personal_emailAddress FROM Student")
+
     students = cursor.fetchall()
     cursor.close()
 
