@@ -394,5 +394,14 @@ def upload_final_report():
         # Redirect to a success page or render a success message
         return redirect(url_for('student_upload_documents_page'))
 
+@app.route('/studentdatabase', methods=['GET'])
+def student_database():
+    cursor = db_conn.cursor()
+    cursor.execute("SELECT Stud_ID, Stud_name, Gender, Programme_of_Study, Intern_batch, Personal_emailAddress FROM Student")
+    students = cursor.fetchall()
+    cursor.close()
+
+    return render_template('studentdatabase.html', students=students)
+
 if __name__ == '__main__':
     app.run(host='0.0.0.0', port=80, debug=True)
