@@ -428,8 +428,9 @@ def view_student_progress():
         for student in students:
             student_id = student[0]
 
-            # Initialize the file status as 'Pending' (red color)
-            status = {'text': 'Pending', 'status': 'pending'}
+            # Initialize the file status as 'Completed' (green color)
+            status = {'text': 'Completed', 'status': 'completed'}
+            all_files_found = True  # Flag to track if all files are found
 
             # Generate presigned URLs for each file (if they exist)
             for file_name in ['letter_of_indemnity', 'company_acceptance_letter', 'parents_acknowledgment_form', 'progress-report', 'final-report']:
@@ -447,15 +448,22 @@ def view_student_progress():
                             Params={'Bucket': bucket, 'Key': file_key},
                             ExpiresIn=3600
                         )
+                    else:
+                        # File does not exist, set the flag to False
+                        all_files_found = False
                 except NoCredentialsError:
                     flash('S3 credentials are missing or incorrect.', 'error')
                 except ClientError as e:
                     if e.response['Error']['Code'] == '404':
-                        # File does not exist, set the status to Pending and presigned_url to None
-                        status['text'] = 'Pending'
-                        status['status'] = 'pending'
+                        # File does not exist, set the flag to False
+                        all_files_found = False
 
                 student_files.setdefault(student_id, {})[file_name] = {'url': presigned_url}
+
+            # Update the status to 'Completed' only if all files are found
+            if not all_files_found:
+                status['text'] = 'Pending'
+                status['status'] = 'pending'
 
             # Store the status in the student_files dictionary
             student_files[student_id]['Status'] = status
