@@ -1,245 +1,244 @@
-<!DOCTYPE html>
-<html lang="en">
+from flask import Flask, render_template, request, redirect, url_for,session, flash
+from pymysql import connections
+import os
+import boto3
+from botocore.exceptions import NoCredentialsError
+from config import *
 
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <meta name="description" content="">
-    <meta name="author" content="">
-    <link rel="preconnect" href="https://fonts.gstatic.com">
-    <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@300;400;600;700;800&display=swap" rel="stylesheet">
+app = Flask(__name__, static_folder='static')
+app.secret_key = '123456'
 
-    <title>Student Profile - SEO Dream</title>
+# AWS S3 configuration
+bucket = custombucket
+region = customregion
+s3 = boto3.resource('s3')
 
-    <!-- Bootstrap core CSS -->
-    <link href="{{ url_for('static', filename='vendor/bootstrap/css/bootstrap.min.css') }}" rel="stylesheet">
+# Database configuration
+db_conn = connections.Connection(
+    host=customhost,
+    port=3306,
+    user=customuser,
+    password=custompass,
+    db=customdb
+)
 
-    <!-- Additional CSS Files -->
-    <link href="{{ url_for('static', filename='assets/css/fontawesome.css') }}" rel="stylesheet">
-    <link href="{{ url_for('static', filename='assets/css/templatemo-seo-dream.css') }}" rel="stylesheet">
-    <link href="{{ url_for('static', filename='assets/css/animated.css') }}" rel="stylesheet">
-    <link href="{{ url_for('static', filename='assets/css/owl.css') }}" rel="stylesheet">
+@app.route("/")
+def home():
+    return render_template('index.html')
 
-    <style>
-        /* Add custom CSS styles for your student profile page */
-        /* Example styles for the sidebar */
-        .sidebar {
-            width: 250px;
-            background-color: #333; /* Change this color to match your design */
-            color: #fff;
-            position: fixed;
-            height: 100%;
-            overflow: auto;
-        }
+@app.route("/login")
+def login():
+    return render_template('login.html')
 
-        .sidebar a {
-            padding: 15px;
-            text-decoration: none;
-            font-size: 18px;
-            color: #fff;
-            display: block;
-        }
+# Define a route for student sign-up
+@app.route("/student_sign_up", methods=['GET', 'POST'])
+def student_sign_up():
+    if request.method == 'POST':
+        # Get form data from the POST request
+        student_name = request.form['Stud_name']
+        student_id = request.form['Stud_ID']
+        nric_no = request.form['NRIC_Number']
+        gender = request.form['Gender']
+        programme = request.form['Programme_of_Study']
+        cgpa = request.form['CGPA']
+        student_email = request.form['TARUMT_emailAddress']
+        mobile_num = request.form['Mobile_number']
+        intern_batch = request.form['Intern_batch']
+        home_address = request.form['Home_Address']
+        personal_email = request.form['Personal_emailAddress']
+        student_image_file = request.files['studentImage']
 
-        .sidebar a:hover {
-            background-color: #555;
-        }
+        # Insert student data into the database
+        insert_sql = "INSERT INTO Student (Stud_name, Stud_ID, NRIC_Number, Gender, Programme_of_Study, CGPA, TARUMT_emailAddress, Mobile_number, Intern_batch, Home_Address, Personal_emailAddress) VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s)"
+        cursor = db_conn.cursor()
+        
+        try:
+            cursor.execute(insert_sql, (student_name, student_id, nric_no, gender, programme, cgpa, student_email, mobile_num, intern_batch, home_address, personal_email))
+            db_conn.commit()
 
-        /* Example styles for the main content */
-        .content {
-            margin-left: 250px;
-            padding: 20px;
-        }
+            # Upload student image to S3
+            if student_image_file.filename != "":
+                student_image_file_name_in_s3 = "student-id-" + str(student_id) + "_image_file"
+                s3.Bucket(bucket).put_object(Key=student_image_file_name_in_s3, Body=student_image_file)
 
-        /* Header styles */
-        .header {
-            background-color: #33ccc5; /* Change this color to match your design */
-            color: #fff;
-            padding: 10px 0;
-            text-align: center;
-        }
+            return render_template('signup_success.html', name=student_name)
+        except Exception as e:
+            return str(e)
+        finally:
+            cursor.close()
 
-        .header h1 {
-            margin: 0;
-        }
+    return render_template('student_sign_up.html')
 
-        .sign-out-link {
-            position: absolute;
-            top: 20px;
-            right: 20px;
-            color: #fff;
-            text-decoration: none;
-            font-weight: bold;
-        }
+@app.route('/login', methods=['POST'], endpoint='login_student')
+def login():
+    if request.method == 'POST':
+        # Get the entered student ID and IC number from the form
+        student_id = request.form['username']
+        ic_number = request.form['password']
 
-        /* Student Profile styles */
-        .student-profile {
-            background-color: #f2f2f2;
-            padding: 20px;
-            border-radius: 10px;
-            text-align: center;
-        }
+        # Query the database to check if the student ID and IC number match
+        cursor = db_conn.cursor()
+        cursor.execute("SELECT * FROM Student WHERE Stud_ID = %s AND NRIC_Number = %s", (student_id, ic_number))
+        student = cursor.fetchone()
+        cursor.close()
 
-        .student-profile img {
-            max-width: 200px;
-            border-radius: 50%;
-            margin-bottom: 20px;
-        }
+        if student:
+            # Student credentials are valid, redirect to the student dashboard
+            session['student_id'] = student_id
+            return redirect(url_for('student_dashboard'))
+        else:
+            # Invalid credentials, display an error message
+            flash('Invalid username or password', 'error')
 
-        .student-info {
-            display: grid;
-            grid-template-columns: repeat(2, 1fr);
-            grid-gap: 20px;
-            text-align: left;
-            padding: 20px;
-        }
+    return render_template('login.html')
 
-        .student-info-box {
-            background-color: #fff;
-            padding: 15px;
-            border-radius: 10px;
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-        }
+@app.route('/student_dashboard')
+def student_dashboard():
+    # Check if student is logged in by checking if student_id is in the session
+    if 'student_id' in session:
+        student_id = session['student_id']
+        # Query the database to retrieve the student's information
+        cursor = db_conn.cursor()
+        cursor.execute("SELECT * FROM Student WHERE Stud_ID = %s", (student_id,))
+        student = cursor.fetchone()
+        cursor.close()
 
-        .student-info-box span {
-            font-weight: bold;
-            color: #555;
-        }
+        if student:
+            # Access the elements of the tuple by their indices
+            Stud_name = student[0]
+            Stud_ID = student[1]
+            NRIC_Number = student[2]
+            Gender = student[3]
+            Programme_of_Study = student[4]
+            CGPA = student[5]
+            TARUMT_emailAddress = student[6]
+            Mobile_number = student[7]
+            Intern_batch = student[8]
+            Home_Address = student[9]
+            Personal_emailAddress = student[10]
 
-        /* Edit Button styles */
-        .edit-button {
-            background-color: #33ccc5;
-            color: #fff;
-            border: none;
-            padding: 10px 20px;
-            border-radius: 5px;
-            text-decoration: none;
-            cursor: pointer;
-            margin-top: 20px;
-        }
+            student_image_file_name_in_s3 = "student-id-" + str(student_id) + "_image_file"
+            student_image_url = s3.meta.client.generate_presigned_url(
+                'get_object',
+                Params={'Bucket': bucket, 'Key': student_image_file_name_in_s3},
+                ExpiresIn=3600  # Set an appropriate expiration time
+            )
 
-        .edit-button:hover {
-            background-color: #1e8c8b;
-        }
+            # Check if the student has uploaded a resume
+            resume_filename = f"student-{student_id}-resume.pdf"  # Adjust the filename format as needed
+            student_resume_url = s3.meta.client.generate_presigned_url(
+                'get_object',
+                Params={'Bucket': bucket, 'Key': resume_filename},
+                ExpiresIn=3600  # Set an appropriate expiration time
+            ) if s3.Bucket(bucket).Object(resume_filename).load() else None
 
-        .student-profile img {
-            max-width: 180px;
-            height: 250px;
-            border: 2px solid #555; /* Add a border with a color of your choice */
-            border-radius: 0; /* Set border-radius to 0 to remove any rounded corners */
-            margin-bottom: 20px;
-        }
+            # Render the student dashboard page with the student's information and resume URL
+            return render_template('student_dashboard.html', Stud_name=Stud_name, Stud_ID=Stud_ID, NRIC_Number=NRIC_Number, Gender=Gender, Programme_of_Study=Programme_of_Study, CGPA=CGPA, TARUMT_emailAddress=TARUMT_emailAddress, Mobile_number=Mobile_number, Intern_batch=Intern_batch, Home_Address=Home_Address, Personal_emailAddress=Personal_emailAddress, student_image_url=student_image_url, student_resume_url=student_resume_url)
+
+    # If the student is not logged in, redirect to the login page
+    return redirect(url_for('login'))
+
+def update_student_profile(student_id, updates):
+    cursor = db_conn.cursor()
+    update_sql = "UPDATE Student SET "
+    update_values = []
+
+    for field, value in updates.items():
+        if value is not None:
+            update_sql += f"{field} = %s, "
+            update_values.append(value)
+
+    # Remove the trailing comma and space
+    update_sql = update_sql.rstrip(', ')
+
+    update_sql += " WHERE Stud_ID = %s"
+    update_values.append(student_id)
+
+    try:
+        cursor.execute(update_sql, tuple(update_values))
+        db_conn.commit()
+        return True  # Profile updated successfully
+    except Exception as e:
+        db_conn.rollback()
+        return str(e)  # Error updating profile
+    finally:
+        cursor.close()
+
+@app.route('/student_profile_edit', methods=['GET', 'POST'])
+def student_profile_edit():
+    if 'student_id' in session:
+        student_id = session['student_id']
+        cursor = db_conn.cursor()
+        cursor.execute("SELECT * FROM Student WHERE Stud_ID = %s", (student_id,))
+        student = cursor.fetchone()
+        cursor.close()
+
+        if student:
+            if request.method == 'POST':
+                updated_fields = request.form.getlist('update_fields[]')
+                updates = {}
+
+                if 'cgpa' in updated_fields:
+                    new_cgpa = request.form.get('cgpa')
+                    updates['CGPA'] = new_cgpa
+
+                if 'mobile' in updated_fields:
+                    new_mobile_number = request.form.get('mobileNumber')
+                    updates['Mobile_number'] = new_mobile_number
+
+                if 'address' in updated_fields:
+                    new_home_address = request.form.get('homeAddress')
+                    updates['Home_Address'] = new_home_address
+
+                if 'email' in updated_fields:
+                    new_personal_email = request.form.get('personalEmail')
+                    updates['Personal_emailAddress'] = new_personal_email
+
+                if update_student_profile(student_id, updates) is True:
+                    flash('Profile updated successfully', 'success')
+                else:
+                    flash('Error updating profile', 'error')
+
+                return redirect(url_for('student_dashboard'))
+
+            return render_template('try_student_update.html', student=student)
+
+    return redirect(url_for('login'))
+
+# Define a route for uploading the resume
+@app.route('/upload_resume', methods=['POST'])
+def upload_resume():
+    if 'student_id' in session:
+        student_id = session['student_id']
+        student_resume_file = request.files['resume_file']
+
+        # Ensure a file was selected for upload
+        if student_resume_file and student_resume_file.filename != '':
+            # Generate a unique filename for the resume, e.g., using the student's ID
+            resume_filename = f"student-{student_id}-resume.pdf"  # Adjust the filename format as needed
+
+            # Upload the resume file to your S3 bucket
+            try:
+                s3.Bucket(bucket).put_object(Key=resume_filename, Body=student_resume_file)
+                flash('Resume uploaded successfully', 'success')
+
+                # Generate a URL for viewing the uploaded resume
+                student_resume_url = s3.meta.client.generate_presigned_url(
+                    'get_object',
+                    Params={'Bucket': bucket, 'Key': resume_filename},
+                    ExpiresIn=3600  # Set an appropriate expiration time
+                )
+
+                return redirect(url_for('student_profile', student_resume_url=student_resume_url))
+            except NoCredentialsError:
+                flash('S3 credentials are missing or incorrect. Unable to upload resume.', 'error')
+            except Exception as e:
+                flash(f'Error uploading resume: {str(e)}', 'error')
+        else:
+            flash('No resume file selected for upload', 'error')
+
+    return redirect(url_for('student_dashboard'))
 
 
-    </style>
-</head>
-
-<body>
-    <!-- ***** Preloader Start ***** -->
-    <div id="js-preloader" class="js-preloader">
-        <div class="preloader-inner">
-            <span class="dot"></span>
-            <div class="dots">
-                <span></span>
-                <span></span>
-                <span></span>
-            </div>
-        </div>
-    </div>
-    <!-- ***** Preloader End ***** -->
-
-    <!-- ***** Header Start ***** -->
-    <div class="header">
-        <h1>Student Profile</h1>
-        <a href="/login" class="sign-out-link">Sign Out</a>
-    </div>
-    <!-- ***** Header End ***** -->
-
-    <!-- ***** Student Profile Start ***** -->
-    <div class="sidebar">
-        <a href="/student_dashboard">Student Profile</a>
-        <a href="student_company_jobs_posting.html">Job Postings</a>
-        <a href="#">Upload Documents</a>
-        <!-- Add more navigation links as needed -->
-        <!-- <a href="#">Link 4</a> -->
-    </div>
-
-    <div class="content">
-        <!-- Student Profile -->
-        <div class="student-profile">
-            <img src="{{ student_image_url }}" alt="Student Profile Picture">
-            <div class="student-info">
-                <div class="student-info-box">
-                    <span>Name:</span> {{ Stud_name }}
-                </div>
-                <div class="student-info-box">
-                    <span>ID:</span> {{ Stud_ID }}
-                </div>
-                <div class="student-info-box">
-                    <span>NRIC Number:</span> {{ NRIC_Number }}
-                </div>
-                <div class="student-info-box">
-                    <span>Gender:</span> {{ Gender }}
-                </div>
-                <div class="student-info-box">
-                    <span>Programme of Study:</span> {{ Programme_of_Study }}
-                </div>
-                <div class="student-info-box">
-                    <span>CGPA:</span> {{ CGPA }}
-                </div>
-                <div class="student-info-box">
-                    <span>TARUMT Email:</span> {{ TARUMT_emailAddress }}
-                </div>
-                <div class="student-info-box">
-                    <span>Mobile Number:</span> {{ Mobile_number }}
-                </div>
-                <div class="student-info-box">
-                    <span>Intern Batch:</span> {{ Intern_batch }}
-                </div>
-                <div class="student-info-box">
-                    <span>Home Address:</span> {{ Home_Address }}
-                </div>
-                <div class="student-info-box">
-                    <span>Personal Email:</span> {{ Personal_emailAddress }}
-                </div>
-            </div>
-            <a href="{{ url_for('student_profile_edit') }}" class="edit-button">Edit Profile</a>
-            
-            <!-- Add the Upload Resume button below the Edit Profile button -->
-            {% if student_resume_url %}
-                <a href="{{ student_resume_url }}" class="edit-button">View Resume</a>
-            {% else %}
-                <!-- Display a message if no resume is uploaded -->
-                <p>No resume uploaded.</p>
-            {% endif %}
-            
-            <!-- Add the Upload Resume button below the Edit Profile button -->
-            <form action="/upload_resume" method="POST" enctype="multipart/form-data">
-                <input type="file" name="resume_file" accept=".pdf, .doc, .docx">
-                <input type="submit" class="edit-button" value="Upload Resume">
-            </form>
-    </div>
-    <!-- ***** Student Profile End ***** -->
-
-    <!-- ... (remaining HTML code) ... -->
-
-    <footer>
-        <div class="container">
-            <div class="row">
-                <div class="col-lg-12">
-                    <!-- Add your footer content here -->
-                    <!-- ... -->
-                </div>
-            </div>
-        </div>
-    </footer>
-
-    <!-- Scripts -->
-    <script src="{{ url_for('static', filename='vendor/jquery/jquery.min.js') }}"></script>
-    <script src="{{ url_for('static', filename='vendor/bootstrap/js/bootstrap.bundle.min.js') }}"></script>
-    <script src="{{ url_for('static', filename='assets/js/owl-carousel.js') }}"></script>
-    <script src="{{ url_for('static', filename='assets/js/animation.js') }}"></script>
-    <script src="{{ url_for('static', filename='assets/js/imagesloaded.js') }}"></script>
-    <script src="{{ url_for('static', filename='assets/js/custom.js') }}"></script>
-</body>
-
-</html>
+if __name__ == '__main__':
+    app.run(host='0.0.0.0', port=80, debug=True)
