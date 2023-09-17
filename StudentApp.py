@@ -291,7 +291,7 @@ def upload_documents():
                 file = request.files[field_name]
                 if file.filename != '':
                     # Construct the S3 object key with the desired naming convention
-                    s3_object_key = f"student-{student_id}-{field_name}"
+                    s3_object_key = f"student-{student_id}-{field_name}.pdf"
                     s3.Bucket(bucket).put_object(Key=s3_object_key, Body=file)
 
         # Redirect to a success page or render a success message
