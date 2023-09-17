@@ -207,8 +207,8 @@
             <!-- Add the Upload Resume button below the Edit Profile button -->
             {% if student_resume_url %}
                 <p><a href="{{ student_resume_url }}" target="_blank">View Resume</a></p>
-            {% endif %}
-                <!-- Display a message if no resume is uploaded -->
+            {% else %}
+            <!-- Display a message if no resume is uploaded -->
                 <p>No resume uploaded.</p>
             {% endif %}
             
