@@ -148,23 +148,51 @@
     <div class="content">
         <!-- Student Profile Edit Form -->
         <div class="student-profile-edit">
-            <form action="/update_profile" method="POST">
+            <form action="/student_profile_edit" method="POST">
                 <label for="cgpa">CGPA:</label>
-                <input type="text" id="cgpa" name="cgpa" value="{{ CGPA }}">
+                <input type="text" id="cgpa" name="cgpa" value="{{ student[5] }}">
                 
                 <label for="mobileNumber">Mobile Number:</label>
-                <input type="text" id="mobileNumber" name="mobileNumber" value="{{ Mobile_number }}">
+                <input type="text" id="mobileNumber" name="mobileNumber" value="{{ student[7] }}">
                 
                 <label for="homeAddress">Home Address:</label>
-                <input type="text" id="homeAddress" name="homeAddress" value="{{ Home_Address }}">
+                <input type="text" id="homeAddress" name="homeAddress" value="{{ student[9] }}">
                 
                 <label for="personalEmail">Personal Email:</label>
-                <input type="text" id="personalEmail" name="personalEmail" value="{{ Personal_emailAddress }}">
+                <input type="text" id="personalEmail" name="personalEmail" value="{{ student[10] }}">
+                
+                <input type="checkbox" name="update_fields[]" value="cgpa"> Update CGPA
+                <input type="checkbox" name="update_fields[]" value="mobile"> Update Mobile Number
+                <input type="checkbox" name="update_fields[]" value="address"> Update Home Address
+                <input type="checkbox" name="update_fields[]" value="email"> Update Personal Email
                 
                 <input type="submit" class="edit-button" value="Save Changes">
             </form>
         </div>
     </div>
+    <!-- ***** Student Profile Edit End ***** -->
+
+    <!-- ... (footer content) ... -->
+
+    <!-- Scripts -->
+    <!-- ... (script tags) ... -->
+</body>
+</html>
+Here are the changes and improvements made:
+
+Added checkboxes in the HTML form to allow the user to select which fields to update.
+
+Modified the Flask route for student profile edit to handle both GET and POST requests.
+
+Updated the Flask route to retrieve the student's information and pass it to the HTML template.
+
+These changes should help you implement the desired functionality for updating student profiles. Make sure to update the action attribute of the form to match the correct route if needed.
+
+
+
+
+
+
     <!-- ***** Student Profile Edit End ***** -->
 
     <!-- ... (remaining HTML code) ... -->
