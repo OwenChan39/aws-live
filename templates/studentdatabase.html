@@ -9,7 +9,7 @@
     <link rel="preconnect" href="https://fonts.gstatic.com">
     <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@300;400;600;700;800&display=swap" rel="stylesheet">
 
-    <title>Lecturer Dashboard - SEO Dream</title>
+    <title>Student Database - SEO Dream</title>
 
     <!-- Bootstrap core CSS -->
     <link href="{{ url_for('static', filename='vendor/bootstrap/css/bootstrap.min.css') }}" rel="stylesheet">
@@ -20,7 +20,7 @@
     <link href="{{ url_for('static', filename='assets/css/animated.css') }}" rel="stylesheet">
     <link href="{{ url_for('static', filename='assets/css/owl.css') }}" rel="stylesheet">
     <style>
-        /* Add custom CSS styles for your dashboard page */
+        /* Add custom CSS styles for your student database page */
         /* Example styles for the sidebar */
         .sidebar {
             width: 250px;
@@ -49,55 +49,6 @@
             padding: 20px;
         }
 
-        /* Custom styles for the Quote of the day and program boxes */
-        .quote {
-            background-color: #f2f2f2;
-            padding: 20px;
-            border-radius: 10px;
-            margin-bottom: 20px;
-        }
-
-        .program-box {
-            background-color: #FA9D4D;
-            padding: 15px;
-            border-radius: 10px;
-            margin-bottom: 20px;
-        }
-
-        /* Styling for Quote of the Day */
-        .quote h3 {
-            color: #333;
-            margin-bottom: 10px;
-        }
-
-        .quote blockquote {
-            color: #555;
-            font-style: italic;
-        }
-
-        /* Styling for Total Number of Students */
-        .program-box h3 {
-            color: #555;
-            margin-bottom: 10px;
-        }
-
-        .program-box p {
-            color: #333;
-            font-weight: bold;
-        }
-
-        .program-box-container {
-            display: flex;
-            flex-direction: row; /* Display program boxes in a horizontal line */
-            justify-content: space-between; /* Distribute the space between program boxes evenly */
-            flex-wrap: wrap; /* Allow boxes to wrap to the next line if the screen is too narrow */
-        }
-
-        .program-box {
-            width: calc(33.33% - 20px); /* Adjust the width as needed */
-            margin-bottom: 20px;
-        }
-
         /* Header styles */
         .header {
             background-color: #33ccc5; /* Change this color to match your index.html */
@@ -119,24 +70,49 @@
             font-weight: bold;
         }
 
-        /* Additional CSS for the new dashboard sections */
-        .sub-section {
+        /* Styling for Student Database Table */
+        .student-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+
+        .student-table th,
+        .student-table td {
+            padding: 10px;
+            border: 1px solid #ddd;
+            text-align: left;
+        }
+
+        .student-table th {
+            background-color: #333;
+            color: #fff;
+        }
+
+        /* Additional CSS for the new student database sections */
+        .search-section {
             background-color: #f2f2f2;
             padding: 10px;
             border-radius: 10px;
-            margin-top: 10px;
+            margin-top: 20px;
         }
 
-        .sub-section p {
-            margin: 5px 0;
+        .search-input {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
         }
 
-        .sub-section span {
-            font-weight: bold;
-            color: #555;
+        .search-button {
+            background-color: #333;
+            color: #fff;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            cursor: pointer;
         }
 
-        
     </style>
 </head>
 
@@ -156,101 +132,56 @@
 
     <!-- ***** Header Start ***** -->
     <div class="header">
-        <h1>Lecturer Dashboard</h1>
-        <a href="/login" class="sign-out-link">Sign Out</a>
+        <h1>Student Database</h1>
+        <a href="index.html" class="sign-out-link">Sign Out</a>
     </div>
     <!-- ***** Header End ***** -->
 
-    <!-- ***** Lecturer Dashboard Start ***** -->
+    <!-- ***** Student Database Start ***** -->
     <div class="sidebar">
-        <a href="/studentdatabase">View Student Database</a>
-        <a href="view_progress_reports.html">View Student Reports</a>
+        <a href="lecturer_dashboard.html">View Lecturer Dashboard</a>
         <!-- Add more navigation links as needed -->
         <!-- <a href="#">Link 2</a> -->
         <!-- <a href="#">Link 3</a> -->
     </div>
-    
+
     <div class="content">
+        <h2>Welcome to the Student Database</h2>
 
-        <h2>Hello, {{ lecturer_name }}!</h2>
+        <!-- Search Section -->
+        <div class="search-section">
+            <h3>Search Students</h3>
+            <input type="text" class="search-input" placeholder="Enter student name or ID">
+            <button class="search-button">Search</button>
+        </div>
 
-        <br>
-    
-        <!-- Quote of the Day -->
-        <div class="quote">
-            <h3>Quote of the Day:</h3>
-            <blockquote>
-                "Belief creates the actual fact."
-            </blockquote>
-        </div>
-    
-        <!-- Program Boxes with Student Counts -->
-        <div class="program-box-container">
-            <!-- Program Boxes for Total Number of Students (You can keep these) -->
-            <div class="program-box">
-                <h3>RDS</h3>
-                <p>Total Number of Students: 150</p>
-            </div>
-    
-            <div class="program-box">
-                <h3>RIT</h3>
-                <p>Total Number of Students: 200</p>
-            </div>
-    
-            <div class="program-box">
-                <h3>RWS</h3>
-                <p>Total Number of Students: 120</p>
-            </div>
-        </div>
-    
-        <!-- Other Dashboard Content Goes Here -->
-    
-        <!-- Online Application Section -->
-        <div class="dashboard-section">
-            <div class="dashboard-column">
-                <h3>Online Application</h3>
-                <div class="application-box">
-                    <div class="sub-section">
-                        <h5>Pre-Register</h5>
-                        <!-- Add anchor links for Pending and Printed Application Letters -->
-                        <p>
-                            <a href="pending_application.html">Pending Application Letters:</a>
-                            <span>5</span>
-                        </p>
-                        <p>
-                            <a href="printed_application.html">Printed Application Letters:</a>
-                            <span>3</span>
-                        </p>
-                    </div>
-                </div>
-            </div>
-    
-            <div class="dashboard-column">
-                <div class="response-box">
-                    <div class="sub-section">
-                        <h5>Student Response</h5>
-                        <p>Accepted Responses: <span>8</span></p>
-                        <p>Rejected Responses: <span>1</span></p>
-
-                    </div>
-                </div>
-            </div>
-    
-            <div class="dashboard-column">
-                <div class="placement-box">
-                    <div class="sub-section">
-                        <h5>Internship Placement</h5>
-                        <p>Confirmed Placements: <span>10</span></p>
-                    </div>
-                </div>
-            </div>
-        </div>
+        <!-- Student Database Table -->
+        <table class="student-table">
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Name</th>
+                    <th>Gender</th>
+                    <th>Program</th>
+                    <th>Intern Batch</th>
+                    <th>Email</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for student in students %}
+                <tr>
+                    <td>{{ student[0] }}</td>
+                    <td>{{ student[1] }}</td>
+                    <td>{{ student[2] }}</td>
+                    <td>{{ student[3] }}</td>
+                    <td>{{ student[4] }}</td>
+                    <td>{{ student[5] }}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
     </div>
-
-    
-        <!-- Other Dashboard Content Goes Here -->
-    </div>
-    <!-- ***** Lecturer Dashboard End ***** -->
+    <!-- ***** Student Database End ***** -->
 
     <!-- ... (remaining HTML code) ... -->
 
@@ -272,7 +203,6 @@
     <script src="{{ url_for('static', filename='assets/js/animation.js') }}"></script>
     <script src="{{ url_for('static', filename='assets/js/imagesloaded.js') }}"></script>
     <script src="{{ url_for('static', filename='assets/js/custom.js') }}"></script>
-
 </body>
 
 </html>
