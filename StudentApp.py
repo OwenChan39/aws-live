@@ -230,7 +230,7 @@ def upload_resume():
         else:
             flash('No resume file selected for upload', 'error')
 
-    return redirect(url_for('student_profile'))
+    return redirect(url_for('student_dashboard'))
 
 
 if __name__ == '__main__':
