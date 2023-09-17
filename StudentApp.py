@@ -4,6 +4,7 @@ import os
 import boto3
 from botocore.exceptions import NoCredentialsError
 from config import *
+from werkzeug.utils import secure_filename
 
 app = Flask(__name__, static_folder='static')
 app.secret_key = '123456'
@@ -274,7 +275,76 @@ def upload_resume():
 
     return redirect(url_for('student_dashboard'))
 
+@app.route('/student_upload_documents_page')
+def student_upload_documents_page():
+    return render_template('Student_Upload_Documents.html')
 
+@app.route('/student_upload_documents', methods=['POST'])
+def upload_documents():
+    if request.method == 'POST':
+        if 'student_id' in session:
+            student_id = session['student_id']
+
+        # Handle combined submission (Letter of Indemnity, Company Acceptance Letter, Parent's Acknowledgment Form)
+        for field_name in ['letter_of_indemnity', 'company_acceptance_letter', 'parents_acknowledgment_form']:
+            if field_name in request.files:
+                file = request.files[field_name]
+                if file.filename != '':
+                    # Construct the S3 object key with the desired naming convention
+                    s3_object_key = f"student-{student_id}-{field_name}"
+                    try:
+                        s3.upload_fileobj(file, bucket, s3_object_key)
+                    except NoCredentialsError:
+                        return "AWS credentials not available."
+
+        # Redirect to a success page or render a success message
+        return "Documents uploaded successfully."
+    
+    return redirect(url_for('student_upload_documents_page'))
+
+@app.route('/student_upload_documents_progress', methods=['POST'])
+def upload_progress_report():
+    if request.method == 'POST':
+        if 'student_id' in session:
+            student_id = session['student_id']
+
+        # Handle progress report submission
+        if 'progress_report' in request.files:
+            file = request.files['progress_report']
+            if file.filename != '':
+                # Construct the S3 object key with the desired naming convention
+                s3_object_key = f"student-{student_id}-progress-report.pdf"
+                try:
+                    s3.upload_fileobj(file, bucket, s3_object_key)
+                except NoCredentialsError:
+                    return "AWS credentials not available."
+
+        # Redirect to a success page or render a success message
+        return "Progress report uploaded successfully."
+    
+    return redirect(url_for('student_upload_documents_page'))
+
+@app.route('/student_upload_documents_final', methods=['POST'])
+def upload_final_report():
+    if request.method == 'POST':
+        if 'student_id' in session:
+            student_id = session['student_id']
+
+        # Handle final report submission
+        if 'final_report' in request.files:
+            file = request.files['final_report']
+            if file.filename != '':
+                # Construct the S3 object key with the desired naming convention
+                s3_object_key = f"student-{student_id}-final-report.pdf"
+                try:
+                    s3.upload_fileobj(file, bucket, s3_object_key)
+                except NoCredentialsError:
+                    return "AWS credentials not available."
+
+        # Redirect to a success page or render a success message
+        return "Final report uploaded successfully."
+    
+    return redirect(url_for('student_upload_documents_page'))
 
 if __name__ == '__main__':
     app.run(host='0.0.0.0', port=80, debug=True)
