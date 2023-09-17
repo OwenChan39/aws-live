@@ -96,7 +96,7 @@ def lecturer_sign_up():
 
     return render_template('lecturer_sign_up.html')
 
-@app.route('/login', methods=['POST'], endpoint='login')
+@app.route('/login', methods=['POST'], endpoint='login_role')
 def login():
     if request.method == 'POST':
         # Get the entered username and password from the form
