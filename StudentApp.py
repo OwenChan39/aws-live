@@ -177,7 +177,7 @@ def student_profile_edit():
 
                 return redirect(url_for('student_dashboard'))
 
-            return render_template('student_profile_edit.html', student=student)
+            return render_template('try_student_update.html', student=student)
 
     return redirect(url_for('login'))
 
