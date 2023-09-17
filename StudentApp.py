@@ -138,10 +138,10 @@ def login():
 
 @app.route('/lecturer_dashboard', methods=['GET', 'POST'])
 def lecturer_dashboard():
-    if 'username' in session and 'role' in session and session['role'] == 'lecturer':
-        lecturer_username = session['username']
+    if 'lecturer_id' in session and 'role' in session and session['role'] == 'lecturer':
+        lecturer_id = session['lecturer_id']
         cursor = db_conn.cursor()
-        cursor.execute("SELECT * FROM Lecturer WHERE Lect_name = %s", (lecturer_username,))
+        cursor.execute("SELECT * FROM Lecturer WHERE Lect_ID = %s", (lecturer_id,))
         lecturer = cursor.fetchone()
 
         if lecturer:
@@ -153,6 +153,7 @@ def lecturer_dashboard():
 
         # Pass the lecturer_name to the template
         return render_template('lecturer_dashboard.html', lecturer_name=lecturer_name)
+
 
 @app.route('/student_dashboard', methods=['GET', 'POST'])
 def student_dashboard():
