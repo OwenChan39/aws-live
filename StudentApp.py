@@ -428,8 +428,8 @@ def view_student_progress():
         for student in students:
             student_id = student[0]
 
-            # Initialize the file status as 'Pending' (red color)
-            status = {'text': 'Pending', 'status': 'pending'}
+            # Initialize the file status as 'Completed' (green color)
+            status = {'text': 'Completed', 'status': 'completed'}
 
             # Generate presigned URLs for each file (if they exist)
             for file_name in ['letter_of_indemnity', 'company_acceptance_letter', 'parents_acknowledgment_form', 'progress-report', 'final-report']:
@@ -440,7 +440,11 @@ def view_student_progress():
                     s3_client = boto3.client('s3', region_name=region)
                     s3_object = s3_client.head_object(Bucket=bucket, Key=file_key)
 
-                    if 'ContentLength' in s3_object:
+                    if 'ContentLength' not in s3_object:
+                        # File does not exist, set the status to Pending and presigned_url to None
+                        status['text'] = 'Pending'
+                        status['status'] = 'pending'
+                    else:
                         # File exists, generate a presigned URL
                         presigned_url = s3_client.generate_presigned_url(
                             'get_object',
@@ -450,14 +454,10 @@ def view_student_progress():
                 except NoCredentialsError:
                     flash('S3 credentials are missing or incorrect.', 'error')
 
-                # Update the status to 'Completed' (green color) if a file exists,
-                # otherwise set it to 'X' (or any other indicator)
-                status = {'text': 'X' if presigned_url is None else 'Completed', 'status': 'completed' if presigned_url is not None else 'pending'}
-
                 student_files.setdefault(student_id, {})[file_name] = {'url': presigned_url}
-                
-                # Store the status in the student_files dictionary
-                student_files[student_id]['Status'] = status
+
+            # Store the status in the student_files dictionary
+            student_files[student_id]['Status'] = status
 
         cursor.close()
 
