@@ -107,11 +107,11 @@ def login():
         cursor = db_conn.cursor()
 
         # Check if it's a student login
-        cursor.execute("SELECT * FROM Student WHERE Stud_ID = %s AND Password = %s", (username, password))
+        cursor.execute("SELECT * FROM Student WHERE Stud_ID = %s AND NRIC_Number = %s", (username, password))
         student = cursor.fetchone()
 
         # Check if it's a lecturer login
-        cursor.execute("SELECT * FROM Lecturer WHERE Lecturer_ID = %s AND Password = %s", (username, password))
+        cursor.execute("SELECT * FROM Lecturer WHERE Lecturer_ID = %s AND Lect_IC = %s", (username, password))
         lecturer = cursor.fetchone()
 
         cursor.close()
