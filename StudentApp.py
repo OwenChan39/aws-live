@@ -92,12 +92,10 @@ def login():
 
     return render_template('login.html')
 
-@app.route('/student_dashboard')
+@app.route('/student_dashboard', methods=['GET', 'POST'])
 def student_dashboard():
-    # Check if student is logged in by checking if student_id is in the session
     if 'student_id' in session:
         student_id = session['student_id']
-        # Query the database to retrieve the student's information
         cursor = db_conn.cursor()
         cursor.execute("SELECT * FROM Student WHERE Stud_ID = %s", (student_id,))
         student = cursor.fetchone()
@@ -124,35 +122,29 @@ def student_dashboard():
                 ExpiresIn=3600
             )
 
-            # Check if a resume exists for the student
-            cursor = db_conn.cursor()
-            cursor.execute("SELECT ResumeFileName FROM Student WHERE Stud_ID = %s", (student_id,))
-            resume_data = cursor.fetchone()
-            cursor.close()
+            # Check if a resume file exists in S3
+            resume_filename = f"student-{student_id}-resume.pdf"  # Adjust the filename format as needed
+            student_resume_url = None
 
-            if resume_data and resume_data[0]:  # Resume exists
+            try:
+                s3.Object(bucket, resume_filename).load()
                 student_resume_url = s3.meta.client.generate_presigned_url(
                     'get_object',
-                    Params={'Bucket': bucket, 'Key': resume_data[0]},
+                    Params={'Bucket': bucket, 'Key': resume_filename},
                     ExpiresIn=3600
                 )
-            else:  # Resume doesn't exist
-                student_resume_url = None
+            except Exception as e:
+                pass
 
             if request.method == 'POST' and 'resume_file' in request.files:
                 student_resume_file = request.files['resume_file']
 
                 # Ensure a file was selected for upload
                 if student_resume_file and student_resume_file.filename != '':
-                    resume_filename = f"student-{student_id}-resume.pdf"
+                    resume_filename = f"student-{student_id}-resume.pdf"  # Adjust the filename format as needed
+
                     try:
                         s3.Bucket(bucket).put_object(Key=resume_filename, Body=student_resume_file)
-
-                        # Update the database to store the resume information
-                        cursor = db_conn.cursor()
-                        cursor.execute("UPDATE Student SET ResumeFileName = %s WHERE Stud_ID = %s",
-                                       (resume_filename, student_id))
-                        db_conn.commit()
 
                         student_resume_url = s3.meta.client.generate_presigned_url(
                             'get_object',
@@ -168,13 +160,19 @@ def student_dashboard():
                 else:
                     flash('No resume file selected for upload', 'error')
 
+            if student_resume_url:
+                resume_button_text = "View Resume"
+            else:
+                resume_button_text = "Upload Resume"
+
             return render_template('student_dashboard.html', Stud_name=Stud_name, Stud_ID=Stud_ID,
                                    NRIC_Number=NRIC_Number, Gender=Gender, Programme_of_Study=Programme_of_Study,
                                    CGPA=CGPA, TARUMT_emailAddress=TARUMT_emailAddress, Mobile_number=Mobile_number,
                                    Intern_batch=Intern_batch, Home_Address=Home_Address,
                                    Personal_emailAddress=Personal_emailAddress, student_image_url=student_image_url,
-                                   student_resume_url=student_resume_url)
+                                   student_resume_url=student_resume_url, resume_button_text=resume_button_text)
 
+    # If the student is not logged in, redirect to the login page
     return redirect(url_for('login'))
 
 def update_student_profile(student_id, updates):
