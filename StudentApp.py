@@ -96,45 +96,29 @@ def lecturer_sign_up():
 
     return render_template('lecturer_sign_up.html')
 
-@app.route('/login', methods=['POST'], endpoint='login_role')
+@app.route('/login', methods=['POST'], endpoint='login_student')
 def login():
     if request.method == 'POST':
-        # Get the entered role, username, and password from the form
-        role = request.form['role']
-        username = request.form['username']
-        password = request.form['password']
+        # Get the entered student ID and IC number from the form
+        student_id = request.form['username']
+        ic_number = request.form['password']
 
-        # Query the database to check if the username and password match for the selected role
+        # Query the database to check if the student ID and IC number match
         cursor = db_conn.cursor()
-
-        if role == 'student':
-            # Check if it's a student login
-            cursor.execute("SELECT * FROM Student WHERE Stud_ID = %s AND NRIC_Number = %s", (username, password))
-            student = cursor.fetchone()
-
-            if student:
-                # Student credentials are valid, redirect to the student dashboard
-                session['username'] = username
-                session['role'] = 'student'
-                return redirect(url_for('student_dashboard'))
-        
-        elif role == 'lecturer':
-            # Check if it's a lecturer login
-            cursor.execute("SELECT * FROM Lecturer WHERE Lect_ID = %s AND Lect_IC = %s", (username, password))
-            lecturer = cursor.fetchone()
-
-            if lecturer:
-                # Lecturer credentials are valid, redirect to the lecturer dashboard
-                session['username'] = username
-                session['role'] = 'lecturer'
-                return redirect(url_for('lecturer_dashboard'))
-
+        cursor.execute("SELECT * FROM Student WHERE Stud_ID = %s AND NRIC_Number = %s", (student_id, ic_number))
+        student = cursor.fetchone()
         cursor.close()
 
-        # Invalid credentials or role, display an error message
-        flash('Invalid username, password, or role', 'error')
+        if student:
+            # Student credentials are valid, redirect to the student dashboard
+            session['student_id'] = student_id
+            return redirect(url_for('student_dashboard'))
+        else:
+            # Invalid credentials, display an error message
+            flash('Invalid username or password', 'error')
 
     return render_template('login.html')
+
 
 @app.route("/lecturer_dashboard")
 def lecturer_dashboard():
