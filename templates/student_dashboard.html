@@ -202,7 +202,7 @@
                     <span>Personal Email:</span> {{ Personal_emailAddress }}
                 </div>
             </div>
-            <a href="student_edit_profile.html" class="edit-button">Edit Profile</a>
+            <a href="{{ url_for('student_profile_edit') }}" class="edit-button">Edit Profile</a>
             
             <!-- Add the Upload Resume button below the Edit Profile button -->
             <a href="upload_resume.html" class="edit-button">Upload Resume</a>
