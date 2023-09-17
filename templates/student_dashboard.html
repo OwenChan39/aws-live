@@ -122,9 +122,9 @@
         }
 
         .student-profile img {
-            width: 200px; /* Set a fixed width */
-            height: 250px; /* Set a fixed height */
-            border-radius: 50%;
+            max-width: 200px;
+            height: 250px;
+            border: 2px solid #555; /* Add a border with a color of your choice */
             margin-bottom: 20px;
         }
 
@@ -165,7 +165,7 @@
     <div class="content">
         <!-- Student Profile -->
         <div class="student-profile">
-            <img src="{{ student_image_url }}" alt="Student Profile Picture" class="rounded-circle">
+            <img src="{{ student_image_url }}" alt="Student Profile Picture">
             <div class="student-info">
                 <div class="student-info-box">
                     <span>Name:</span> {{ Stud_name }}
