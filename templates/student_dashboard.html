@@ -210,13 +210,14 @@
                 <input type="submit" class="edit-button" value="Upload Resume">
             </form>
 
-            <!-- Display the "View Resume" button if a resume is uploaded -->
+            <!-- Add the Upload Resume button below the Edit Profile button -->
             {% if student_resume_url %}
-                <p><a href="{{ student_resume_url }}" target="_blank" class="edit-button">View Resume</a></p>
+                <p><a href="{{ student_resume_url }}" target="_blank">View Resume</a></p>
             {% else %}
-            <!-- Display a message if no resume is uploaded -->
-                <p>No resume uploaded.</p>
+                <!-- Display a message or button for uploading a resume -->
+                <p>No resume uploaded. <a href="{{ url_for('upload_resume') }}">Upload Resume</a></p>
             {% endif %}
+
     </div>
     <!-- ***** Student Profile End ***** -->
 
