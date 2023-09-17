@@ -111,7 +111,7 @@
                                     <div class="form-group mt-3">
                                         <h4>Don't have an account?</h4>
                                         <button class="main-blue-button" onclick="location.href='/student_sign_up'">Student Signup</button>
-                                        <button class="main-blue-button" onclick="location.href='lecturer_signup.html'">Lecturer Signup</button>
+                                        <button class="main-blue-button" onclick="location.href='/lecturer_sign_up'">Lecturer Signup</button>
                                         <button class="main-blue-button" onclick="location.href='company_signup.html'">Company Signup</button>
                                         <button class="main-blue-button" onclick="location.href='adminSignup.html'">Admin Signup</button>
                                     </div>
@@ -131,39 +131,6 @@
     </div>
 </div>
 <!-- ***** Login Area End ***** -->
-
-<script>
-    function login() {
-        // Get the selected login type
-        var loginType = document.getElementById("loginType").value;
-
-        // Get the entered username
-        var username = document.getElementById("username").value;
-
-        // Set the lecturer's name in localStorage as the entered username
-        localStorage.setItem('lecturerName', username);
-
-        // Redirect the user based on login type
-        switch (loginType) {
-            case "student":
-                window.location.href = "student_dashboard.html";
-                break;
-            case "lecturer":
-                window.location.href = "lecturer_dashboard.html";
-                break;
-            case "company":
-                window.location.href = "company_dashboard.html";
-                break;
-            case "admin":
-                window.location.href = "admin_dashboard.html";
-                break;
-            default:
-                // Handle invalid login type
-                alert("Invalid login type");
-        }
-    }
-</script>
-
 
 <!-- ... (remaining HTML code) ... -->
 
