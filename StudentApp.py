@@ -2,7 +2,7 @@ from flask import Flask, render_template, request, redirect, url_for,session, fl
 from pymysql import connections
 import os
 import boto3
-from botocore.exceptions import NoCredentialsError
+from botocore.exceptions import NoCredentialsError, ClientError  
 from config import *
 from werkzeug.utils import secure_filename
 
