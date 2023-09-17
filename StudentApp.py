@@ -458,7 +458,7 @@ def view_student_progress():
 
         cursor.close()
 
-        return render_template('view_student_progress.html', students=students, student_files=student_files)
+        return render_template('view_progress_reports.html', students=students, student_files=student_files)
 
     return redirect(url_for('login'))
 
