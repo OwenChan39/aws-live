@@ -171,35 +171,35 @@
                     <td>{{ student[0] }}</td>
                     <td>{{ student[1] }}</td>
                     <td>
-                        {% if student_files[student[0]]['Letter of Indemnity']['url'] %}
+                        {% if student_files[student[0]]['letter_of_indemnity']['url'] %}
                         <a href="{{ student_files[student[0]][letter_of_indemnity']['url'] }}" class="download-button">Download</a>
                         {% else %}
                         (X)
                         {% endif %}
                     </td>
                     <td>
-                        {% if student_files[student[0]]['Company Acceptance Letter']['url'] %}
+                        {% if student_files[student[0]]['company_acceptance_letter']['url'] %}
                         <a href="{{ student_files[student[0]]['company_acceptance_letter']['url'] }}" class="download-button">Download</a>
                         {% else %}
                         (X)
                         {% endif %}
                     </td>
                     <td>
-                        {% if student_files[student[0]]['Parent\'s Acknowledgment Form']['url'] %}
+                        {% if student_files[student[0]]['Pparents_acknowledgment_form']['url'] %}
                         <a href="{{ student_files[student[0]]['parents_acknowledgment_form']['url'] }}" class="download-button">Download</a>
                         {% else %}
                         (X)
                         {% endif %}
                     </td>
                     <td>
-                        {% if student_files[student[0]]['Progress Report']['url'] %}
+                        {% if student_files[student[0]]['progress-report']['url'] %}
                         <a href="{{ student_files[student[0]]['progress-report']['url'] }}" class="download-button">Download</a>
                         {% else %}
                         (X)
                         {% endif %}
                     </td>
                     <td>
-                        {% if student_files[student[0]]['Final Report']['url'] %}
+                        {% if student_files[student[0]]['final-report']['url'] %}
                         <a href="{{ student_files[student[0]]['final-report']['url'] }}" class="download-button">Download</a>
                         {% else %}
                         (X)
