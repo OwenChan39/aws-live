@@ -220,16 +220,14 @@ def upload_resume():
             # Upload the resume file to your S3 bucket
             try:
                 s3.Bucket(bucket).put_object(Key=resume_filename, Body=student_resume_file)
+
+                # Update the database to store the resume information
+                update_sql = "UPDATE Student SET ResumeFileName = %s WHERE Stud_ID = %s"
+                cursor = db_conn.cursor()
+                cursor.execute(update_sql, (resume_filename, student_id))
+                db_conn.commit()
+
                 flash('Resume uploaded successfully', 'success')
-
-                # Generate a URL for viewing the uploaded resume
-                student_resume_url = s3.meta.client.generate_presigned_url(
-                    'get_object',
-                    Params={'Bucket': bucket, 'Key': resume_filename},
-                    ExpiresIn=3600  # Set an appropriate expiration time
-                )
-
-                return redirect(url_for('student_profile', student_resume_url=student_resume_url))
             except NoCredentialsError:
                 flash('S3 credentials are missing or incorrect. Unable to upload resume.', 'error')
             except Exception as e:
@@ -238,6 +236,7 @@ def upload_resume():
             flash('No resume file selected for upload', 'error')
 
     return redirect(url_for('student_dashboard'))
+
 
 
 if __name__ == '__main__':
