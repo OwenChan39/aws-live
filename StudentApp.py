@@ -414,5 +414,56 @@ def student_database():
 
     return render_template('studentdatabase.html', students=students)
 
+@app.route('/view_student_progress', methods=['GET'])
+def view_student_progress():
+    if 'lecturer_id' in session and session['role'] == 'lecturer':
+        # Retrieve student data and file status from your database
+        cursor = db_conn.cursor()
+        cursor.execute("SELECT Stud_ID, Stud_name FROM Student")
+        students = cursor.fetchall()
+
+        # Dictionary to store file status and presigned URLs
+        student_files = {}
+
+        for student in students:
+            student_id = student[0]
+
+            # Initialize the file status as 'Pending' (red color)
+            status = {'text': 'Pending', 'status': 'pending'}
+
+            # Generate presigned URLs for each file (if they exist)
+            for file_name in ['letter_of_indemnity', 'company_acceptance_letter', 'parents_acknowledgment_form', 'progress-report', 'final-report']:
+                file_key = f"student-{student_id}-{file_name}.pdf"
+                presigned_url = None
+
+                try:
+                    s3_client = boto3.client('s3', region_name=region)
+                    presigned_url = s3_client.generate_presigned_url(
+                        'get_object',
+                        Params={'Bucket': bucket, 'Key': file_key},
+                        ExpiresIn=3600
+                    )
+                except NoCredentialsError:
+                    flash('S3 credentials are missing or incorrect.', 'error')
+
+                student_files.setdefault(student_id, {})[file_name] = {'url': presigned_url}
+
+                # Update the status to 'Completed' (green color) if a file exists
+                if presigned_url:
+                    status['text'] = 'Completed'
+                    status['status'] = 'completed'
+
+            # Store the status in the student_files dictionary
+            student_files[student_id]['Status'] = status
+
+        cursor.close()
+
+        return render_template('view_student_progress.html', students=students, student_files=student_files)
+
+    return redirect(url_for('login'))
+
 if __name__ == '__main__':
     app.run(host='0.0.0.0', port=80, debug=True)
+
+
+
