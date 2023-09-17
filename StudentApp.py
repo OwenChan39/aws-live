@@ -133,7 +133,7 @@ def login():
 
         if student:
             # Student credentials are valid, set session data for student
-            session['username'] = username
+            session['student_id'] = username
             session['role'] = 'student'
             return redirect(url_for('student_dashboard'))
         
@@ -144,7 +144,7 @@ def login():
 
         if lecturer:
             # Lecturer credentials are valid, set session data for lecturer
-            session['username'] = username
+            session['lecturer_id'] = username
             session['role'] = 'lecturer'
             return redirect(url_for('lecturer_dashboard'))
 
