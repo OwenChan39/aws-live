@@ -2,6 +2,7 @@ from flask import Flask, render_template, request, redirect, url_for,session, fl
 from pymysql import connections
 import os
 import boto3
+from botocore.exceptions import NoCredentialsError
 from config import *
 
 app = Flask(__name__, static_folder='static')
@@ -196,6 +197,40 @@ def student_profile_edit():
             return render_template('try_student_update.html', student=student)
 
     return redirect(url_for('login'))
+
+# Define a route for uploading the resume
+@app.route('/upload_resume', methods=['POST'])
+def upload_resume():
+    if 'student_id' in session:
+        student_id = session['student_id']
+        student_resume_file = request.files['resume_file']
+
+        # Ensure a file was selected for upload
+        if student_resume_file and student_resume_file.filename != '':
+            # Generate a unique filename for the resume, e.g., using the student's ID
+            resume_filename = f"student-{student_id}-resume.pdf"  # Adjust the filename format as needed
+
+            # Upload the resume file to your S3 bucket
+            try:
+                s3.Bucket(bucket).put_object(Key=resume_filename, Body=student_resume_file)
+                flash('Resume uploaded successfully', 'success')
+
+                # Generate a URL for viewing the uploaded resume
+                student_resume_url = s3.meta.client.generate_presigned_url(
+                    'get_object',
+                    Params={'Bucket': bucket, 'Key': resume_filename},
+                    ExpiresIn=3600  # Set an appropriate expiration time
+                )
+
+                return redirect(url_for('student_profile', student_resume_url=student_resume_url))
+            except NoCredentialsError:
+                flash('S3 credentials are missing or incorrect. Unable to upload resume.', 'error')
+            except Exception as e:
+                flash(f'Error uploading resume: {str(e)}', 'error')
+        else:
+            flash('No resume file selected for upload', 'error')
+
+    return redirect(url_for('student_profile'))
 
 
 if __name__ == '__main__':
