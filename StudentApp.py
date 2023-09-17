@@ -428,39 +428,35 @@ def view_student_progress():
         for student in students:
             student_id = student[0]
 
-        # Initialize the file status as 'Completed' (green color)
-        status = {'text': 'Completed', 'status': 'completed'}
+            # Initialize the file status as 'Pending' (red color)
+            status = {'text': 'Pending', 'status': 'pending'}
 
-        # Generate presigned URLs for each file (if they exist)
-        for file_name in ['letter_of_indemnity', 'company_acceptance_letter', 'parents_acknowledgment_form', 'progress-report', 'final-report']:
-            file_key = f"student-{student_id}-{file_name}.pdf"
-            presigned_url = None
+            # Generate presigned URLs for each file (if they exist)
+            for file_name in ['letter_of_indemnity', 'company_acceptance_letter', 'parents_acknowledgment_form', 'progress-report', 'final-report']:
+                file_key = f"student-{student_id}-{file_name}.pdf"
+                presigned_url = None
 
-            try:
-                s3_client = boto3.client('s3', region_name=region)
-                s3_object = s3_client.head_object(Bucket=bucket, Key=file_key)
+                try:
+                    s3_client = boto3.client('s3', region_name=region)
+                    s3_object = s3_client.head_object(Bucket=bucket, Key=file_key)
 
-                if 'ContentLength' not in s3_object:
-                    # File does not exist, set the status to Pending and presigned_url to None
-                    status['text'] = 'Pending'
-                    status['status'] = 'pending'
-                else:
-                    # File exists, generate a presigned URL
-                    presigned_url = s3_client.generate_presigned_url(
-                        'get_object',
-                        Params={'Bucket': bucket, 'Key': file_key},
-                        ExpiresIn=3600
-                    )
-            except NoCredentialsError:
-                flash('S3 credentials are missing or incorrect.', 'error')
-            except ClientError as e:
-                if e.response['Error']['Code'] == '404':
-                    # File does not exist, set the status to Pending and presigned_url to None
-                    status['text'] = 'Pending'
-                    status['status'] = 'pending'
+                    if 'ContentLength' in s3_object:
+                        # File exists, generate a presigned URL
+                        presigned_url = s3_client.generate_presigned_url(
+                            'get_object',
+                            Params={'Bucket': bucket, 'Key': file_key},
+                            ExpiresIn=3600
+                        )
+                except NoCredentialsError:
+                    flash('S3 credentials are missing or incorrect.', 'error')
+                except ClientError as e:
+                    if e.response['Error']['Code'] == '404':
+                        # File does not exist, set the status to Pending and presigned_url to None
+                        status['text'] = 'Pending'
+                        status['status'] = 'pending'
 
-            student_files.setdefault(student_id, {})[file_name] = {'url': presigned_url}
-            
+                student_files.setdefault(student_id, {})[file_name] = {'url': presigned_url}
+
             # Store the status in the student_files dictionary
             student_files[student_id]['Status'] = status
 
