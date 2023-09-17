@@ -96,26 +96,60 @@ def lecturer_sign_up():
 
     return render_template('lecturer_sign_up.html')
 
-@app.route('/login', methods=['POST'], endpoint='login_student')
+# @app.route('/login', methods=['POST'], endpoint='login_student')
+# def login():
+#     if request.method == 'POST':
+#         # Get the entered student ID and IC number from the form
+#         student_id = request.form['username']
+#         ic_number = request.form['password']
+
+#         # Query the database to check if the student ID and IC number match
+#         cursor = db_conn.cursor()
+#         cursor.execute("SELECT * FROM Student WHERE Stud_ID = %s AND NRIC_Number = %s", (student_id, ic_number))
+#         student = cursor.fetchone()
+#         cursor.close()
+
+#         if student:
+#             # Student credentials are valid, redirect to the student dashboard
+#             session['student_id'] = student_id
+#             return redirect(url_for('student_dashboard'))
+#         else:
+#             # Invalid credentials, display an error message
+#             flash('Invalid username or password', 'error')
+
+#     return render_template('login.html')
+
+@app.route('/login', methods=['POST'], endpoint='login')
 def login():
     if request.method == 'POST':
-        # Get the entered student ID and IC number from the form
-        student_id = request.form['username']
-        ic_number = request.form['password']
+        # Get the entered username and password from the form
+        username = request.form['username']
+        password = request.form['password']
 
-        # Query the database to check if the student ID and IC number match
+        # Query the database to check if the username and password match for a student
         cursor = db_conn.cursor()
-        cursor.execute("SELECT * FROM Student WHERE Stud_ID = %s AND NRIC_Number = %s", (student_id, ic_number))
+        cursor.execute("SELECT * FROM Student WHERE Stud_ID = %s AND NRIC_Number = %s", (username, password))
         student = cursor.fetchone()
-        cursor.close()
 
         if student:
-            # Student credentials are valid, redirect to the student dashboard
-            session['student_id'] = student_id
+            # Student credentials are valid, set session data for student
+            session['username'] = username
+            session['role'] = 'student'
             return redirect(url_for('student_dashboard'))
-        else:
-            # Invalid credentials, display an error message
-            flash('Invalid username or password', 'error')
+        
+        # If the user is not a student, check if they are a lecturer
+        cursor.execute("SELECT * FROM Lecturer WHERE Lect_ID = %s AND Lect_IC = %s", (username, password))
+        lecturer = cursor.fetchone()
+        cursor.close()
+
+        if lecturer:
+            # Lecturer credentials are valid, set session data for lecturer
+            session['username'] = username
+            session['role'] = 'lecturer'
+            return redirect(url_for('lecturer_dashboard'))
+
+        # Invalid credentials, display an error message
+        flash('Invalid username, password, or role', 'error')
 
     return render_template('login.html')
 
