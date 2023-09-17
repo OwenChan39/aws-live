@@ -116,22 +116,65 @@ def student_dashboard():
             Intern_batch = student[8]
             Home_Address = student[9]
             Personal_emailAddress = student[10]
-            
+
             student_image_file_name_in_s3 = "student-id-" + str(student_id) + "_image_file"
             student_image_url = s3.meta.client.generate_presigned_url(
                 'get_object',
                 Params={'Bucket': bucket, 'Key': student_image_file_name_in_s3},
-                ExpiresIn=3600  # Set an appropriate expiration time
+                ExpiresIn=3600
             )
 
-            # Set student_resume_url to None to indicate no resume is uploaded
-            student_resume_url = None
+            # Check if a resume exists for the student
+            cursor = db_conn.cursor()
+            cursor.execute("SELECT ResumeFileName FROM Student WHERE Stud_ID = %s", (student_id,))
+            resume_data = cursor.fetchone()
+            cursor.close()
 
+            if resume_data and resume_data[0]:  # Resume exists
+                student_resume_url = s3.meta.client.generate_presigned_url(
+                    'get_object',
+                    Params={'Bucket': bucket, 'Key': resume_data[0]},
+                    ExpiresIn=3600
+                )
+            else:  # Resume doesn't exist
+                student_resume_url = None
 
-            # Render the student dashboard page with the student's information and resume URL
-            return render_template('student_dashboard.html', Stud_name=Stud_name, Stud_ID=Stud_ID, NRIC_Number=NRIC_Number, Gender=Gender, Programme_of_Study=Programme_of_Study, CGPA=CGPA, TARUMT_emailAddress=TARUMT_emailAddress, Mobile_number=Mobile_number, Intern_batch=Intern_batch, Home_Address=Home_Address, Personal_emailAddress=Personal_emailAddress, student_image_url=student_image_url, student_resume_url=student_resume_url)
+            if request.method == 'POST' and 'resume_file' in request.files:
+                student_resume_file = request.files['resume_file']
 
-    # If the student is not logged in, redirect to the login page
+                # Ensure a file was selected for upload
+                if student_resume_file and student_resume_file.filename != '':
+                    resume_filename = f"student-{student_id}-resume.pdf"
+                    try:
+                        s3.Bucket(bucket).put_object(Key=resume_filename, Body=student_resume_file)
+
+                        # Update the database to store the resume information
+                        cursor = db_conn.cursor()
+                        cursor.execute("UPDATE Student SET ResumeFileName = %s WHERE Stud_ID = %s",
+                                       (resume_filename, student_id))
+                        db_conn.commit()
+
+                        student_resume_url = s3.meta.client.generate_presigned_url(
+                            'get_object',
+                            Params={'Bucket': bucket, 'Key': resume_filename},
+                            ExpiresIn=3600
+                        )
+
+                        flash('Resume uploaded successfully', 'success')
+                    except NoCredentialsError:
+                        flash('S3 credentials are missing or incorrect. Unable to upload resume.', 'error')
+                    except Exception as e:
+                        flash(f'Error uploading resume: {str(e)}', 'error')
+                else:
+                    flash('No resume file selected for upload', 'error')
+
+            return render_template('student_dashboard.html', Stud_name=Stud_name, Stud_ID=Stud_ID,
+                                   NRIC_Number=NRIC_Number, Gender=Gender, Programme_of_Study=Programme_of_Study,
+                                   CGPA=CGPA, TARUMT_emailAddress=TARUMT_emailAddress, Mobile_number=Mobile_number,
+                                   Intern_batch=Intern_batch, Home_Address=Home_Address,
+                                   Personal_emailAddress=Personal_emailAddress, student_image_url=student_image_url,
+                                   student_resume_url=student_resume_url)
+
     return redirect(url_for('login'))
 
 def update_student_profile(student_id, updates):
