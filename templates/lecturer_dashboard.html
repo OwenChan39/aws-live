@@ -172,7 +172,7 @@
     
     <div class="content">
 
-        <h2>Hello, <span id="lecturerNamePlaceholder">[Lecturer Name]</span>!</h2>
+        <h2>Hello, {{ lecturer_name }}!</h2>
 
         <br>
     
@@ -273,15 +273,6 @@
     <script src="{{ url_for('static', filename='assets/js/imagesloaded.js') }}"></script>
     <script src="{{ url_for('static', filename='assets/js/custom.js') }}"></script>
 
-<script>
-    // Retrieve the lecturer's name from localStorage
-    var lecturerName = localStorage.getItem('lecturerName');
-
-    // Update the placeholder with the lecturer's name
-    if (lecturerName) {
-        document.getElementById('lecturerNamePlaceholder').textContent = lecturerName;
-    }
-</script>
 </body>
 
 </html>
