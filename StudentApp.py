@@ -132,6 +132,15 @@ def student_dashboard():
 
 @app.route('/student_profile_edit', methods=['GET', 'POST'])
 def student_profile_edit():
+    student = None  # Initialize student as None
+    
+    if 'student_id' in session:
+        student_id = session['student_id']
+        cursor = db_conn.cursor()
+        cursor.execute("SELECT * FROM Student WHERE Stud_ID = %s", (student_id,))
+        student = cursor.fetchone()
+        cursor.close()
+
     if request.method == 'POST':
         # Check if the form was submitted
         updated_fields = request.form.getlist('update_fields[]')
