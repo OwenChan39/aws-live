@@ -136,11 +136,10 @@ def student_dashboard():
                     ExpiresIn=3600  # Set an appropriate expiration time
                 )
             else:
-                student_resume_url = None
+                student_resume_url = None  # Resume not found, set it to None
 
             # Render the student dashboard page with the student's information and resume URL
             return render_template('student_dashboard.html', Stud_name=Stud_name, Stud_ID=Stud_ID, NRIC_Number=NRIC_Number, Gender=Gender, Programme_of_Study=Programme_of_Study, CGPA=CGPA, TARUMT_emailAddress=TARUMT_emailAddress, Mobile_number=Mobile_number, Intern_batch=Intern_batch, Home_Address=Home_Address, Personal_emailAddress=Personal_emailAddress, student_image_url=student_image_url, student_resume_url=student_resume_url)
-
 
     # If the student is not logged in, redirect to the login page
     return redirect(url_for('login'))
