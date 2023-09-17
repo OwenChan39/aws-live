@@ -82,17 +82,24 @@
                                 <div class="col-lg-12">
                                     <!-- Login Form -->
                                     <form id="loginForm" action="/login" method="POST">
-                                        <!-- Select Login Type -->
-                                        <!-- ... (existing login form code) ... -->
+                                        <!-- Select Role -->
+                                        <div class="form-group">
+                                            <label for="role">Select Role:</label>
+                                            <select class="form-control" id="role" name="role">
+                                                <option value="student">Student</option>
+                                                <option value="lecturer">Lecturer</option>
+                                                <!-- Add more roles as needed -->
+                                            </select>
+                                        </div>
                                         
                                         <!-- Username and Password -->
                                         <div class="form-group">
-                                            <label for="username">Student ID:</label>
-                                            <input type="text" class="form-control" name="username" id="username" placeholder="Student ID" required>
+                                            <label for="username">Username:</label>
+                                            <input type="text" class="form-control" name="username" id="username" placeholder="Username" required>
                                         </div>
                                         <div class="form-group">
-                                            <label for="password">IC Number:</label>
-                                            <input type="password" class="form-control" name="password" id="password" placeholder="IC Number" required>
+                                            <label for="password">Password:</label>
+                                            <input type="password" class="form-control" name="password" id="password" placeholder="Password" required>
                                         </div>
                                         <!-- End Username and Password -->
                                     
