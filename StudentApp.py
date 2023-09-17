@@ -104,7 +104,6 @@ def student_dashboard():
         cursor.close()
 
         if student:
-            print("Student data fetched:", student)  # Add this line for debugging
             # Access the elements of the tuple by their indices
             Stud_name = student[0]
             Stud_ID = student[1]
@@ -124,9 +123,17 @@ def student_dashboard():
                 Params={'Bucket': bucket, 'Key': student_image_file_name_in_s3},
                 ExpiresIn=3600  # Set an appropriate expiration time
             )
-            
-            # Render the student dashboard page with the student's information
-            return render_template('student_dashboard.html', Stud_name=Stud_name, Stud_ID=Stud_ID, NRIC_Number=NRIC_Number, Gender=Gender, Programme_of_Study=Programme_of_Study, CGPA=CGPA, TARUMT_emailAddress=TARUMT_emailAddress, Mobile_number=Mobile_number, Intern_batch=Intern_batch, Home_Address=Home_Address, Personal_emailAddress=Personal_emailAddress,student_image_url=student_image_url)
+
+            # Check if the student has uploaded a resume
+            resume_filename = f"student-{student_id}-resume.pdf"  # Adjust the filename format as needed
+            student_resume_url = s3.meta.client.generate_presigned_url(
+                'get_object',
+                Params={'Bucket': bucket, 'Key': resume_filename},
+                ExpiresIn=3600  # Set an appropriate expiration time
+            ) if s3.Bucket(bucket).Object(resume_filename).load() else None
+
+            # Render the student dashboard page with the student's information and resume URL
+            return render_template('student_dashboard.html', Stud_name=Stud_name, Stud_ID=Stud_ID, NRIC_Number=NRIC_Number, Gender=Gender, Programme_of_Study=Programme_of_Study, CGPA=CGPA, TARUMT_emailAddress=TARUMT_emailAddress, Mobile_number=Mobile_number, Intern_batch=Intern_batch, Home_Address=Home_Address, Personal_emailAddress=Personal_emailAddress, student_image_url=student_image_url, student_resume_url=student_resume_url)
 
     # If the student is not logged in, redirect to the login page
     return redirect(url_for('login'))
