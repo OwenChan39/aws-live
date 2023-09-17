@@ -111,7 +111,7 @@ def login():
         student = cursor.fetchone()
 
         # Check if it's a lecturer login
-        cursor.execute("SELECT * FROM Lecturer WHERE Lecturer_ID = %s AND Lect_IC = %s", (username, password))
+        cursor.execute("SELECT * FROM Lecturer WHERE Lect_ID = %s AND Lect_IC = %s", (username, password))
         lecturer = cursor.fetchone()
 
         cursor.close()
