@@ -292,10 +292,7 @@ def upload_documents():
                 if file.filename != '':
                     # Construct the S3 object key with the desired naming convention
                     s3_object_key = f"student-{student_id}-{field_name}"
-                    try:
-                        s3.upload_fileobj(file, bucket, s3_object_key)
-                    except NoCredentialsError:
-                        return "AWS credentials not available."
+                    s3.Bucket(bucket).put_object(Key=s3_object_key, Body=s3_object_key)
 
         # Redirect to a success page or render a success message
         return "Documents uploaded successfully."
