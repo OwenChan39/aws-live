@@ -151,19 +151,19 @@
             <form action="/update_profile" method="POST">
                 <label for="cgpa">CGPA:</label>
                 <input type="checkbox" id="update_cgpa" name="update_fields[]" value="cgpa">
-                <input type="text" id="cgpa" name="cgpa" value="{{ CGPA }}" disabled>
+                <input type="text" id="cgpa" name="cgpa" value="{{ CGPA }}">
                 
                 <label for="mobileNumber">Mobile Number:</label>
                 <input type="checkbox" id="update_mobile" name="update_fields[]" value="mobile">
-                <input type="text" id="mobileNumber" name="mobileNumber" value="{{ Mobile_number }}" disabled>
+                <input type="text" id="mobileNumber" name="mobileNumber" value="{{ Mobile_number }}">
                 
                 <label for="homeAddress">Home Address:</label>
                 <input type="checkbox" id="update_address" name="update_fields[]" value="address">
-                <input type="text" id="homeAddress" name="homeAddress" value="{{ Home_Address }}" disabled>
+                <input type="text" id="homeAddress" name="homeAddress" value="{{ Home_Address }}">
                 
                 <label for="personalEmail">Personal Email:</label>
                 <input type="checkbox" id="update_email" name="update_fields[]" value="email">
-                <input type="text" id="personalEmail" name="personalEmail" value="{{ Personal_emailAddress }}" disabled>
+                <input type="text" id="personalEmail" name="personalEmail" value="{{ Personal_emailAddress }}">
                 
                 <input type="submit" class="edit-button" value="Save Changes">
             </form>
