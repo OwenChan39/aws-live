@@ -292,12 +292,11 @@ def upload_documents():
                 if file.filename != '':
                     # Construct the S3 object key with the desired naming convention
                     s3_object_key = f"student-{student_id}-{field_name}"
-                    s3.Bucket(bucket).put_object(Key=s3_object_key, Body=s3_object_key)
+                    s3.Bucket(bucket).put_object(Key=s3_object_key, Body=file)
 
         # Redirect to a success page or render a success message
-        return "Documents uploaded successfully."
+        return redirect(url_for('student_upload_documents_page'))
     
-    return redirect(url_for('student_upload_documents_page'))
 
 @app.route('/student_upload_documents_progress', methods=['POST'])
 def upload_progress_report():
@@ -311,15 +310,10 @@ def upload_progress_report():
             if file.filename != '':
                 # Construct the S3 object key with the desired naming convention
                 s3_object_key = f"student-{student_id}-progress-report.pdf"
-                try:
-                    s3.upload_fileobj(file, bucket, s3_object_key)
-                except NoCredentialsError:
-                    return "AWS credentials not available."
+                s3.Bucket(bucket).put_object(Key=s3_object_key, Body=file)
 
         # Redirect to a success page or render a success message
-        return "Progress report uploaded successfully."
-    
-    return redirect(url_for('student_upload_documents_page'))
+        return redirect(url_for('student_upload_documents_page'))
 
 @app.route('/student_upload_documents_final', methods=['POST'])
 def upload_final_report():
@@ -333,15 +327,10 @@ def upload_final_report():
             if file.filename != '':
                 # Construct the S3 object key with the desired naming convention
                 s3_object_key = f"student-{student_id}-final-report.pdf"
-                try:
-                    s3.upload_fileobj(file, bucket, s3_object_key)
-                except NoCredentialsError:
-                    return "AWS credentials not available."
+                s3.Bucket(bucket).put_object(Key=s3_object_key, Body=file)
 
         # Redirect to a success page or render a success message
-        return "Final report uploaded successfully."
-    
-    return redirect(url_for('student_upload_documents_page'))
+        return redirect(url_for('student_upload_documents_page'))
 
 if __name__ == '__main__':
     app.run(host='0.0.0.0', port=80, debug=True)
