@@ -130,53 +130,81 @@ def student_dashboard():
     # If the student is not logged in, redirect to the login page
     return redirect(url_for('login'))
 
+# Function to update the student profile in the database
+def update_student_profile(student_id, cgpa, mobile_number, home_address, personal_email):
+    cursor = db_conn.cursor()
+    update_sql = "UPDATE Student SET CGPA=%s, Mobile_number=%s, Home_Address=%s, Personal_emailAddress=%s WHERE Stud_ID=%s"
+    try:
+        cursor.execute(update_sql, (cgpa, mobile_number, home_address, personal_email, student_id))
+        db_conn.commit()
+        return True  # Profile updated successfully
+    except Exception as e:
+        db_conn.rollback()
+        return str(e)  # Error updating profile
+    finally:
+        cursor.close()
+
 @app.route('/student_profile_edit', methods=['GET', 'POST'])
 def student_profile_edit():
     if request.method == 'POST':
         # Check if the form was submitted
         updated_fields = request.form.getlist('update_fields[]')
-        
-        # Get the student ID from the session
-        student_id = session.get('student_id')
 
-        # Update the fields based on the selected checkboxes
         if 'cgpa' in updated_fields:
             # Update the CGPA field
             new_cgpa = request.form.get('cgpa')
-            update_student_field(student_id, 'CGPA', new_cgpa)
+            if new_cgpa:
+                if update_student_profile(session['student_id'], new_cgpa, None, None, None) is True:
+                    flash('CGPA updated successfully', 'success')
+                else:
+                    flash('Error updating CGPA', 'error')
 
         if 'mobile' in updated_fields:
             # Update the Mobile Number field
             new_mobile_number = request.form.get('mobileNumber')
-            update_student_field(student_id, 'Mobile_number', new_mobile_number)
+            if new_mobile_number:
+                if update_student_profile(session['student_id'], None, new_mobile_number, None, None) is True:
+                    flash('Mobile Number updated successfully', 'success')
+                else:
+                    flash('Error updating Mobile Number', 'error')
 
         if 'address' in updated_fields:
             # Update the Home Address field
             new_home_address = request.form.get('homeAddress')
-            update_student_field(student_id, 'Home_Address', new_home_address)
+            if new_home_address:
+                if update_student_profile(session['student_id'], None, None, new_home_address, None) is True:
+                    flash('Home Address updated successfully', 'success')
+                else:
+                    flash('Error updating Home Address', 'error')
 
         if 'email' in updated_fields:
             # Update the Personal Email field
             new_personal_email = request.form.get('personalEmail')
-            update_student_field(student_id, 'Personal_emailAddress', new_personal_email)
+            if new_personal_email:
+                if update_student_profile(session['student_id'], None, None, None, new_personal_email) is True:
+                    flash('Personal Email updated successfully', 'success')
+                else:
+                    flash('Error updating Personal Email', 'error')
 
-        # Redirect the user to the student profile page
-        return redirect(url_for('student_profile'))
+        # After updating the fields, you can redirect the user to the student profile page or any other page.
+        return redirect(url_for('student_dashboard'))
 
     # Render the student profile edit page (GET request)
-    return render_template('try_student_update.html', CGPA='CGPA_VALUE', Mobile_number='MOBILE_NUMBER', Home_Address='HOME_ADDRESS', Personal_emailAddress='EMAIL_ADDRESS')
+    return render_template('try_student_update.html')
 
-def update_student_field(student_id, field_name, new_value):
-    try:
-        # Update the specified field in the database
-        cursor = db_conn.cursor()
-        update_sql = f"UPDATE Student SET {field_name} = %s WHERE Stud_ID = %s"
-        cursor.execute(update_sql, (new_value, student_id))
-        db_conn.commit()
-        cursor.close()
-        flash(f'Successfully updated {field_name}', 'success')
-    except Exception as e:
-        flash(f'Error updating {field_name}: {str(e)}', 'error')
+
+
+# def update_student_field(student_id, field_name, new_value):
+#     try:
+#         # Update the specified field in the database
+#         cursor = db_conn.cursor()
+#         update_sql = f"UPDATE Student SET {field_name} = %s WHERE Stud_ID = %s"
+#         cursor.execute(update_sql, (new_value, student_id))
+#         db_conn.commit()
+#         cursor.close()
+#         flash(f'Successfully updated {field_name}', 'success')
+#     except Exception as e:
+#         flash(f'Error updating {field_name}: {str(e)}', 'error')
 
 
 if __name__ == '__main__':
