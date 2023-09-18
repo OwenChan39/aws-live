@@ -22,13 +22,11 @@
     <link href="{{ url_for('static', filename='assets/css/owl.css') }}" rel="stylesheet">
 
     <!-- Custom CSS -->
-    <link rel="stylesheet" href="assets/css/custom.css">
+    <link rel="stylesheet" href="{{ url_for('static', filename='assets/css/custom.css') }}">
 
     <style>
         .main-banner {
             background-color: rgba(255, 255, 255, 0.1);
-            /* Adjust the alpha value (0.8) to control transparency */
-            /* Your other styles for .main-banner here */
         }
 
         .file-upload {
@@ -40,11 +38,8 @@
             padding-top: 50px;
             display: flex;
             justify-content: center;
-            /* Horizontally center-align */
             align-items: center;
-            /* Vertically center-align */
             height: 100%;
-            /* Make sure the parent div has a defined height */
         }
     </style>
 
@@ -111,66 +106,68 @@
                                     <div class="col-lg-12">
                                         <h2>Company Signup</h2>
                                     </div>
-                                    <div class="col-lg-6">
-                                        <!-- Company Signup Form - Left Side -->
+                                    <div class="col-lg-12">
+                                        <!-- Company Signup Form -->
                                         <form action="/company_signup" method="POST" enctype="multipart/form-data">
                                             <!-- Company Name -->
                                             <div class="form-group">
                                                 <label for="company_name">Company Name</label>
-                                                <input type="text" class="form-control" id="company_name" name="company_name" required>
+                                                <input type="text" class="form-control" id="company_name"
+                                                    name="company_name" required>
                                             </div>
-                                            <br>
+
                                             <!-- Industry Involved -->
                                             <div class="form-group">
                                                 <label for="industry">Industry Involved</label>
-                                                <input type="text" class="form-control" id="industry" name="industry" required>
+                                                <input type="text" class="form-control" id="industry"
+                                                    name="industry" required>
                                             </div>
-                                            <br>
+
                                             <!-- Total Staff -->
                                             <div class="form-group">
                                                 <label for="total_staff">Total Staff</label>
-                                                <input type="number" class="form-control" id="total_staff" name="total_staff" required>
+                                                <input type="number" class="form-control" id="total_staff"
+                                                    name="total_staff" required>
                                             </div>
-                                            <br>
+
                                             <!-- Product or Service -->
                                             <div class="form-group">
                                                 <label for="product_service">Product or Service</label>
-                                                <textarea class="form-control" id="product_service" name="product_service" rows="4" required></textarea>
+                                                <textarea class="form-control" id="product_service"
+                                                    name="product_service" rows="4" required></textarea>
                                             </div>
-                                            <br>
+
                                             <!-- Company Website -->
                                             <div class="form-group">
                                                 <label for="company_website">Company Website</label>
-                                                <input type="url" class="form-control" id="company_website" name="company_website" required>
+                                                <input type="url" class="form-control" id="company_website"
+                                                    name="company_website" required>
                                             </div>
-                                            <br>
+
                                             <!-- Nature of Job to Intern Students -->
                                             <div class="form-group">
-                                                <label for="nature_of_job">Nature of Job to Intern Students</label>
-                                                <input type="text" class="form-control" id="job-possition" name="job-possition" required>
+                                                <label for="job-possition">Nature of Job to Intern Students</label>
+                                                <input type="text" class="form-control" id="job-possition"
+                                                    name="job-possition" required>
                                             </div>
-                                            <br>
+
                                             <!-- OT Claim (YES/NO) -->
                                             <div class="form-group">
                                                 <label for="ot_claim">Overtime(OT) Claim (YES/NO)</label>
-                                                <select class="form-control" id="ot_claim" name="ot_claim" required>
+                                                <select class="form-control" id="ot_claim" name="ot_claim"
+                                                    required>
                                                     <option value="YES">YES</option>
                                                     <option value="NO">NO</option>
                                                 </select>
                                             </div>
 
-                                        </form>
-                                        <!-- End Company Signup Form - Left Side -->
-                                    </div>
-                                    <div class="col-lg-6">
-                                        <!-- Company Signup Form - Right Side -->
-                                        <form action="/company_signup" method="POST" enctype="multipart/form-data">
                                             <!-- Company Address -->
                                             <div class="form-group">
                                                 <label for="company_address">Company Address</label>
-                                                <input type="text" class="form-control" id="company_address" name="company_address" required>
+                                                <input type="text" class="form-control" id="company_address"
+                                                    name="company_address" required>
                                             </div>
-                                            <br>
+
                                             <!-- State in Malaysia -->
                                             <div class="form-group">
                                                 <label for="state">Select State in Malaysia</label>
@@ -179,78 +176,64 @@
                                                     <option value="Johor">Johor</option>
                                                     <option value="Kedah">Kedah</option>
                                                     <option value="Kelantan">Kelantan</option>
-                                                    <option value="Kuala Lumpur">Kuala Lumpur</option>
-                                                    <option value="Labuan">Labuan</option>
-                                                    <option value="Melaka">Melaka</option>
-                                                    <option value="Negeri Sembilan">Negeri Sembilan</option>
-                                                    <option value="Pahang">Pahang</option>
-                                                    <option value="Penang">Penang</option>
-                                                    <option value="Perak">Perak</option>
-                                                    <option value="Perlis">Perlis</option>
-                                                    <option value="Putrajaya">Putrajaya</option>
-                                                    <option value="Sabah">Sabah</option>
-                                                    <option value="Sarawak">Sarawak</option>
-                                                    <option value="Selangor">Selangor</option>
-                                                    <option value="Terengganu">Terengganu</option>
+                                                    <!-- Add more state options as needed -->
                                                 </select>
                                             </div>
 
-
-                                            <br>
                                             <!-- Remarks -->
                                             <div class="form-group">
                                                 <label for="remarks">Remarks</label>
-                                                <textarea class="form-control" id="remarks" name="remarks" rows="4"></textarea>
+                                                <textarea class="form-control" id="remarks" name="remarks"
+                                                    rows="4"></textarea>
                                             </div>
 
-                                            <br>
                                             <!-- Person in Charge -->
                                             <div class="form-group">
                                                 <label for="person_in_charge">Person in Charge Name</label>
-                                                <input type="text" class="form-control" id="person_in_charge" name="person_in_charge" required>
+                                                <input type="text" class="form-control" id="person_in_charge"
+                                                    name="person_in_charge" required>
                                             </div>
 
-                                            <br>
                                             <!-- Contact Number -->
                                             <div class="form-group">
                                                 <label for="contact_number">Contact Number</label>
-                                                <input type="tel" class="form-control" id="contact_number" name="contact_number" required>
+                                                <input type="tel" class="form-control" id="contact_number"
+                                                    name="contact_number" required>
                                             </div>
 
-                                            <br>
                                             <!-- Email -->
                                             <div class="form-group">
                                                 <label for="email">Email</label>
-                                                <input type="email" class="form-control" id="email" name="email" required>
+                                                <input type="email" class="form-control" id="email" name="email"
+                                                    required>
                                             </div>
 
-                                            <br>
                                             <!-- Upload SSM/Company Registration Certificate -->
                                             <div class="form-group">
                                                 <label for="certificate_upload">Upload SSM/Company Registration
                                                     Certificate</label>
-                                                <div class="file-upload"><input type="file" class="form-control-file"
-                                                        id="certificate_upload" name="certificate_upload" required>
-                                                </div>
+                                                <div class="file-upload"><input type="file"
+                                                        class="form-control-file" id="certificate_upload"
+                                                        name="certificate_upload" required></div>
                                             </div>
 
-                                            <br>
                                             <!-- Upload Company Logo -->
                                             <div class="form-group">
                                                 <label for="logo_upload">Upload Company Logo</label>
-                                                <div class="file-upload">
-                                                    <input type="file" class="form-control-file" id="logo_upload" name="logo_upload" required>
+                                                <div class="file-upload"><input type="file"
+                                                        class="form-control-file" id="logo_upload"
+                                                        name="logo_upload" required></div>
+                                            </div>
+
+                                            <!-- Submit Button -->
+                                            <div class="submitbutton">
+                                                <div class="form-group">
+                                                    <button type="submit" class="main-green-button">Sign Up</button>
                                                 </div>
                                             </div>
-                                            <!-- End Company Signup Form - Right Side -->
+                                        </form>
+                                        <!-- End Company Signup Form -->
                                     </div>
-
-                                    <div class="submitbutton">
-                                        <div class="form-group">
-                                            <button type="submit" class="main-green-button">Sign Up</button>
-                                        </div>
-                                    </div>
-
                                 </div>
                             </div>
                         </div>
