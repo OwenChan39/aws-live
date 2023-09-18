@@ -105,7 +105,7 @@ def company_signup():
         total_staff = request.form['total_staff']
         product_service = request.form['product_service']
         company_website = request.form['company_website']
-        nature_of_job = request.form['nature_of_job']
+        nature_of_job = request.form['job-possition']
         ot_claim = request.form['ot_claim']
         company_address = request.form['company_address']
         state = request.form['state']
