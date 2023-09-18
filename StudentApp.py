@@ -117,23 +117,23 @@ def company_signup():
         certificate_upload = request.files['certificate_upload']
         logo_upload = request.files['logo_upload']
 
-        # Insert student data into the database
+        # Insert company data into the database
         insert_sql = "INSERT INTO Company (Comp_name, Comp_website, State, Contact_number, Person_in_charge, EmailAddress, Comp_industry, Comp_address, Total_staff, Product_or_service, Job_offer, OT_claim, Remarks) VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s)"
         cursor = db_conn.cursor()
 
         try:
             cursor.execute(insert_sql, (
-            company_name, company_website, state, contact_number, person_in_charge, email,industry, company_address, total_staff, product_service, nature_of_job, ot_claim, contact_number, remarks))
+                company_name, company_website, state, contact_number, person_in_charge, email, industry, company_address, total_staff, product_service, nature_of_job, ot_claim, remarks))
             db_conn.commit()
 
-            # Upload student image to S3
+            # Upload company documents to S3
             if certificate_upload.filename != "":
                 certificate_s3 = "company-" + str(company_name) + "-certificate"
-                s3.Bucket(bucket).put_object(Key=certificate_s3, Body=certificate_upload)
-            
+                s3.upload_fileobj(certificate_upload, bucket, certificate_s3)
+
             if logo_upload.filename != "":
                 company_logo_s3 = "company-" + str(company_name) + "-logo"
-                s3.Bucket(bucket).put_object(Key=company_logo_s3, Body=logo_upload)
+                s3.upload_fileobj(logo_upload, bucket, company_logo_s3)
 
             return render_template('signup_success.html', name=company_name)
         except Exception as e:
