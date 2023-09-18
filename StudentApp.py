@@ -96,6 +96,48 @@ def lecturer_sign_up():
 
     return render_template('lecturer_sign_up.html')
 
+@app.route("/company_signup", methods=['GET', 'POST'])
+def company_signup():
+    if request.method == 'POST':
+        # Get form data from the POST request
+        company_name = request.form['company_name']
+        industry = request.form['industry']
+        total_staff = request.form['total_staff']
+        product_service = request.form['product_service']
+        company_website = request.form['company_website']
+        nature_of_job = request.form['nature_of_job']
+        ot_claim = request.form['ot_claim']
+        company_address = request.form['company_address']
+        state = request.form['state']
+        remarks = request.form['remarks']
+        person_in_charge = request.form['person_in_charge']
+        contact_number = request.form['contact_number']
+        email = request.form['email']
+
+        company_image_file = request.files['companyImage']
+
+        # Insert student data into the database
+        insert_sql = "INSERT INTO Company (Comp_name, Comp_website, State, Contact_number, Person_in_charge, EmailAddress, Comp_industry, Comp_address, Total_staff, Product_or_service, Job_offer, OT_claim, Remarks) VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s)"
+        cursor = db_conn.cursor()
+
+        try:
+            cursor.execute(insert_sql, (
+            company_name, company_website, state, contact_number, person_in_charge, email,industry, company_address, total_staff, product_service, nature_of_job, ot_claim, contact_number, remarks))
+            db_conn.commit()
+
+            # Upload student image to S3
+            if company_image_file.filename != "":
+                student_image_file_name_in_s3 = "company-" + str(company_name) + "_image_file"
+                s3.Bucket(bucket).put_object(Key=student_image_file_name_in_s3, Body=company_image_file)
+
+            return render_template('signup_success.html', name=company_name)
+        except Exception as e:
+            return str(e)
+        finally:
+            cursor.close()
+
+    return render_template('company_signup.html')
+
 @app.route('/login', methods=['POST'], endpoint='login_role')
 def login():
     if request.method == 'POST':
