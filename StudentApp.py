@@ -114,7 +114,8 @@ def company_signup():
         contact_number = request.form['contact_number']
         email = request.form['email']
 
-        company_image_file = request.files['companyImage']
+        certificate_upload = request.files['certificate_upload']
+        logo_upload = request.files['logo_upload']
 
         # Insert student data into the database
         insert_sql = "INSERT INTO Company (Comp_name, Comp_website, State, Contact_number, Person_in_charge, EmailAddress, Comp_industry, Comp_address, Total_staff, Product_or_service, Job_offer, OT_claim, Remarks) VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s)"
@@ -126,9 +127,13 @@ def company_signup():
             db_conn.commit()
 
             # Upload student image to S3
-            if company_image_file.filename != "":
-                student_image_file_name_in_s3 = "company-" + str(company_name) + "_image_file"
-                s3.Bucket(bucket).put_object(Key=student_image_file_name_in_s3, Body=company_image_file)
+            if certificate_upload.filename != "":
+                certificate_s3 = "company-" + str(company_name) + "-certificate"
+                s3.Bucket(bucket).put_object(Key=certificate_s3, Body=certificate_upload)
+            
+            if logo_upload.filename != "":
+                company_logo_s3 = "company-" + str(company_name) + "-logo"
+                s3.Bucket(bucket).put_object(Key=company_logo_s3, Body=logo_upload)
 
             return render_template('signup_success.html', name=company_name)
         except Exception as e:
