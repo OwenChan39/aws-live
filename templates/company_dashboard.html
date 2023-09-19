@@ -120,7 +120,6 @@
             display: table;
         }
 
-
         .left-container .logo {
             width: 180px;
             /* Adjust the width as needed */
@@ -140,7 +139,6 @@
 
         .offerHead h3 #editButton {
             font-size: 22px;
-
             margin-left: 10px;
             /* Add some space between the heading text and the button */
             background-color: #ffffff;
@@ -170,9 +168,9 @@
         .offer .job-container {
             background-color: #f2f2f2;
             /* Grey background color */
-
             border-radius: 10px;
             margin-top: 10px;
+            padding: 10px;
         }
 
         .sign-out-link {
@@ -261,16 +259,29 @@
             <br>
 
             <div class="offerHead">
-                <h3>Job Offer
+                <h3>Job Offers
                     {% if status == 'Approved' %}
                         <a href="{{ url_for('addjobpage') }}" class="edit-button">Edit Jobs</a>
                     {% endif %}
                 </h3>
             </div>
             <div class="offer">
-                <div class="job-container">
-                    <p><strong>Job Position : </strong> {{ job_position }}</p>
-                </div>
+                {% if companyjobs %}
+                    {% for job in companyjobs %}
+                        <div class="job-container">
+                            <p><strong>Job Position : </strong> {{ job[1] }}</p>
+                            <p><strong>Job Description : </strong> {{ job[2] }}</p>
+                            <p><strong>Job Requirements : </strong> {{ job[3] }}</p>
+                            <p><strong>Career Level : </strong> {{ job[4] }}</p>
+                            <p><strong>Qualification : </strong> {{ job[5] }}</p>
+                            <p><strong>Job Type : </strong> {{ job[6] }}</p>
+                            <p><strong>Years of Experience : </strong> {{ job[7] }}</p>
+                            <p><strong>Salary : </strong> {{ job[8] }}</p>
+                        </div>
+                    {% endfor %}
+                {% else %}
+                    <p>No job offers available.</p>
+                {% endif %}
             </div>
         </div>
     </div>
@@ -278,8 +289,6 @@
     </div>
 
     <!-- ***** Thank You Content Start ***** -->
-
-
 
     <footer>
         <!-- Add your footer content here, such as copyright information or links -->
@@ -292,11 +301,6 @@
         function infoEdit() {
             window.location.href = "company_info_edit.html"; // Redirect to the desired page
         }
-
-        function jobEdit() {
-            window.location.href = "company_info_edit.html#job-offer"; // Redirect to the desired page
-        }
-    
     
         // Attach the click event to the button
         document.getElementById("editButton").addEventListener("click", infoEdit);
