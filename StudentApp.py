@@ -222,7 +222,7 @@ from flask import Flask, render_template, request
 
 # Your other imports and app setup here
 
-@app.route("/company/<company_id>")
+@app.route("/company_dashboard")
 def company_profile(company_id):
     try:
         # Fetch company data from the database based on company_id
