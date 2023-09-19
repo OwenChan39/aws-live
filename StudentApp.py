@@ -220,7 +220,24 @@ def login():
 
 @app.route('/company_dashboard')
 def company_dashboard():
-    return render_template('company_dashboard.html')
+    if 'company_id' in session:
+        company_id = session['company_id']
+        
+        # Retrieve company information from the database using the company_id
+        query = "SELECT * FROM Company WHERE Company_ID = %s"
+        cursor = db_conn.cursor()
+        cursor.execute(query, (company_id,))
+        company_info = cursor.fetchone()  # Assuming there's only one matching company
+        
+        if company_info:
+            company_name = company_info['Comp_name']
+            company_logo_s3_key = f"company-{company_id}-logo"
+            
+            # Render the company dashboard template and pass the relevant data
+            return render_template('company_dashboard.html', company_name=company_name, company_logo_s3_key=company_logo_s3_key)
+    
+    # Handle the case when there's no company_id in the session or if the company doesn't exist
+    return "Company dashboard data not found."
 
 
 @app.route('/lecturer_dashboard', methods=['GET', 'POST'])
