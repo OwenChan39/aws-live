@@ -275,7 +275,7 @@ def company_dashboard():
     else:
         return "Unauthorized"
 
-@app.route("/company_addjob_page")
+@app.route("/addjobpage")
 def addjobpage():
     return render_template('company_info_edit.html')
 
