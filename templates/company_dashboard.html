@@ -207,14 +207,14 @@
     <!-- ***** Header Start ***** -->
     <div class="header">
         <h1>Company Dashboard</h1>
-        <a href="index.html" class="sign-out-link">Sign Out</a>
+        <a href="/login" class="sign-out-link">Sign Out</a>
     </div>
     <!-- ***** Header End ***** -->
 
     <div class="left-container">
         <!-- Left content goes here -->
         <div class="logo">
-            <img src="logo.png" alt="Description of your image" class="sidebar-image">
+            <img src="{{ url_for('s3', key=company_logo_s3_key) }}" alt="Company Logo">
         </div>
     </div>
 
