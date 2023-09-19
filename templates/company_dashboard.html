@@ -1,0 +1,307 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@300;400;600;700;800&display=swap"
+        rel="stylesheet">
+
+    <title>Company Dashboard - SEO Dream</title>
+
+    <!-- Bootstrap core CSS -->
+    <link href="{{ url_for('static', filename='vendor/bootstrap/css/bootstrap.min.css') }}" rel="stylesheet">
+
+    <!-- Additional CSS Files -->
+    <link href="{{ url_for('static', filename='assets/css/fontawesome.css') }}" rel="stylesheet">
+    <link href="{{ url_for('static', filename='assets/css/templatemo-seo-dream.css') }}" rel="stylesheet">
+    <link href="{{ url_for('static', filename='assets/css/animated.css') }}" rel="stylesheet">
+    <link href="{{ url_for('static', filename='assets/css/owl.css') }}" rel="stylesheet">
+
+    <style>
+        /* Example styles for the main content */
+        .content {
+            margin-left: 10px;
+            padding: 20px;
+        }
+
+        .status {
+            background-color: #f0f0f0;
+            padding: 10px;
+            text-align: center;
+        }
+
+        #approvalStatus {
+            font-size: 25px;
+            font-weight: bold;
+            color: #e74c3c;
+            /* Set color for pending status (e.g., red) */
+        }
+
+        /* Custom styles for the Quote of the day and program boxes */
+        /* Styling for Edit Button */
+        .info h3 {
+            display: flex;
+            align-items: center;
+            /* Vertically center the text and button */
+            color: #333;
+            margin-bottom: 10px;
+        }
+
+        .infoHead h3 #editButton {
+            font-size: 22px;
+
+            margin-left: 10px;
+            /* Add some space between the heading text and the button */
+            background-color: #ffffff;
+            /* Button background color */
+            color: #1500ffb7;
+            /* Button text color */
+            border: none;
+            /* Remove button border */
+            border-radius: 5px;
+            /* Rounded corners */
+            padding: 2px 10px;
+            /* Padding inside the button */
+            cursor: pointer;
+            /* Show a hand cursor on hover */
+            transition: color 0.3s;
+            /* Smooth color transition on hover */
+        }
+
+        .infoHead h3 #editButton:hover {
+            color: #fa3232;
+            /* Change the text color on hover */
+        }
+
+        .info .info-container {
+            background-color: #f2f2f2;
+            /* Grey background color */
+            padding: 20px;
+            border-radius: 10px;
+            margin-top: 10px;
+        }
+
+        /* Header styles */
+        .header {
+            background-color: #33ccc5;
+            /* Change this color to match your index.html */
+            color: #fff;
+            padding: 10px 0;
+            text-align: center;
+        }
+
+        .header h1 {
+            margin: 0;
+        }
+
+        .left-container {
+            float: left;
+            width: 15%;
+        }
+
+        /* Style for right container */
+        .right-container {
+            float: left;
+            width: 85%;
+            /* Adjust the width as needed */
+            background-color: #ffffff;
+            padding: 20px;
+        }
+
+        /* Clear floating elements to prevent layout issues */
+        .clearfix::after {
+            content: "";
+            clear: both;
+            display: table;
+        }
+
+
+        .left-container .logo {
+            width: 180px;
+            /* Adjust the width as needed */
+            height: 200px;
+            /* This keeps the image's aspect ratio */
+            padding-top: 20px;
+            margin-left: 30px;
+        }
+
+        .offer {
+            background-color: #f2f2f2;
+            /* Grey background color */
+            padding: 20px;
+            border-radius: 10px;
+            margin-top: 10px;
+        }
+
+        .offerHead h3 #editButton {
+            font-size: 22px;
+
+            margin-left: 10px;
+            /* Add some space between the heading text and the button */
+            background-color: #ffffff;
+            /* Button background color */
+            color: #1500ffb7;
+            /* Button text color */
+            border: none;
+            /* Remove button border */
+            border-radius: 5px;
+            /* Rounded corners */
+            padding: 2px 10px;
+            /* Padding inside the button */
+            cursor: pointer;
+            /* Show a hand cursor on hover */
+            transition: color 0.3s;
+            /* Smooth color transition on hover */
+        }
+
+        .offerHead h3 {
+            display: flex;
+            align-items: center;
+            /* Vertically center the text and button */
+            color: #333;
+            margin-bottom: 10px;
+        }
+
+        .offer .job-container {
+            background-color: #f2f2f2;
+            /* Grey background color */
+
+            border-radius: 10px;
+            margin-top: 10px;
+        }
+
+        .sign-out-link {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            color: #fff;
+            text-decoration: none;
+            font-weight: bold;
+        }
+
+        /* Additional CSS for the new dashboard sections */
+        .sub-section {
+            background-color: #f2f2f2;
+            padding: 10px;
+            border-radius: 10px;
+            margin-top: 10px;
+        }
+
+        .sub-section p {
+            margin: 5px 0;
+        }
+
+        .sub-section span {
+            font-weight: bold;
+            color: #555;
+        }
+    </style>
+</head>
+
+<body>
+    <!-- ***** Header Start ***** -->
+    <div class="header">
+        <h1>Company Dashboard</h1>
+        <a href="index.html" class="sign-out-link">Sign Out</a>
+    </div>
+    <!-- ***** Header End ***** -->
+
+    <div class="left-container">
+        <!-- Left content goes here -->
+        <div class="logo">
+            <img src="logo.png" alt="Description of your image" class="sidebar-image">
+        </div>
+    </div>
+
+    <!-- Container for right content -->
+    <div class="right-container">
+        <!-- Right content goes here -->
+        <div class="content">
+
+            <h2>Hello, Apple Inc!</h2>
+            <br>
+            <div class="status">
+                <p>Approval Status: <span id="approvalStatus">Pending</span></p>
+            </div>
+
+            <br>
+
+
+            <!-- Info of the company -->
+            <div class="infoHead">
+                <h3>Information <button id="editButton", onclick="infoEdit()">Edit</button></h3>
+            </div>
+            <div class="info">
+                <div class="info-container">
+                    <p><strong>[Company Name Here]</strong> </p>
+                    <p><strong>[Company Industry]</strong> </p>
+                    <p><strong>Product or Service :</strong> [Product or Service Here]</p>
+                    <p><strong>Company Website :</strong> <a href="[Company Website Here]" target="_blank">[Company
+                            Website
+                            Here]</a></p>
+                    <p><strong>OT Claim :</strong> [OT Claim Here]</p>
+                </div>
+                <div class="info-container">
+                    <p><strong>Address</strong></p>
+                    <p>[Company address]</p>
+                    <p>[Company state]</p>
+                    <p>[Company city]</p>
+                </div>
+                <div class="info-container">
+                    <p><strong>Person In Charge</strong></p>
+                    <p>[Name of PIC]</p>
+                    <p>[Contact Number]</p>
+                    <p>[Email Address]</p>
+                </div>
+                <div class="info-container">
+                    <p><strong>Remark :</strong></p>
+                    <p>[remark]</p>
+                </div>
+            </div>
+            <br>
+
+            <div class="offerHead">
+                <h3>Job Offer <button id="editButton" onclick="jobEdit()">Edit</button></h3>
+            </div>
+            <div class="offer">
+                <div class="job-container">
+                    <p><strong>Job Possition : </strong> [Job Possition]</p>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <!-- ***** Thank You Content Start ***** -->
+
+
+
+    <footer>
+        <!-- Add your footer content here, such as copyright information or links -->
+    </footer>
+    <!-- ***** Footer End ***** -->
+
+    <!-- Add your JavaScript scripts or link to external JS files here -->
+    <script>
+        // Function to handle the click event
+        function infoEdit() {
+            window.location.href = "company_info_edit.html"; // Redirect to the desired page
+        }
+
+        function jobEdit() {
+            window.location.href = "company_info_edit.html#job-offer"; // Redirect to the desired page
+        }
+    
+    
+        // Attach the click event to the button
+        document.getElementById("editButton").addEventListener("click", infoEdit);
+    </script>
+
+</body>
+
+</html>
