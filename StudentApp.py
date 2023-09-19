@@ -144,11 +144,13 @@ def company_signup():
             company_id = generate_company_id()
             
             # Insert company data into the database
-            insert_sql = "INSERT INTO Company (Company_ID, Comp_name, Comp_website, State, Contact_number, Person_in_charge, EmailAddress, Comp_industry, Comp_address, Total_staff, Product_or_service, Job_offer, OT_claim, Remarks) VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s)"
+            insert_sql = "INSERT INTO Company (Company_ID, Comp_name, Comp_website, State, Contact_number, Person_in_charge, EmailAddress, Comp_industry, Comp_address, Total_staff, Product_or_service, Job_offer, OT_claim, Remarks, Status) VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s)"
             cursor = db_conn.cursor()
+
+            status = "Pending"
             
             cursor.execute(insert_sql, (
-                company_id, company_name, company_website, state, contact_number, person_in_charge, email, industry, company_address, total_staff, product_service, nature_of_job, ot_claim, remarks))
+                company_id, company_name, company_website, state, contact_number, person_in_charge, email, industry, company_address, total_staff, product_service, nature_of_job, ot_claim, remarks,status))
             db_conn.commit()
 
             # Upload company documents to S3
@@ -242,6 +244,7 @@ def company_dashboard():
             nature_of_job = company[11]
             ot_claim = company[12]
             remarks = company[13]
+            status = company[14]
             
             company_logo = "company-" + str(company_id) + "-logo"
             company_image_url = s3.meta.client.generate_presigned_url(
@@ -264,7 +267,8 @@ def company_dashboard():
                                    person_in_charge=person_in_charge,
                                    contact_number=contact_number,
                                    email=email,
-                                   company_image_url=company_image_url
+                                   company_image_url=company_image_url,
+                                   status=status
                                    )
         else:
             return "Company not found"  # Handle the case where the company is not in the database
