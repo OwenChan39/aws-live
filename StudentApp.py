@@ -129,11 +129,11 @@ def company_signup():
             # Upload company documents to S3
             if certificate_upload.filename != "":
                 certificate_s3 = "company-" + str(company_name) + "-certificate"
-                s3.upload_fileobj(certificate_upload, bucket, certificate_s3)
+                s3.Bucket(bucket).put_object(Key=certificate_s3, Body=certificate_upload)
 
             if logo_upload.filename != "":
                 company_logo_s3 = "company-" + str(company_name) + "-logo"
-                s3.upload_fileobj(logo_upload, bucket, company_logo_s3)
+                s3.Bucket(bucket).put_object(Key=company_logo_s3, Body=logo_upload)
 
             return render_template('signup_success.html', name=company_name)
         except Exception as e:
