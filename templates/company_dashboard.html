@@ -222,45 +222,40 @@
     <div class="right-container">
         <!-- Right content goes here -->
         <div class="content">
-
-            <h2>Hello, Apple Inc!</h2>
+            <h2>Hello, {{ company_name }}!</h2>
             <br>
             <div class="status">
                 <p>Approval Status: <span id="approvalStatus">Pending</span></p>
             </div>
-
             <br>
-
 
             <!-- Info of the company -->
             <div class="infoHead">
-                <h3>Information <button id="editButton", onclick="infoEdit()">Edit</button></h3>
+                <h3>Information <button id="editButton" onclick="infoEdit()">Edit</button></h3>
             </div>
             <div class="info">
                 <div class="info-container">
-                    <p><strong>[Company Name Here]</strong> </p>
-                    <p><strong>[Company Industry]</strong> </p>
-                    <p><strong>Product or Service :</strong> [Product or Service Here]</p>
-                    <p><strong>Company Website :</strong> <a href="[Company Website Here]" target="_blank">[Company
-                            Website
-                            Here]</a></p>
-                    <p><strong>OT Claim :</strong> [OT Claim Here]</p>
+                    <p><strong>{{ company_name }}</strong> </p>
+                    <p><strong>{{ company_industry }}</strong> </p>
+                    <p><strong>Product or Service :</strong> {{ product_service }}</p>
+                    <p><strong>Company Website :</strong> <a href="{{ company_website }}" target="_blank">{{ company_website }}</a></p>
+                    <p><strong>OT Claim :</strong> {{ ot_claim }}</p>
                 </div>
                 <div class="info-container">
                     <p><strong>Address</strong></p>
-                    <p>[Company address]</p>
-                    <p>[Company state]</p>
-                    <p>[Company city]</p>
+                    <p>{{ company_address }}</p>
+                    <p>{{ company_state }}</p>
+                    <p>{{ company_city }}</p>
                 </div>
                 <div class="info-container">
                     <p><strong>Person In Charge</strong></p>
-                    <p>[Name of PIC]</p>
-                    <p>[Contact Number]</p>
-                    <p>[Email Address]</p>
+                    <p>{{ person_in_charge }}</p>
+                    <p>{{ contact_number }}</p>
+                    <p>{{ email }}</p>
                 </div>
                 <div class="info-container">
                     <p><strong>Remark :</strong></p>
-                    <p>[remark]</p>
+                    <p>{{ remark }}</p>
                 </div>
             </div>
             <br>
@@ -270,10 +265,11 @@
             </div>
             <div class="offer">
                 <div class="job-container">
-                    <p><strong>Job Possition : </strong> [Job Possition]</p>
+                    <p><strong>Job Position : </strong> {{ job_position }}</p>
                 </div>
             </div>
         </div>
+    </div>
 
     </div>
 
