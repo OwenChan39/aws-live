@@ -275,6 +275,10 @@ def company_dashboard():
     else:
         return "Unauthorized"
 
+@app.route("/company_addjob_page")
+def addjobpage():
+    return render_template('company_info_edit.html')
+
 
 @app.route('/lecturer_dashboard', methods=['GET', 'POST'])
 def lecturer_dashboard():
