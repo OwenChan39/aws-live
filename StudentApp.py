@@ -207,7 +207,7 @@ def login():
             company = cursor.fetchone()
 
             if company:
-                session['comapany_id'] = username
+                session['company_id'] = username
                 session['role'] = 'company'
                 return redirect(url_for('company_dashboard'))
 
