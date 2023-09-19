@@ -218,58 +218,60 @@ def login():
 
     return render_template('login.html')
 
-from flask import Flask, render_template, request
-
-# Your other imports and app setup here
-
-@app.route('/company_dashboard', methods=['GET'])
-def company_profile(company_id):
+@app.route('/company_dashboard', methods=['GET', 'POST'])
+def company_dashboard():
     try:
-        # Fetch company data from the database based on company_id
-        select_sql = "SELECT * FROM Company WHERE Company_ID = %s"
-        cursor = db_conn.cursor()
-        cursor.execute(select_sql, (company_id,))
-        company_data = cursor.fetchone()  # Retrieve the first row (assuming Company_ID is unique)
+        if 'company_id' in session and 'role' in session and session['role'] == 'company':
+            company_id = session['company_id']
+            cursor = db_conn.cursor()
+            cursor.execute("SELECT * FROM Company WHERE Company_ID = %s", (company_id,))
+            company = cursor.fetchone()
 
-        if company_data:
-            # Extract data from the database response
-            company_name = company_data['Comp_name']
-            industry = company_data['Comp_industry']
-            total_staff = company_data['Total_staff']
-            product_service = company_data['Product_or_service']
-            company_website = company_data['Comp_website']
-            nature_of_job = company_data['Job_offer']
-            ot_claim = company_data['OT_claim']
-            company_address = company_data['Comp_address']
-            state = company_data['State']
-            remarks = company_data['Remarks']
-            person_in_charge = company_data['Person_in_charge']
-            contact_number = company_data['Contact_number']
-            email = company_data['EmailAddress']
+            if company:
+                company_id = company[0]
+                company_name = company[1]
+                industry = company[2]
+                total_staff = company[3]
+                product_service = company[4]
+                company_website = company[5]
+                nature_of_job = company[6]
+                ot_claim = company[7]
+                company_address = company[8]
+                state = company[9]
+                remarks = company[10]
+                person_in_charge = company[11]
+                contact_number = company[12]
+                email = company[13]
+                
+                company_logo = "customer-" + str(company_id) + "-logo"
+                company_image_url = s3.meta.client.generate_presigned_url(
+                    'get_object',
+                    Params={'Bucket': bucket, 'Key': company_logo},
+                    ExpiresIn=3600
+                )
 
-            return render_template('company_profile.html',
-                                   company_name=company_name,
-                                   industry=industry,
-                                   total_staff=total_staff,
-                                   product_service=product_service,
-                                   company_website=company_website,
-                                   nature_of_job=nature_of_job,
-                                   ot_claim=ot_claim,
-                                   company_address=company_address,
-                                   state=state,
-                                   remarks=remarks,
-                                   person_in_charge=person_in_charge,
-                                   contact_number=contact_number,
-                                   email=email)
-
-        else:
-            return "Company not found"  # Handle the case where the company is not in the database
-
+                return render_template('company_profile.html',
+                                    company_name=company_name,
+                                    industry=industry,
+                                    total_staff=total_staff,
+                                    product_service=product_service,
+                                    company_website=company_website,
+                                    nature_of_job=nature_of_job,
+                                    ot_claim=ot_claim,
+                                    company_address=company_address,
+                                    state=state,
+                                    remarks=remarks,
+                                    person_in_charge=person_in_charge,
+                                    contact_number=contact_number,
+                                    email=email,
+                                    company_image_url=company_image_url
+                                    )
+            else:
+                return "Company not found"  # Handle the case where the company is not in the database
     except Exception as e:
         return str(e)
     finally:
         cursor.close()
-
 
 
 @app.route('/lecturer_dashboard', methods=['GET', 'POST'])
