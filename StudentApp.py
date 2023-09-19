@@ -5,6 +5,8 @@ import boto3
 from botocore.exceptions import NoCredentialsError, ClientError  
 from config import *
 from werkzeug.utils import secure_filename
+import random
+import string
 
 app = Flask(__name__, static_folder='static')
 app.secret_key = '123456'
@@ -96,6 +98,26 @@ def lecturer_sign_up():
 
     return render_template('lecturer_sign_up.html')
 
+# Function to generate a random unique company ID
+def generate_company_id():
+    # Generate a random alphanumeric string, e.g., 'C001'
+    prefix = 'C'
+    unique_id = ''.join(random.choices(string.digits, k=3))
+    company_id = f'{prefix}{unique_id}'
+    # Check if the generated ID is already in use
+    while db_id_exists(company_id):
+        unique_id = ''.join(random.choices(string.digits, k=3))
+        company_id = f'{prefix}{unique_id}'
+    return company_id
+
+# Function to check if the generated company ID already exists in the database
+def db_id_exists(company_id):
+    cursor = db_conn.cursor()
+    cursor.execute("SELECT COUNT(*) FROM Company WHERE Company_ID = %s", (company_id,))
+    count = cursor.fetchone()[0]
+    cursor.close()
+    return count > 0
+
 @app.route("/company_signup", methods=['GET', 'POST'])
 def company_signup():
     if request.method == 'POST':
@@ -117,22 +139,25 @@ def company_signup():
         certificate_upload = request.files['certificate_upload']
         logo_upload = request.files['logo_upload']
 
-        # Insert company data into the database
-        insert_sql = "INSERT INTO Company (Comp_name, Comp_website, State, Contact_number, Person_in_charge, EmailAddress, Comp_industry, Comp_address, Total_staff, Product_or_service, Job_offer, OT_claim, Remarks) VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s)"
-        cursor = db_conn.cursor()
-
         try:
+            # Generate a unique company ID
+            company_id = generate_company_id()
+            
+            # Insert company data into the database
+            insert_sql = "INSERT INTO Company (Company_ID, Comp_name, Comp_website, State, Contact_number, Person_in_charge, EmailAddress, Comp_industry, Comp_address, Total_staff, Product_or_service, Job_offer, OT_claim, Remarks) VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s)"
+            cursor = db_conn.cursor()
+            
             cursor.execute(insert_sql, (
-                company_name, company_website, state, contact_number, person_in_charge, email, industry, company_address, total_staff, product_service, nature_of_job, ot_claim, remarks))
+                company_id, company_name, company_website, state, contact_number, person_in_charge, email, industry, company_address, total_staff, product_service, nature_of_job, ot_claim, remarks))
             db_conn.commit()
 
             # Upload company documents to S3
             if certificate_upload.filename != "":
-                certificate_s3 = "company-" + str(company_name) + "-SSM_certificate"
+                certificate_s3 = f"company-{company_id}-SSM_certificate"
                 s3.Bucket(bucket).put_object(Key=certificate_s3, Body=certificate_upload)
 
             if logo_upload.filename != "":
-                company_logo_s3 = "company-" + str(company_name) + "-logo"
+                company_logo_s3 = f"company-{company_id}-logo"
                 s3.Bucket(bucket).put_object(Key=company_logo_s3, Body=logo_upload)
 
             return render_template('signup_success.html', name=company_name)
