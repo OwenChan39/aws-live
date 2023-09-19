@@ -522,6 +522,24 @@ def student_database():
 
     return render_template('studentdatabase.html', students=students)
 
+@app.route('/delete_student/<int:student_id>', methods=['GET'])
+def delete_student(student_id):
+    cursor = db_conn.cursor()
+    
+    try:
+        # Execute a SQL query to delete the student with the specified ID
+        delete_query = "DELETE FROM Student WHERE Stud_ID = %s"
+        cursor.execute(delete_query, (student_id,))
+        db_conn.commit()
+        
+        # Redirect back to the student database page after deletion
+        return redirect('/studentdatabase')
+    except Exception as e:
+        return str(e)
+    finally:
+        cursor.close()
+
+
 @app.route('/view_student_progress', methods=['GET'])
 def view_student_progress():
     if 'lecturer_id' in session and session['role'] == 'lecturer':
