@@ -220,7 +220,7 @@ def login():
 
 @app.route('/company_dashboard', methods=['GET', 'POST'])
 def company_dashboard():
-    if 'company_id' in session and 'role' in session and session['role'] == 'company':
+    if 'company_id' in session:
         company_id = session['company_id']
         cursor = db_conn.cursor()
         cursor.execute("SELECT * FROM Company WHERE Company_ID = %s", (company_id,))
