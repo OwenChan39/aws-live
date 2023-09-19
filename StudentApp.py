@@ -238,19 +238,19 @@ def company_dashboard():
             industry = company[7]
             company_address = company[8]
             total_staff = company[9]
-            product_service = company[1]
+            product_service = company[10]
             nature_of_job = company[11]
             ot_claim = company[12]
             remarks = company[13]
             
-            company_logo = "customer-" + str(company_id) + "-logo"
+            company_logo = "company-" + str(company_id) + "-logo"
             company_image_url = s3.meta.client.generate_presigned_url(
                 'get_object',
                 Params={'Bucket': bucket, 'Key': company_logo},
                 ExpiresIn=3600
             )
 
-            return render_template('company_profile.html',
+            return render_template('company_dashboard.html',
                                    company_name=company_name,
                                    industry=industry,
                                    total_staff=total_staff,
