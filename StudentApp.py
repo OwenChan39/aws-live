@@ -218,30 +218,58 @@ def login():
 
     return render_template('login.html')
 
-@app.route('/company_dashboard')
-def company_dashboard():
-    if 'company_id' in session:
-        company_id = session['company_id']
-        
-        # Retrieve company information from the database using the company_id
-        query = "SELECT * FROM Company WHERE Company_ID = %s"
+from flask import Flask, render_template, request
+
+# Your other imports and app setup here
+
+@app.route("/company/<company_id>")
+def company_profile(company_id):
+    try:
+        # Fetch company data from the database based on company_id
+        select_sql = "SELECT * FROM Company WHERE Company_ID = %s"
         cursor = db_conn.cursor()
-        cursor.execute(query, (company_id,))
-        company_info = cursor.fetchone()  # Assuming there's only one matching company
+        cursor.execute(select_sql, (company_id,))
+        company_data = cursor.fetchone()  # Retrieve the first row (assuming Company_ID is unique)
 
-        print(f"Company ID: {company_id}")
-        print(f"Company Info: {company_info}")
-        
-        if company_info:
-            company_name = company_info['Comp_name']
-            company_logo_s3_key = f"company-{company_id}-logo"
-            
-            # Render the company dashboard template and pass the relevant data
-            return render_template('company_dashboard.html', company_name=company_name, company_logo_s3_key=company_logo_s3_key)
+        if company_data:
+            # Extract data from the database response
+            company_name = company_data['Comp_name']
+            industry = company_data['Comp_industry']
+            total_staff = company_data['Total_staff']
+            product_service = company_data['Product_or_service']
+            company_website = company_data['Comp_website']
+            nature_of_job = company_data['Job_offer']
+            ot_claim = company_data['OT_claim']
+            company_address = company_data['Comp_address']
+            state = company_data['State']
+            remarks = company_data['Remarks']
+            person_in_charge = company_data['Person_in_charge']
+            contact_number = company_data['Contact_number']
+            email = company_data['EmailAddress']
 
-    # Handle the case when there's no company_id in the session or if the company doesn't exist
-    print("Company dashboard data not found.")
-    return "Company dashboard data not found."
+            return render_template('company_profile.html',
+                                   company_name=company_name,
+                                   industry=industry,
+                                   total_staff=total_staff,
+                                   product_service=product_service,
+                                   company_website=company_website,
+                                   nature_of_job=nature_of_job,
+                                   ot_claim=ot_claim,
+                                   company_address=company_address,
+                                   state=state,
+                                   remarks=remarks,
+                                   person_in_charge=person_in_charge,
+                                   contact_number=contact_number,
+                                   email=email)
+
+        else:
+            return "Company not found"  # Handle the case where the company is not in the database
+
+    except Exception as e:
+        return str(e)
+    finally:
+        cursor.close()
+
 
 
 @app.route('/lecturer_dashboard', methods=['GET', 'POST'])
