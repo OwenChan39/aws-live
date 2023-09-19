@@ -318,6 +318,41 @@ def save_job_details():
     # Handle GET requests or other cases
     return render_template('company_info_edit.html')  # Render the form page again if not a POST request
 
+@app.route('/company_jobs_list', methods=['GET', 'POST'])
+def company_jobs_list():
+    if 'company_id' in session:
+        company_id = session['company_id']
+        cursor = db_conn.cursor()
+        cursor.execute("SELECT * FROM Job_Details WHERE Company_ID = %s", (company_id,))
+        companyjobs = cursor.fetchone()
+        cursor.close()
+
+        if companyjobs:
+            company_id = companyjobs[0]
+            jobposition = companyjobs[1]
+            jobdescription = companyjobs[2]
+            jobrequiremnts = companyjobs[3]
+            careerlevel = companyjobs[4]
+            qualification = companyjobs[5]
+            jobtype = companyjobs[6]
+            yearsexperience = companyjobs[7]
+            salary = companyjobs[8]
+
+            return render_template('company_info_edit.html',
+                                   jobposition=jobposition,
+                                   jobdescription=jobdescription,
+                                   jobrequiremnts=jobrequiremnts,
+                                   careerlevel=careerlevel,
+                                   qualification=qualification,
+                                   jobtype=jobtype,
+                                   yearsexperience=yearsexperience,
+                                   salary=salary
+                                   )
+        else:
+            return "Company jobs not found" 
+    else:
+        return "Unauthorized"
+
 
 
 @app.route('/lecturer_dashboard', methods=['GET', 'POST'])
