@@ -128,7 +128,7 @@ def company_signup():
 
             # Upload company documents to S3
             if certificate_upload.filename != "":
-                certificate_s3 = "company-" + str(company_name) + "-certificate"
+                certificate_s3 = "company-" + str(company_name) + "-SSM_certificate"
                 s3.Bucket(bucket).put_object(Key=certificate_s3, Body=certificate_upload)
 
             if logo_upload.filename != "":
