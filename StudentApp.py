@@ -228,6 +228,9 @@ def company_dashboard():
         cursor = db_conn.cursor()
         cursor.execute(query, (company_id,))
         company_info = cursor.fetchone()  # Assuming there's only one matching company
+
+        print(f"Company ID: {company_id}")
+        print(f"Company Info: {company_info}")
         
         if company_info:
             company_name = company_info['Comp_name']
@@ -235,8 +238,9 @@ def company_dashboard():
             
             # Render the company dashboard template and pass the relevant data
             return render_template('company_dashboard.html', company_name=company_name, company_logo_s3_key=company_logo_s3_key)
-    
+
     # Handle the case when there's no company_id in the session or if the company doesn't exist
+    print("Company dashboard data not found.")
     return "Company dashboard data not found."
 
 
