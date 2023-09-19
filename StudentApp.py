@@ -200,6 +200,16 @@ def login():
                 session['lecturer_id'] = username
                 session['role'] = 'lecturer'
                 return redirect(url_for('lecturer_dashboard'))
+            
+        elif role == 'company':
+            # Check if it's a company login
+            cursor.execute("SELECT * FROM Comapny WHERE Company_ID = %s AND Contact_number = %s", (username, password))
+            company = cursor.fetchone()
+
+            if company:
+                session['comapany_id'] = username
+                session['role'] = 'company'
+                return redirect(url_for('company_dashboard'))
 
         cursor.close()
 
@@ -207,6 +217,11 @@ def login():
         flash('Invalid username, password, or role', 'error')
 
     return render_template('login.html')
+
+@app.route('/company_dashboard')
+def company_dashboard():
+    return render_template('company_dashboard.html')
+
 
 @app.route('/lecturer_dashboard', methods=['GET', 'POST'])
 def lecturer_dashboard():
