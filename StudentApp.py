@@ -279,6 +279,46 @@ def company_dashboard():
 def addjobpage():
     return render_template('company_info_edit.html')
 
+@app.route('/save_job_details', methods=['POST'])
+def save_job_details():
+    if request.method == 'POST':
+        # Get job details from the form
+        company_id = session.get('company_id')  # Assuming you store company_id in session after login
+        job_position = request.form['job_position']
+        job_description = request.form['job_description']
+        job_requirements = request.form['job_requirements']
+        career_level = request.form['career_level']
+        qualification = request.form['qualification']
+        job_type = request.form['job_type']
+        years_experience = request.form['years_experience']
+        salary = request.form['salary']
+
+        try:
+            # Insert job details into the database
+            insert_sql = """
+                INSERT INTO Job_Details (
+                    company_id, JobPosition, JobDescription, JobRequirements,
+                    CareerLevel, Qualification, JobType, YearsExperience, Salary
+                ) VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s)
+            """
+            cursor = db_conn.cursor()
+            cursor.execute(insert_sql, (
+                company_id, job_position, job_description, job_requirements,
+                career_level, qualification, job_type, years_experience, salary
+            ))
+            db_conn.commit()
+            cursor.close()
+
+            # Redirect to a success page or any other appropriate action
+            return render_template('company_info_edit.html')
+
+        except Exception as e:
+            return str(e)  # Handle database insertion errors here
+
+    # Handle GET requests or other cases
+    return render_template('company_info_edit.html')  # Render the form page again if not a POST request
+
+
 
 @app.route('/lecturer_dashboard', methods=['GET', 'POST'])
 def lecturer_dashboard():
