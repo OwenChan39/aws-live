@@ -268,6 +268,8 @@ def company_dashboard():
                                    )
         else:
             return "Company not found"  # Handle the case where the company is not in the database
+    else:
+        return "Unauthorized"
 
 
 @app.route('/lecturer_dashboard', methods=['GET', 'POST'])
