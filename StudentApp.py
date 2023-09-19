@@ -225,6 +225,7 @@ def company_dashboard():
         cursor = db_conn.cursor()
         cursor.execute("SELECT * FROM Company WHERE Company_ID = %s", (company_id,))
         company = cursor.fetchone()
+        cursor.close()
 
         if company:
             company_id = company[0]
