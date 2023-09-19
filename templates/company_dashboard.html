@@ -263,7 +263,7 @@
             <div class="offerHead">
                 <h3>Job Offer
                     {% if status == 'Approved' %}
-                        <button id="editButton" onclick="jobEdit()">Edit</button>
+                        <a href="{{ url_for('company_addjob_page') }}" class="edit-button">Edit Jobs</a>
                     {% endif %}
                 </h3>
             </div>
