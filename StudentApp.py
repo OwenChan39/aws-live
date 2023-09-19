@@ -269,10 +269,6 @@ def company_dashboard():
             return "Company not found"  # Handle the case where the company is not in the database
 
 
-        # Pass the lecturer_name to the template
-        return render_template('lecturer_dashboard.html', lecturer_name=lecturer_name)
-
-
 @app.route('/lecturer_dashboard', methods=['GET', 'POST'])
 def lecturer_dashboard():
     if 'lecturer_id' in session and 'role' in session and session['role'] == 'lecturer':
