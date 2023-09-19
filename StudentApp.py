@@ -203,7 +203,7 @@ def login():
             
         elif role == 'company':
             # Check if it's a company login
-            cursor.execute("SELECT * FROM Comapny WHERE Company_ID = %s AND Contact_number = %s", (username, password))
+            cursor.execute("SELECT * FROM Company WHERE Company_ID = %s AND Contact_number = %s", (username, password))
             company = cursor.fetchone()
 
             if company:
