@@ -338,7 +338,7 @@ def company_jobs_list():
             yearsexperience = companyjobs[7]
             salary = companyjobs[8]
 
-            return render_template('company_info_edit.html',
+            return render_template('company_dashboard.html',
                                    jobposition=jobposition,
                                    jobdescription=jobdescription,
                                    jobrequiremnts=jobrequiremnts,
