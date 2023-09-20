@@ -282,60 +282,90 @@ def company_dashboard():
     else:
         return "Unauthorized"
 
-# Define a route to update company information
-@app.route('/update_company_info', methods=['POST'])
-def update_company_info():
+def update_company_profile(company_id, updates):
+    cursor = db_conn.cursor()
+    update_sql = "UPDATE Company SET "
+    update_values = []
+
+    for field, value in updates.items():
+        if value is not None:
+            update_sql += f"{field} = %s, "
+            update_values.append(value)
+
+    # Remove the trailing comma and space
+    update_sql = update_sql.rstrip(', ')
+
+    update_sql += " WHERE Company_ID = %s"
+    update_values.append(company_id)
+
+    try:
+        cursor.execute(update_sql, tuple(update_values))
+        db_conn.commit()
+        return True  # Profile updated successfully
+    except Exception as e:
+        db_conn.rollback()
+        return str(e)  # Error updating profile
+    finally:
+        cursor.close()
+
+@app.route('/company_profile_edit', methods=['GET', 'POST'])
+def company_profile_edit():
     if 'company_id' in session:
         company_id = session['company_id']
         cursor = db_conn.cursor()
         cursor.execute("SELECT * FROM Company WHERE Company_ID = %s", (company_id,))
         company = cursor.fetchone()
+        cursor.close()
 
         if company:
-            # Retrieve the form data submitted by the user
-            total_staff = request.form.get('total_staff')
-            product_service = request.form.get('product_service')
-            company_website = request.form.get('company_website')
-            ot_claim = request.form.get('ot_claim')
-            remarks = request.form.get('remarks')
-            person_in_charge = request.form.get('person_in_charge')
-            contact_number = request.form.get('contact_number')
-            email = request.form.get('email')
+            if request.method == 'POST':
+                updated_fields = request.form.getlist('update_fields[]')
+                updates = {}
 
-            # Compare submitted values with existing values
-            if total_staff != company[9]:
-                cursor.execute("UPDATE Company SET Total_Staff = %s WHERE Company_ID = %s", (total_staff, company_id))
+                if 'total_staff' in updated_fields:
+                    new_total_staff = request.form.get('total_staff')
+                    updates['Total_Staff'] = new_total_staff
 
-            if product_service != company[10]:
-                cursor.execute("UPDATE Company SET Product_Service = %s WHERE Company_ID = %s", (product_service, company_id))
+                if 'product_service' in updated_fields:
+                    new_product_service = request.form.get('product_service')
+                    updates['Product_Service'] = new_product_service
 
-            if company_website != company[2]:
-                cursor.execute("UPDATE Company SET Company_Website = %s WHERE Company_ID = %s", (company_website, company_id))
+                if 'company_website' in updated_fields:
+                    new_company_website = request.form.get('company_website')
+                    updates['Company_Website'] = new_company_website
 
-            if ot_claim != company[12]:
-                cursor.execute("UPDATE Company SET OT_Claim = %s WHERE Company_ID = %s", (ot_claim, company_id))
+                if 'ot_claim' in updated_fields:
+                    new_ot_claim = request.form.get('ot_claim')
+                    updates['OT_Claim'] = new_ot_claim
 
-            if remarks != company[13]:
-                cursor.execute("UPDATE Company SET Remarks = %s WHERE Company_ID = %s", (remarks, company_id))
+                if 'remarks' in updated_fields:
+                    new_remarks = request.form.get('remarks')
+                    updates['Remarks'] = new_remarks
 
-            if person_in_charge != company[5]:
-                cursor.execute("UPDATE Company SET Person_in_Charge = %s WHERE Company_ID = %s", (person_in_charge, company_id))
+                if 'person_in_charge' in updated_fields:
+                    new_person_in_charge = request.form.get('person_in_charge')
+                    updates['Person_in_Charge'] = new_person_in_charge
 
-            if contact_number != company[4]:
-                cursor.execute("UPDATE Company SET Contact_Number = %s WHERE Company_ID = %s", (contact_number, company_id))
+                if 'contact_number' in updated_fields:
+                    new_contact_number = request.form.get('contact_number')
+                    updates['Contact_Number'] = new_contact_number
 
-            if email != company[6]:
-                cursor.execute("UPDATE Company SET Email = %s WHERE Company_ID = %s", (email, company_id))
+                if 'email' in updated_fields:
+                    new_email = request.form.get('email')
+                    updates['Email'] = new_email
 
-            db_conn.commit()
-            cursor.close()
-            flash('Company information updated successfully', 'success')
-            return redirect(url_for('company_dashboard'))
-        else:
-            return "Company not found"
+                # You can add more fields as needed
 
-    else:
-        return "Unauthorized"
+                if update_company_profile(company_id, updates):
+                    flash('Company information updated successfully', 'success')
+                else:
+                    flash('Error updating company information', 'error')
+
+                return redirect(url_for('company_dashboard'))
+
+            return render_template('company_dashboard.html', company=company)
+
+    return redirect(url_for('login'))
 
 
 
