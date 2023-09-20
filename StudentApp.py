@@ -410,7 +410,7 @@ def company_profile_edit():
 
             db_conn.commit()
             cursor.close()
-            return redirect(url_for('company_info_edit'))
+            return redirect(url_for('addjobpage'))
         
         return render_template('company_info_edit.html')
 
@@ -988,3 +988,6 @@ def update_company_status():
 
 if __name__ == '__main__':
     app.run(host='0.0.0.0', port=80, debug=True)
+
+
+
