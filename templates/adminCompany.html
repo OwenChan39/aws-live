@@ -1,0 +1,624 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@300;400;600;700;800&display=swap"
+        rel="stylesheet">
+
+    <title>Company List</title>
+
+    <!-- Bootstrap core CSS -->
+    <link href="{{ url_for('static', filename='vendor/bootstrap/css/bootstrap.min.css') }}" rel="stylesheet">
+
+    <!-- Additional CSS Files -->
+    <link rel="stylesheet" href="{{ url_for('static', filename='assets/css/fontawesome.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='assets/css/templatemo-seo-dream.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='assets/css/animated.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='assets/css/owl.css') }}">
+
+    <!-- Custom CSS for the background image -->
+
+    <style>
+        .main-banner {
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            padding: 100px 0;
+            text-align: center;
+            color: #fff;
+        }
+
+        /* Remove line above the h2 element */
+        .header-text h2 {
+            border-bottom: none;
+        }
+
+        .nav-link {
+            color: red;
+        }
+
+        .truncate-cell {
+            max-width: 150px;
+            /* Adjust the maximum width to your preference */
+            white-space: nowrap;
+            /* Prevent text from wrapping */
+            overflow: hidden;
+            /* Hide overflow content */
+            text-overflow: ellipsis;
+            /* Show ellipsis (...) for truncated text */
+        }
+    </style>
+
+</head>
+
+<body>
+
+    <!-- ***** Preloader Start ***** -->
+    <div id="js-preloader" class="js-preloader">
+        <div class="preloader-inner">
+            <span class="dot"></span>
+            <div class="dots">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+        </div>
+    </div>
+    <!-- ***** Preloader End ***** -->
+
+    <!-- ***** Header Area Start ***** -->
+    <header class="header-area header-sticky wow slideInDown" data-wow-duration="0.75s" data-wow-delay="0s">
+        <div class="container">
+            <div class="row">
+                <div class="col-12">
+                    <nav class="main-nav">
+                        <!-- ***** Logo Start ***** -->
+                        <a href="/adminLanding" class="logo">
+                            <h4>SEO Dream <img src="{{ url_for('static', filename='assets/images/logo-icon.png') }}"
+                                    alt=""></h4>
+                        </a>
+                        <!-- ***** Logo End ***** -->
+                        <!-- ***** Menu Start ***** -->
+                        <ul class="nav">
+                            <li class="scroll-to-section"><a href="#top" class="active">Home</a></li>
+                            <li class="scroll-to-section"><a href="#features">Features</a></li>
+                            <li class="scroll-to-section"><a href="#about">About Us</a></li>
+                            <li class="scroll-to-section"><a href="#services">Services</a></li>
+                            <li class="scroll-to-section"><a href="#portfolio">Portfolio</a></li>
+                            <li class="scroll-to-section"><a href="#contact">Contact Us</a></li>
+                            <li class="scroll-to-section">
+                                <div class="main-blue-button"><a href="/adminProfile">Profile</a></div>
+                            </li>
+                        </ul>
+                        <a class='menu-trigger'>
+                            <span>Menu</span>
+                        </a>
+                        <!-- ***** Menu End ***** -->
+                    </nav>
+                </div>
+            </div>
+        </div>
+    </header>
+    <!-- ***** Header Area End ***** -->
+
+    <!-- ***** Company List Start ***** -->
+    <div class="main-banner" id="top" data-wow-duration="0.5s" data-wow-delay="0.2s">
+        <div class="container mt-5">
+            <div class="col-lg-12">
+                <div class="row">
+                    <div class="left-content header-text wow fadeInLeft" data-wow-duration="1s" data-wow-delay="1s">
+                        <div class="col-lg-12">
+                            <h2>Company List</h2>
+                        </div>
+                        <ul class="nav nav-tabs" id="companyListTabs" role="tablist">
+                            <li class="nav-item">
+                                <a class="nav-link active" id="newApplicationsTab" data-toggle="tab"
+                                    href="/company_database" role="tab" aria-controls="newApplications"
+                                    aria-selected="false">New Applications</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" id="approvedCompaniesTab" data-toggle="tab" href="/company_database"
+                                    role="tab" aria-controls="approvedCompanies" aria-selected="true">Approved
+                                    Companies</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" id="rejectedCompaniesTab" data-toggle="tab" href="/company_database"
+                                    role="tab" aria-controls="rejectedCompanies" aria-selected="false">Rejected
+                                    Companies</a>
+                            </li>
+                        </ul>
+                        <div class="tab-content" id="companyListTabsContent">
+                            <!-- Tab: New Applications -->
+                            <div class="tab-pane fade show active" id="newApplications" role="tabpanel"
+                                aria-labelledby="newApplicationsTab">
+                                <!-- Table for new applications -->
+                                <!-- Replace with backend route -->
+                                <table class="table">
+                                    <!-- ... (your table header and rows for new applications) ... -->
+                                    <thead>
+                                        <tr>
+                                            <th>Company Name</th>
+                                            <th>Company Email</th>
+                                            <th>Company Contact</th>
+                                            <th>Company Address</th>
+                                            <th>Person in Charge</th>
+                                            <th>Action</th>
+                                            <th>Status</th>
+                                            <th>Date/Time</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        {% if num_of_new == 0 %}
+                                        <tr>
+                                            <td colspan="8">No New Application Found</td>
+                                        </tr>
+                                        {% else %}
+                                        {% for index, company in new_applications %}
+                                        <tr>
+                                            <td>{{ company[0] }}</td>
+                                            <td>{{ company[1] }}</td>
+                                            <td>{{ company[2] }}</td>
+                                            <td class="truncate-cell">{{ company[3] }}</td>
+                                            <td>{{ company[4] }}</td>
+                                            <td>
+                                                <button class="approve-button btn btn-success" data-toggle="modal"
+                                                    data-target="#confirmationModal" data-action="approve"
+                                                    data-company-name="{{ company[0] }}">Approve</button>
+                                                <button class="reject-button btn btn-danger" data-toggle="modal"
+                                                    data-target="#confirmationModal" data-action="reject"
+                                                    data-company-name="{{ company[0] }}">Reject</button>
+                                            </td>
+                                            <td></td>
+                                            <td></td>
+                                        </tr>
+                                        {% endfor %}
+                                        {% endif %}
+                                    </tbody>
+                                </table>
+                            </div>
+
+                            <!-- Tab: Approved Companies -->
+                            <div class="tab-pane fade" id="approvedCompanies" role="tabpanel"
+                                aria-labelledby="approvedCompaniesTab">
+                                <!-- Table for approved companies -->
+                                <table class="table">
+                                    <!-- ... (your table header and rows for approved companies) ... -->
+                                    <thead>
+                                        <tr>
+                                            <th>No</th>
+                                            <th>Company Name</th>
+                                            <th>Company Email</th>
+                                            <th>Company Contact</th>
+                                            <th>Company Address</th>
+                                            <th>Person in Charge</th>
+                                            <th>Action</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        {% if num_of_approved == 0 %}
+                                        <tr>
+                                            <td colspan="7">No Company Found</td>
+                                        </tr>
+                                        {% else %}
+                                        {% for index, company in approved_companies %}
+                                        <tr>
+                                            <td>{{ index + 1 }}</td>
+                                            <td>{{ company[0] }}</td>
+                                            <td>{{ company[1] }}</td>
+                                            <td>{{ company[2] }}</td>
+                                            <td class="truncate-cell">{{ company[3] }}</td>
+                                            <td>{{ company[4] }}</td>
+                                            <td>
+                                                <button class="remove-button btn btn-danger"
+                                                    onclick="location.href='/adminDeleteCompany/{{ company[0] }}'">Remove</button>
+                                            </td>
+                                        </tr>
+                                        {% endfor %}
+                                        {% endif %}
+                                    </tbody>
+                                </table>
+                            </div>
+
+                            <!-- Tab: Rejected Companies -->
+                            <div class="tab-pane fade" id="rejectedCompanies" role="tabpanel"
+                                aria-labelledby="rejectedCompaniesTab">
+                                <!-- Table for rejected companies -->
+                                <table class="table">
+                                    <!-- ... (your table header and rows for rejected companies) ... -->
+                                    <thead>
+                                        <tr>
+                                            <th>No</th>
+                                            <th>Company Name</th>
+                                            <th>Company Email</th>
+                                            <th>Company Contact</th>
+                                            <th>Company Address</th>
+                                            <th>Person in Charge</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        {% if num_of_rejected == 0 %}
+                                        <tr>
+                                            <td colspan="6">No Company Found</td>
+                                        </tr>
+                                        {% else %}
+                                        {% for index, company in rejected_companies %}
+                                        <tr>
+                                            <td>{{ index + 1 }}</td>
+                                            <td>{{ company[0] }}</td>
+                                            <td>{{ company[1] }}</td>
+                                            <td>{{ company[2] }}</td>
+                                            <td class="truncate-cell">{{ company[3] }}</td>
+                                            <td>{{ company[4] }}</td>
+                                        </tr>
+                                        {% endfor %}
+                                        {% endif %}
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- ***** Company List End ***** -->
+
+    <form id="confirmForm" action="/update_company_status" method="POST">
+        <div class="modal fade" id="confirmationModal" tabindex="-1" role="dialog"
+            aria-labelledby="confirmationModalLabel" aria-hidden="true">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="confirmationModalLabel">Confirmation</h5>
+                        <button type="button" class="close btn-danger" id="closeModalButton" data-dismiss="modal"
+                            aria-label="Close" style="color: fff">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <p id="confirmationMessage"></p>
+                    </div>
+                    <div class="modal-footer">
+                        <input type="hidden" name="company_name" id="company_name" value="">
+                        <input type="hidden" name="action" id="action" value="">
+                        <button type="button" class="btn btn-secondary" id="cancelButton"
+                            data-dismiss="modal">Cancel</button>
+                        <button type="button" class="btn btn-primary" id="confirmAction">Confirm</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </form>
+
+    <footer>
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-12">
+                    <p>Copyright © 2021 SEO Dream Co., Ltd. All Rights Reserved.
+                        <br>Web Designed by <a rel="nofollow" href="https://templatemo.com"
+                            title="free CSS templates">TemplateMo</a>
+                    </p>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Scripts -->
+    <script src="{{ url_for('static', filename='vendor/jquery/jquery.min.js') }}"></script>
+    <script src="{{ url_for('static', filename='vendor/bootstrap/js/bootstrap.bundle.min.js') }}"></script>
+    <script src="{{ url_for('static', filename='assets/js/owl-carousel.js') }}"></script>
+    <script src="{{ url_for('static', filename='assets/js/animation.js') }}"></script>
+    <script src="{{ url_for('static', filename='assets/js/imagesloaded.js') }}"></script>
+    <script src="{{ url_for('static', filename='assets/js/custom.js') }}"></script>
+    <script>
+        $(document).ready(function () {
+            // $('#companyListTabs a[href="#approvedCompanies"]').tab('show');
+            $('#approvedCompaniesTab').on('click', function (e) {
+                e.preventDefault(); // Prevent the default behavior of the link
+
+                // Remove the "active" class from all tab links and tab contents
+                $('.nav-link').removeClass('active');
+                $('.tab-pane').removeClass('active');
+
+                // Add the "active" class to the clicked tab link and tab content
+                $(this).addClass('active');
+                $('#approvedCompanies').addClass('show active');
+            });
+
+            $('#rejectedCompaniesTab').on('click', function (e) {
+                e.preventDefault(); // Prevent the default behavior of the link
+
+                // Remove the "active" class from all tab links and tab contents
+                $('.nav-link').removeClass('active');
+                $('.tab-pane').removeClass('active');
+
+                // Add the "active" class to the clicked tab link and tab content
+                $(this).addClass('active');
+                $('#rejectedCompanies').addClass('show active');
+            });
+
+            $('#newApplicationsTab').on('click', function (e) {
+                e.preventDefault(); // Prevent the default behavior of the link
+
+                // Remove the "active" class from all tab links and tab contents
+                $('.nav-link').removeClass('active');
+                $('.tab-pane').removeClass('active');
+
+                // Add the "active" class to the clicked tab link and tab content
+                $(this).addClass('active');
+                $('#newApplications').addClass('show active');
+            });
+
+            $('.approve-button').on('click', function () {
+                // Set the confirmation message
+                var confirmationMessage = "Are you sure you want to approve this company?";
+
+                $('#confirmationMessage').text(confirmationMessage);
+
+                // Show the confirmation modal
+                $('#confirmationModal').modal('show');
+
+                $('#confirmationModal .modal-header').css('background-color', '#10a13e');
+                $('#confirmationModal .modal-header').css('color', '#fff');
+                $('#confirmationModal #confirmAction').css('background-color', '#10a13e');
+
+                var companyName = $(this).data('company-name');
+                var action = $(this).data('action');
+
+                // Store a reference to the clicked "Approve" button
+                var approveButton = $(this);
+                // Handle confirm action
+                $('#confirmAction').off('click').on('click', function () {
+                    // Store the company name and action in hidden input fields within the form
+                    $('#company_name').val(companyName);
+                    $('#action').val(action);
+
+                    // Disable buttons
+                    approveButton.prop('disabled', true); // Disable "Approve" button
+                    approveButton.closest('tr').find('.reject-button').prop('disabled', true); // Disable "Reject" button
+
+                    // Handle approval logic here
+
+                    // Display success message
+                    approveButton.closest('tr').find('td:nth-child(7)').html('<span class="text-success">Approved</span>');
+
+                    // Display date/time
+                    var dateTime = new Date().toLocaleString();
+                    approveButton.closest('tr').find('td:nth-child(8)').text(dateTime);
+
+                    // Create a finalized button
+                    var finalizedButton = $('<button class="finalized-button btn btn-secondary">Finalized</button>');
+                    finalizedButton.prop('disabled', true); // Disable "Finalized" button
+
+                    // Set the width of the finalized button to match the combined width of approve and reject buttons
+                    finalizedButton.width(approveButton.outerWidth() + approveButton.closest('tr').find('.reject-button').outerWidth());
+
+                    // Replace the approve and reject buttons with the finalized button
+                    approveButton.closest('tr').find('td:nth-child(6)').html(finalizedButton);
+
+                    // Close the confirmation modal
+                    $('#confirmationModal').modal('hide');
+
+                    $('#confirmForm').submit();
+                });
+            });
+
+            $('.reject-button').on('click', function () {
+                // Set the confirmation message
+                var confirmationMessage = "Are you sure you want to reject this company?";
+
+                $('#confirmationMessage').text(confirmationMessage);
+
+                // Show the confirmation modal
+                $('#confirmationModal').modal('show');
+
+                $('#confirmationModal .modal-header').css('background-color', '#f54242d5');
+                $('#confirmationModal .modal-header').css('color', '#fff');
+                $('#confirmationModal #confirmAction').css('background-color', '#f54242d5');
+
+                var companyName = $(this).data('company-name');
+                var action = $(this).data('action');
+
+                // Store a reference to the clicked "Approve" button
+                var approveButton = $(this);
+                // Handle confirm action
+                $('#confirmAction').off('click').on('click', function () {
+                    // Store the company name and action in hidden input fields within the form
+                    $('#company_name').val(companyName);
+                    $('#action').val(action);
+
+                    // Disable buttons
+                    rejectButton.prop('disabled', true); // Disable "Reject" button
+                    rejectButton.closest('tr').find('.approve-button').prop('disabled', true); // Disable "Approve" button
+
+                    // Handle rejection logic here
+
+                    // Display success message
+                    rejectButton.closest('tr').find('td:nth-child(7)').html('<span class="text-danger">Rejected</span>');
+
+                    // Display date/time
+                    var dateTime = new Date().toLocaleString();
+                    rejectButton.closest('tr').find('td:nth-child(8)').text(dateTime);
+
+                    // Create a finalized button
+                    var finalizedButton = $('<button class="finalized-button btn btn-secondary">Finalized</button>');
+                    finalizedButton.prop('disabled', true); // Disable "Finalized" button
+
+                    // Set the width of the finalized button to match the combined width of approve and reject buttons
+                    finalizedButton.width(rejectButton.outerWidth() + rejectButton.closest('tr').find('.approve-button').outerWidth());
+
+                    // Replace the approve and reject buttons with the finalized button
+                    rejectButton.closest('tr').find('td:nth-child(6)').html(finalizedButton);
+
+                    // Disable buttons
+                    approveButton.prop('disabled', true); // Disable "Approve" button
+                    approveButton.closest('tr').find('.reject-button').prop('disabled', true); // Disable "Reject" button
+
+                    // Close the confirmation modal
+                    $('#confirmationModal').modal('hide');
+
+                    $('#confirmForm').submit();
+                });
+            });
+
+            $('#closeModalButton').on('click', function () {
+                $('#confirmationModal').modal('hide');
+            });
+
+            $('#cancelButton').on('click', function () {
+                $('#confirmationModal').modal('hide');
+            });
+
+        });
+    </script>
+    <!-- <script>
+
+        // JavaScript code to handle approve and reject actions
+        $(document).ready(function () {
+
+            // Handle "Approve" button click
+            $('.approve-button').on('click', function () {
+                // Set the confirmation message
+                var confirmationMessage = "Are you sure you want to approve this company?";
+                $('#confirmationMessage').text(confirmationMessage);
+
+                // Show the confirmation modal
+                $('#confirmationModal').modal('show');
+
+                // Change the modal header color to red
+                $('#confirmationModal .modal-header').css('background-color', '#10a13e');
+                $('#confirmationModal .modal-header').css('color', '#fff');
+
+                // Change the modal header color to red
+                $('#confirmationModal #confirmAction').css('background-color', '#10a13e');
+
+                // Store a reference to the clicked "Approve" button
+                var approveButton = $(this);
+
+                // Handle confirm action
+                $('#confirmAction').off('click').on('click', function () {
+                    // Disable buttons
+                    approveButton.prop('disabled', true); // Disable "Approve" button
+                    approveButton.closest('tr').find('.reject-button').prop('disabled', true); // Disable "Reject" button
+
+                    // Handle approval logic here
+
+                    // Display success message
+                    approveButton.closest('tr').find('td:nth-child(7)').html('<span class="text-success">Approved</span>');
+
+                    // Display date/time
+                    var dateTime = new Date().toLocaleString();
+                    approveButton.closest('tr').find('td:nth-child(8)').text(dateTime);
+
+                    // Create a finalized button
+                    var finalizedButton = $('<button class="finalized-button btn btn-secondary">Finalized</button>');
+                    finalizedButton.prop('disabled', true); // Disable "Finalized" button
+
+                    // Set the width of the finalized button to match the combined width of approve and reject buttons
+                    finalizedButton.width(approveButton.outerWidth() + approveButton.closest('tr').find('.reject-button').outerWidth());
+
+                    // Replace the approve and reject buttons with the finalized button
+                    approveButton.closest('tr').find('td:nth-child(6)').html(finalizedButton);
+
+                    // Close the confirmation modal
+                    $('#confirmationModal').modal('hide');
+                });
+            });
+
+            // Handle "Reject" button click
+            $('.reject-button').on('click', function () {
+                // Set the confirmation message
+                var confirmationMessage = "Are you sure you want to reject this company?";
+                $('#confirmationMessage').text(confirmationMessage);
+
+                // Show the confirmation modal
+                $('#confirmationModal').modal('show');
+
+                // Change the modal header color to red
+                $('#confirmationModal .modal-header').css('background-color', '#f54242d5');
+                $('#confirmationModal .modal-header').css('color', '#fff');
+
+                // Change the modal header color to red
+                $('#confirmationModal #confirmAction').css('background-color', '#f54242d5');
+
+                // Store a reference to the clicked "Reject" button
+                var rejectButton = $(this);
+
+                // Handle confirm action
+                $('#confirmAction').off('click').on('click', function () {
+                    // Disable buttons
+                    rejectButton.prop('disabled', true); // Disable "Reject" button
+                    rejectButton.closest('tr').find('.approve-button').prop('disabled', true); // Disable "Approve" button
+
+                    // Handle rejection logic here
+
+                    // Display success message
+                    rejectButton.closest('tr').find('td:nth-child(7)').html('<span class="text-danger">Rejected</span>');
+
+                    // Display date/time
+                    var dateTime = new Date().toLocaleString();
+                    rejectButton.closest('tr').find('td:nth-child(8)').text(dateTime);
+
+                    // Create a finalized button
+                    var finalizedButton = $('<button class="finalized-button btn btn-secondary">Finalized</button>');
+                    finalizedButton.prop('disabled', true); // Disable "Finalized" button
+
+                    // Set the width of the finalized button to match the combined width of approve and reject buttons
+                    finalizedButton.width(rejectButton.outerWidth() + rejectButton.closest('tr').find('.approve-button').outerWidth());
+
+                    // Replace the approve and reject buttons with the finalized button
+                    rejectButton.closest('tr').find('td:nth-child(6)').html(finalizedButton);
+
+                    // Close the confirmation modal
+                    $('#confirmationModal').modal('hide');
+                });
+            });
+
+            $('.remove-button').on('click', function () {
+                // Set the confirmation message
+                var confirmationMessage = "Are you sure you want to delete this company?";
+                $('#confirmationMessage').text(confirmationMessage);
+
+                // Show the confirmation modal
+                $('#confirmationModal').modal('show');
+
+                // Change the modal header color to red
+                $('#confirmationModal .modal-header').css('background-color', '#f54242d5');
+                $('#confirmationModal .modal-header').css('color', '#fff');
+
+                // Change the modal header color to red
+                $('#confirmationModal #confirmAction').css('background-color', '#f54242d5');
+
+                // Store a reference to the clicked "Reject" button
+                var removeButton = $(this);
+
+                // Handle confirm action
+                $('#confirmAction').off('click').on('click', function () {
+                    // Disable buttons
+                    removeButton.prop('disabled', true);
+                    removeButton.closest('tr').remove();
+                    location.reload();
+
+                    // Close the confirmation modal
+                    $('#confirmationModal').modal('hide');
+                });
+            });
+
+            $('#closeModalButton').on('click', function () {
+                $('#confirmationModal').modal('hide');
+            });
+
+            $('#cancelButton').on('click', function () {
+                $('#confirmationModal').modal('hide');
+            });
+        });
+    </script> -->
+</body>
+
+</html>

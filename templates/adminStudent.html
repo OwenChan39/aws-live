@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@300;400;600;700;800&display=swap"
+        rel="stylesheet">
+
+    <title>Student List</title>
+
+    <!-- Bootstrap core CSS -->
+    <link href="{{ url_for('static', filename='vendor/bootstrap/css/bootstrap.min.css') }}" rel="stylesheet">
+
+    <!-- Additional CSS Files -->
+    <link rel="stylesheet" href="{{ url_for('static', filename='assets/css/fontawesome.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='assets/css/templatemo-seo-dream.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='assets/css/animated.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='assets/css/owl.css') }}">
+
+    <!-- Custom CSS for the background image -->
+
+    <style>
+        .main-banner {
+            background-image: url("{{ url_for('static', filename='assets/images/background.jpg') }}");
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            padding: 100px 0;
+            text-align: center;
+            color: #fff;
+        }
+
+        /* Remove line above the h2 element */
+        .header-text h2 {
+            border-bottom: none;
+        }
+
+        .see-all-button {
+            float: right;
+            margin-left: 10px;
+        }
+    </style>
+
+</head>
+
+<body>
+
+    <!-- ***** Preloader Start ***** -->
+    <div id="js-preloader" class="js-preloader">
+        <div class="preloader-inner">
+            <span class="dot"></span>
+            <div class="dots">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+        </div>
+    </div>
+    <!-- ***** Preloader End ***** -->
+
+    <!-- ***** Header Area Start ***** -->
+    <header class="header-area header-sticky wow slideInDown" data-wow-duration="0.75s" data-wow-delay="0s">
+        <div class="container">
+            <div class="row">
+                <div class="col-12">
+                    <nav class="main-nav">
+                        <!-- ***** Logo Start ***** -->
+                        <a href="/adminLanding" class="logo">
+                            <h4>SEO Dream <img src="{{ url_for('static', filename='assets/images/logo-icon.png') }}"
+                                    alt=""></h4>
+                        </a>
+                        <!-- ***** Logo End ***** -->
+                        <!-- ***** Menu Start ***** -->
+                        <ul class="nav">
+                            <li class="scroll-to-section"><a href="#top" class="active">Home</a></li>
+                            <li class="scroll-to-section"><a href="#features">Features</a></li>
+                            <li class="scroll-to-section"><a href="#about">About Us</a></li>
+                            <li class="scroll-to-section"><a href="#services">Services</a></li>
+                            <li class="scroll-to-section"><a href="#portfolio">Portfolio</a></li>
+                            <li class="scroll-to-section"><a href="#contact">Contact Us</a></li>
+                            <li class="scroll-to-section">
+                                <div class="main-blue-button"><a href="/adminProfile">Profile</a></div>
+                            </li>
+                        </ul>
+                        <a class='menu-trigger'>
+                            <span>Menu</span>
+                        </a>
+                        <!-- ***** Menu End ***** -->
+                    </nav>
+                </div>
+            </div>
+        </div>
+    </header>
+    <!-- ***** Header Area End ***** -->
+
+    <!-- ***** Student List Start ***** -->
+    <div class="main-banner" id="top" data-wow-duration="0.5s" data-wow-delay="0.2s">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="row">
+                        <div class="left-content header-text wow fadeInLeft" data-wow-duration="1s" data-wow-delay="1s">
+                            <div class="col-lg-12">
+                                <h2>Student List</h2>
+                            </div>
+                            <div class="col-lg-4"> <!-- Adjust the column size as needed -->
+                                <div class="input-group">
+                                    <div class="input-group-append" style="margin-left: 10px;">
+                                        <form action="/adminStudent" method="GET">
+                                            <input type="text" class="search-input" name="query"
+                                                placeholder="Enter student name or ID">
+                                            <button type="submit" class="btn btn-primary search-button">Search</button>
+                                        </form>
+                                    </div>
+                                    <div class="input-group-append" style="margin-left: 10px;">
+                                        {% if number_of_students == 0 %}
+                                        <button class="btn btn-secondary see-all-button"
+                                            onclick="location.href='/adminStudent'">See All</button>
+                                        {% endif %}
+                                    </div>
+                                </div>
+                            </div>
+                            <table class="table">
+                                <thead>
+                                    <tr>
+                                        <th>No</th>
+                                        <th>Student Name</th>
+                                        <th>Student ID</th>
+                                        <th>Program</th>
+                                        <th>Intern Batch</th>
+                                        <th>Email</th>
+                                        <th>Action</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {% if number_of_students == 0 %}
+                                    <tr>
+                                        <td colspan="7">No Student Record Found</td>
+                                    </tr>
+                                    {% else %}
+                                    {% for index, student in students %}
+                                    <tr>
+                                        <td>{{ index + 1}}</td>
+                                        <td>{{ student[1] }}</td>
+                                        <td>{{ student[0] }}</td>
+                                        <td>{{ student[3] }}</td>
+                                        <td>{{ student[4] }}</td>
+                                        <td>{{ student[5] }}</td>
+                                        <td>
+                                            <button class="delete-button btn btn-danger"
+                                                onclick="location.href='/adminDeleteStudent/{{ student[0] }}'">Delete</button>
+                                        </td>
+                                    </tr>
+                                    {% endfor %}
+                                    {% endif %}
+                                </tbody>
+                            </table>
+                            {% if number_of_students == 0 %}
+                            {% else %}
+                            <p>
+                                Total Number of Students: <strong>{{ number_of_students }}</strong>
+                            </p>
+                            {% endif %}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- ***** Student List End ***** -->
+
+    <footer>
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-12">
+                    <p>Copyright © 2021 SEO Dream Co., Ltd. All Rights Reserved.
+                        <br>Web Designed by <a rel="nofollow" href="https://templatemo.com"
+                            title="free CSS templates">TemplateMo</a>
+                    </p>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Scripts -->
+    <script src="{{ url_for('static', filename='vendor/jquery/jquery.min.js') }}"></script>
+    <script src="{{ url_for('static', filename='vendor/bootstrap/js/bootstrap.bundle.min.js') }}"></script>
+    <script src="{{ url_for('static', filename='assets/js/owl-carousel.js') }}"></script>
+    <script src="{{ url_for('static', filename='assets/js/animation.js') }}"></script>
+    <script src="{{ url_for('static', filename='assets/js/imagesloaded.js') }}"></script>
+    <script src="{{ url_for('static', filename='assets/js/custom.js') }}"></script>
+</body>
+
+</html>
