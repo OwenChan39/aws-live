@@ -145,33 +145,17 @@
     <div class="content">
         <!-- Job Postings -->
         <div class="job-postings">
-            <!-- Job Posting 1 -->
+            <!-- Loop through the companyjobs data and generate job posting boxes -->
+            {% for job in companyjobs %}
             <div class="job-posting-box">
-                <h3>Software Engineer</h3>
-                <p>Company: Tech Solutions Inc.</p>
-                <p>Description: We are looking for a talented software engineer to join our team.</p>
-                <p>Location: San Francisco, CA</p>
+                <h3>{{ job.job_title }}</h3>
+                <p>Company: {{ job[1] }}</p>
+                <p>Description: {{ job[2] }}</p>
+                <p>CareerLevel: {{ job[4] }}</p>
                 <a href="#" class="apply-button">Apply</a>
             </div>
-        
-            <!-- Job Posting 2 -->
-            <div class="job-posting-box">
-                <h3>Marketing Manager</h3>
-                <p>Company: MarketingPro Agency</p>
-                <p>Description: Seeking an experienced marketing manager to lead our marketing efforts.</p>
-                <p>Location: New York, NY</p>
-                <a href="#" class="apply-button">Apply</a>
-            </div>
-        
-            <!-- Job Posting 3 -->
-            <div class="job-posting-box">
-                <h3>Graphic Designer</h3>
-                <p>Company: Creative Designs Studio</p>
-                <p>Description: Join our design team to create stunning visuals and graphics.</p>
-                <p>Location: Los Angeles, CA</p>
-                <a href="#" class="apply-button">Apply</a>
-            </div>
-    </div>
+            {% endfor %}
+        </div>
     <!-- ***** Job Postings End ***** -->
 
     <!-- ... (remaining HTML code) ... -->
