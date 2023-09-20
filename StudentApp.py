@@ -222,6 +222,7 @@ def login():
 
 @app.route('/company_dashboard', methods=['GET', 'POST'])
 def company_dashboard():
+    section = request.args.get('section', default=None)
     if 'company_id' in session:
         company_id = session['company_id']
         cursor = db_conn.cursor()
@@ -274,7 +275,8 @@ def company_dashboard():
                                    email=email,
                                    company_image_url=company_image_url,
                                    status=status,
-                                   companyjobs=companyjobs
+                                   companyjobs=companyjobs,
+                                   section=section
                                    )
         else:
             return "Company not found"  # Handle the case where the company is not in the database
