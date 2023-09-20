@@ -487,6 +487,30 @@ def student_dashboard():
     # If the student is not logged in, redirect to the login page
     return redirect(url_for('login'))
 
+@app.route("/adminLanding")
+def adminLanding():
+    return render_template("adminLanding.html")
+    
+@app.route("/adminProfile", methods=["GET", "POST"])
+def adminProfile():
+    if "admin_username" in session and "role" in session and session["role"] == "admin":
+        admin_username = session["admin_username"]
+        cursor = db_conn.cursor()
+        cursor.execute("SELECT * FROM Admin WHERE admin_username = %s", (admin_username,))
+        admin = cursor.fetchone()
+
+        if admin:
+            admin_name = admin[0]
+            admin_username = admin[1]
+            admin_password = admin[2]
+        else:
+            admin_name = "Unknown Admin"  # Default if lecturer not found
+
+        cursor.close()
+
+        # Pass the lecturer_name to the template
+        return render_template("adminProfile.html", admin=admin)
+
 def update_student_profile(student_id, updates):
     cursor = db_conn.cursor()
     update_sql = "UPDATE Student SET "
