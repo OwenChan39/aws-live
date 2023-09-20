@@ -233,7 +233,7 @@
 
             <!-- Info of the company -->
             <div class="infoHead">
-                <h3>Information <button id="editButton" onclick="infoEdit()">Edit</button></h3>
+                <a href="#company-info" class="edit-button">Edit Company Information</a>
             </div>
             <div class="info">
                 <div class="info-container">
@@ -265,7 +265,7 @@
             <div class="offerHead">
                 <h3>Job Offers
                     {% if status == 'Approved' %}
-                        <a href="{{ url_for('addjobpage') }}" class="edit-button">Edit Jobs</a>
+                        <a href="#job-offer" class="edit-button">Edit Job Positions</a>
                     {% endif %}
                 </h3>
             </div>
