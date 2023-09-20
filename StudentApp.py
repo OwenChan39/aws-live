@@ -410,9 +410,9 @@ def company_profile_edit():
 
             db_conn.commit()
             cursor.close()
-            return redirect(url_for('addjobpage'))
+            return render_template('company_info_edit.html')
         
-        return render_template('company_info_edit.html')
+        return redirect(url_for('addjobpage'))
 
 
 @app.route('/save_job_details', methods=['POST'])
