@@ -98,6 +98,44 @@ def lecturer_sign_up():
 
     return render_template('lecturer_sign_up.html')
 
+# Function to encrypt a string
+def encrypt(text, key):
+    encrypted_text = ""
+    for char in text:
+        encrypted_char = chr(ord(char) ^ key)
+        encrypted_text += encrypted_char
+    return encrypted_text
+
+# Function to decrypt an encrypted string
+def decrypt(encrypted_text, key):
+    decrypted_text = ""
+    for char in encrypted_text:
+        decrypted_char = chr(ord(char) ^ key)
+        decrypted_text += decrypted_char
+    return decrypted_text
+
+@app.route("/admin_signup", methods=["GET", "POST"])
+def admin_signup():
+    if request.method == "POST":
+        encrypt_key = 42
+        admin_name = request.form["admin_name"]
+        admin_username = request.form["admin_username"]
+        admin_password = encrypt(request.form["admin_password"], encrypt_key)
+
+        insert_sql = "INSERT INTO Admin (admin_name, admin_username, admin_password) VALUES (%s, %s, %s)"
+        cursor = db_conn.cursor()
+
+        try:
+            cursor.execute(insert_sql, (admin_name, admin_username, admin_password))
+            db_conn.commit()
+
+            return render_template("signup_success.html", name=admin_name)
+
+        finally:
+            cursor.close()
+    
+    return render_template("adminSignup.html")
+
 # Function to generate a random unique company ID
 def generate_company_id():
     # Generate a random alphanumeric string, e.g., 'C001'
