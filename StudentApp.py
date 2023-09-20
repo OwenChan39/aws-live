@@ -410,9 +410,9 @@ def company_profile_edit():
 
             db_conn.commit()
             cursor.close()
-            return render_template('company_dashboard.html')
+            return redirect(url_for('company_info_edit'))
         
-        return redirect(url_for('company_info_edit'))
+        return render_template('company_info_edit.html')
 
 
 @app.route('/save_job_details', methods=['POST'])
@@ -988,6 +988,3 @@ def update_company_status():
 
 if __name__ == '__main__':
     app.run(host='0.0.0.0', port=80, debug=True)
-
-
-
