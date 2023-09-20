@@ -233,7 +233,8 @@
 
             <!-- Info of the company -->
             <div class="infoHead">
-                <h3>Information <a href="{{ url_for('company_dashboard', section='company-info') }}" class="edit-button">Edit</a></h3>
+                <a href="{{ url_for('edit_company_info', company_id=company_id) }}" class="edit-button">Edit Company Information</a>
+
             </div>
             <div class="info">
                 <div class="info-container">
@@ -265,7 +266,7 @@
             <div class="offerHead">
                 <h3>Job Offers
                     {% if status == 'Approved' %}
-                    <h3>Job Offers <a href="{{ url_for('addjobpage', section='job-offer') }}" class="edit-button">Edit</a></h3>
+                        <a href="#job-offer" class="edit-button">Edit Job Positions</a>
                     {% endif %}
                 </h3>
             </div>
@@ -309,21 +310,14 @@
 
     <!-- Add your JavaScript scripts or link to external JS files here -->
     <script>
-        // Function to scroll to the desired section based on the 'section' parameter
-        function scrollToSection() {
-            var section = "{{ section }}";
-            if (section) {
-                var targetSection = document.getElementById(section);
-                if (targetSection) {
-                    targetSection.scrollIntoView();
-                }
-            }
+        // Function to handle the click event
+        function infoEdit() {
+            window.location.href = "company_info_edit.html"; // Redirect to the desired page
         }
     
-        // Call the scroll function on page load
-        window.onload = scrollToSection;
+        // Attach the click event to the button
+        document.getElementById("editButton").addEventListener("click", infoEdit);
     </script>
-    
 
 </body>
 
