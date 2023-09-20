@@ -251,6 +251,26 @@ def login():
                 session['role'] = 'company'
                 return redirect(url_for('company_dashboard'))
 
+        elif role == "admin":
+            encryption_key = 42
+            cursor.execute(
+                "SELECT admin_username, admin_password FROM Admin WHERE admin_username = %s",
+                (username)
+            )
+            result = cursor.fetchone()
+
+            if result:
+                stored_encrypted_password = result[1]
+
+                # Decrypt the stored encrypted password
+                stored_password = decrypt(stored_encrypted_password, encryption_key)
+
+                if stored_password == password:
+                    # Username and password match, it's a successful login
+                    session["admin_username"] = username
+                    session["role"] = "admin"
+                    return redirect(url_for("adminLanding"))
+
         cursor.close()
 
         # Invalid credentials or role, display an error message
