@@ -321,7 +321,7 @@ def update_company_info():
         else:
             flash('Error updating company information', 'error')
 
-        return redirect(url_for('addjobpage'))
+        return redirect(url_for('company_dashboard'))
     else:
         return "Unauthorized"
 
