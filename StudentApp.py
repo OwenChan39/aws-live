@@ -170,44 +170,6 @@ def company_signup():
 
     return render_template('company_signup.html')
 
-# Function to encrypt a string
-def encrypt(text, key):
-    encrypted_text = ""
-    for char in text:
-        encrypted_char = chr(ord(char) ^ key)
-        encrypted_text += encrypted_char
-    return encrypted_text
-
-# Function to decrypt an encrypted string
-def decrypt(encrypted_text, key):
-    decrypted_text = ""
-    for char in encrypted_text:
-        decrypted_char = chr(ord(char) ^ key)
-        decrypted_text += decrypted_char
-    return decrypted_text
-
-@app.route("/admin_signup", methods=["GET", "POST"])
-def admin_signup():
-    if request.method == "POST":
-        encrypt_key = 42
-        admin_name = request.form["admin_name"]
-        admin_username = request.form["admin_username"]
-        admin_password = encrypt(request.form["admin_password"], encrypt_key)
-
-        insert_sql = "INSERT INTO Admin (admin_name, admin_username, admin_password) VALUES (%s, %s, %s)"
-        cursor = db_conn.cursor()
-
-        try:
-            cursor.execute(insert_sql, (admin_name, admin_username, admin_password))
-            db_conn.commit()
-
-            return render_template("signup_success.html", name=admin_name)
-
-        finally:
-            cursor.close()
-    
-    return render_template("adminSignup.html")
-
 @app.route('/login', methods=['POST'], endpoint='login_role')
 def login():
     if request.method == 'POST':
@@ -251,26 +213,6 @@ def login():
                 session['role'] = 'company'
                 return redirect(url_for('company_dashboard'))
 
-        elif role == "admin":
-            encryption_key = 42
-            cursor.execute(
-                "SELECT admin_username, admin_password FROM Admin WHERE admin_username = %s",
-                (username)
-            )
-            result = cursor.fetchone()
-
-            if result:
-                stored_encrypted_password = result[1]
-
-                # Decrypt the stored encrypted password
-                stored_password = decrypt(stored_encrypted_password, encryption_key)
-
-                if stored_password == password:
-                    # Username and password match, it's a successful login
-                    session["admin_username"] = username
-                    session["role"] = "admin"
-                    return redirect(url_for("adminLanding"))
-
         cursor.close()
 
         # Invalid credentials or role, display an error message
@@ -286,12 +228,8 @@ def company_dashboard():
         cursor.execute("SELECT * FROM Company WHERE Company_ID = %s", (company_id,))
         company = cursor.fetchone()
         cursor.close()
-        cursor = db_conn.cursor()
-        cursor.execute("SELECT * FROM Job_Details WHERE Company_ID = %s", (company_id,))
-        companyjobs = cursor.fetchall()  # Fetch all job listings
-        cursor.close()
         
-        if company and companyjobs:
+        if company:
             company_id = company[0]
             company_name = company[1]
             company_website = company[2]
@@ -316,6 +254,11 @@ def company_dashboard():
                 ExpiresIn=3600
             )
 
+            cursor = db_conn.cursor()
+            cursor.execute("SELECT * FROM Job_Details WHERE Company_ID = %s", (company_id,))
+            companyjobs = cursor.fetchall()  # Fetch all job listings
+            cursor.close()
+
             return render_template('company_dashboard.html',
                                    company_name=company_name,
                                    industry=industry,
@@ -335,7 +278,7 @@ def company_dashboard():
                                    companyjobs=companyjobs,
                                    )
         else:
-            return "Company not found"  # Handle the case where the company is not in the database
+            return "Company not found"
         
     else:
         return "Unauthorized"
@@ -486,30 +429,6 @@ def student_dashboard():
 
     # If the student is not logged in, redirect to the login page
     return redirect(url_for('login'))
-
-@app.route("/adminLanding")
-def adminLanding():
-    return render_template("adminLanding.html")
-    
-@app.route("/adminProfile", methods=["GET", "POST"])
-def adminProfile():
-    if "admin_username" in session and "role" in session and session["role"] == "admin":
-        admin_username = session["admin_username"]
-        cursor = db_conn.cursor()
-        cursor.execute("SELECT * FROM Admin WHERE admin_username = %s", (admin_username,))
-        admin = cursor.fetchone()
-
-        if admin:
-            admin_name = admin[0]
-            admin_username = admin[1]
-            admin_password = admin[2]
-        else:
-            admin_name = "Unknown Admin"  # Default if lecturer not found
-
-        cursor.close()
-
-        # Pass the lecturer_name to the template
-        return render_template("adminProfile.html", admin=admin)
 
 def update_student_profile(student_id, updates):
     cursor = db_conn.cursor()
@@ -687,87 +606,6 @@ def student_database():
 
     return render_template('studentdatabase.html', students=students)
 
-@app.route("/adminStudent", methods=["GET"])
-def adminStudent():
-    cursor = db_conn.cursor()
-
-    # Get the search query from the URL parameter
-    query = request.args.get("query", "")
-
-    # Use the search query to filter the student data
-    if query:
-        # Execute a SQL query to retrieve matching students
-        cursor.execute(
-            "SELECT Stud_ID, Stud_name, Gender, Programme_of_Study, Intern_batch, Personal_emailAddress FROM Student WHERE Stud_name LIKE %s OR Stud_ID LIKE %s",
-            ("%" + query + "%", "%" + query + "%"),
-        )
-    else:
-        # If no query provided, retrieve all students
-        cursor.execute(
-            "SELECT Stud_ID, Stud_name, Gender, Programme_of_Study, Intern_batch, Personal_emailAddress FROM Student ORDER BY Stud_name"
-        )
-
-    students = cursor.fetchall()
-    number_of_students = len(students)
-    enumerated_students = enumerate(students)
-    cursor.close()
-
-    return render_template("adminStudent.html", students=enumerated_students, number_of_students=number_of_students)
-
-@app.route('/adminDeleteStudent/<string:student_id>', methods=["GET"])
-def admin_delete_student(student_id):
-    # Implement code to delete the student with the given student_id from the database or list
-    # You can use a database ORM or manipulate the list directly
-    cursor = db_conn.cursor()
-
-    # Example using a list:
-    delete_query = "DELETE FROM Student WHERE Stud_ID = %s"
-    cursor.execute(delete_query, (student_id,))
-    db_conn.commit()
-
-    cursor.close()
-    return redirect(url_for("adminStudent"))
-
-@app.route("/adminLecturer", methods=["GET"])
-def adminLecturer():
-    cursor = db_conn.cursor()
-
-    # Get the search query from the URL parameter
-    query = request.args.get("query", "")
-
-    # Use the search query to filter the student data
-    if query:
-        # Execute a SQL query to retrieve matching students
-        cursor.execute(
-            "SELECT Lect_name, Lect_ID, Lect_emailAddress, Lect_IC, Lect_position FROM Lecturer WHERE Lect_name LIKE %s OR Lect_ID LIKE %s",
-            ("%" + query + "%", "%" + query + "%"),
-        )
-    else:
-        # If no query provided, retrieve all students
-        cursor.execute(
-            "SELECT Lect_name, Lect_ID, Lect_emailAddress, Lect_IC, Lect_position FROM Lecturer ORDER BY Lect_name"
-        )
-
-    lecturers = cursor.fetchall()
-    number_of_lecturers = len(lecturers)
-    enumerated_lecturers = enumerate(lecturers)
-    cursor.close()
-
-    return render_template("adminLecturer.html", lecturers=enumerated_lecturers, number_of_lecturers=number_of_lecturers)
-
-@app.route('/adminDeleteLecturer/<string:lecturer_id>', methods=["GET"])
-def admin_delete_lecturer(lecturer_id):
-    # Implement code to delete the lecturer with the given lecturer_id from the database or list
-    # You can use a database ORM or manipulate the list directly
-    cursor = db_conn.cursor()
-
-    # Example using a list:
-    delete_query = "DELETE FROM Lecturer WHERE Lect_ID = %s"
-    cursor.execute(delete_query, (lecturer_id,))
-    db_conn.commit()
-
-    cursor.close()
-    return redirect(url_for("adminLecturer"))
 
 @app.route('/view_student_progress', methods=['GET'])
 def view_student_progress():
@@ -850,73 +688,6 @@ def student_company_jobs_posting():
     else:
         return "Unauthorized"
 
-@app.route('/company_database', methods=["GET"])
-def company_database():
-    cursor = db_conn.cursor()
-
-    # Retrieve data for new applications
-    cursor.execute(
-        "SELECT Comp_name, EmailAddress, Contact_number, Comp_address, Person_in_charge, Status FROM Company WHERE Status = 'Pending' ORDER BY Comp_name"
-    )
-    new_applications = cursor.fetchall()
-    num_of_new = len(new_applications)
-    enumerated_new = enumerate(new_applications)
-
-    # Retrieve data for approved companies
-    cursor.execute(
-        "SELECT Comp_name, EmailAddress, Contact_number, Comp_address, Person_in_charge, Status FROM Company WHERE Status = 'Approved' ORDER BY Comp_name"
-    )
-    approved_companies = cursor.fetchall()
-    num_of_approved = len(approved_companies)
-    enumerated_approved = enumerate(approved_companies)
-
-    # Retrieve data for rejected companies
-    cursor.execute(
-        "SELECT Comp_name, EmailAddress, Contact_number, Comp_address, Person_in_charge, Status FROM Company WHERE Status = 'Rejected' ORDER BY Comp_name"
-    )
-    rejected_companies = cursor.fetchall()
-    num_of_rejected = len(rejected_companies)
-    enumerated_rejected = enumerate(rejected_companies)
-
-    cursor.close()
-
-    return render_template("adminCompany.html",
-                           new_applications=enumerated_new,
-                           num_of_new=num_of_new,
-                           approved_companies=enumerated_approved,
-                           num_of_approved=num_of_approved,
-                           rejected_companies=enumerated_rejected,
-                           num_of_rejected=num_of_rejected)
-
-@app.route('/adminDeleteCompany/<string:company_name>', methods=["GET"])
-def admin_delete_company(company_name):
-    # Implement code to delete the student with the given student_id from the database or list
-    # You can use a database ORM or manipulate the list directly
-    cursor = db_conn.cursor()
-
-    # Example using a list:
-    delete_query = "DELETE FROM Company WHERE Comp_name = %s"
-    cursor.execute(delete_query, (company_name,))
-    db_conn.commit()
-
-    cursor.close()
-    return redirect(url_for("company_database"))
-
-@app.route('/update_company_status', methods=['POST'])
-def update_company_status():
-    cursor = db_conn.cursor()
-    # Get the company ID from the submitted form
-    company_name = str(request.form.get('company_name'))
-    action = str(request.form.get('action'))
-
-    if action == 'approve':
-        cursor.execute("UPDATE Company SET Status = 'Approved' WHERE Comp_name = %s", (company_name,))
-    elif action == 'reject':
-        cursor.execute("UPDATE Company SET Status = 'Rejected' WHERE Comp_name = %s", (company_name,))
-    
-    db_conn.commit()
-    cursor.close()
-    return redirect(url_for("company_database"))
 
 if __name__ == '__main__':
     app.run(host='0.0.0.0', port=80, debug=True)
