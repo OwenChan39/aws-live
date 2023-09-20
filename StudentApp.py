@@ -672,7 +672,7 @@ def student_company_jobs_posting():
         company_id = session['company_id']
         cursor = db_conn.cursor()
         cursor.execute("""
-            SELECT JD.job_title, C.company_name, JD.description, JD.career_level
+            SELECT JD.JobPosition, C.Comp_name, JD.JobDescription, JD.CareerLevel
             FROM Job_Details JD
             JOIN Company C ON JD.Company_ID = C.Company_ID
             WHERE JD.Company_ID = %s
