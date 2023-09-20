@@ -361,10 +361,9 @@ def company_profile_edit():
                 else:
                     flash('Error updating company information', 'error')
 
-                return redirect(url_for('company_dashboard'))
+                return render_template('company_info_edit.html', company=company)
 
             return render_template('company_info_edit.html', company=company)
-
     return redirect(url_for('login'))
 
 
