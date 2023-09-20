@@ -327,12 +327,16 @@ def company_jobs_list():
         companyjobs = cursor.fetchall()  # Fetch all job listings
         cursor.close()
 
+        print("Company ID:", company_id)  # Print company ID for debugging
+        print("Company Jobs:", companyjobs)  # Print job listings for debugging
+
         if companyjobs:
             return render_template('company_dashboard.html', companyjobs=companyjobs)
         else:
             return "Company jobs not found"
     else:
         return "Unauthorized"
+
 
 
 
