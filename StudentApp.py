@@ -398,8 +398,8 @@ def company_profile_edit():
             # Perform the SQL UPDATE operation to update the company's data
             update_query = """
                 UPDATE Company
-                SET Total_Staff = %s, Product_Service = %s, Company_Website = %s, Remarks = %s,
-                Person_In_Charge = %s, Contact_Number = %s, Email = %s
+                SET Total_Staff = %s, Product_or_Service = %s, Comp_Website = %s, Remarks = %s,
+                Person_In_Charge = %s, Contact_Number = %s, EmailAddress = %s
                 WHERE Company_ID = %s
             """
 
