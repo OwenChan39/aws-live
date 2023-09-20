@@ -10,6 +10,7 @@ import string
 
 app = Flask(__name__, static_folder='static')
 app.secret_key = '123456'
+app.config['TEMPLATES_AUTO_RELOAD'] = True
 
 # AWS S3 configuration
 bucket = custombucket
