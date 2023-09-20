@@ -343,7 +343,43 @@ def company_dashboard():
 
 @app.route("/addjobpage")
 def addjobpage():
-    return render_template('company_info_edit.html')
+    if 'company_id' in session:
+        company_id = session['company_id']
+        cursor = db_conn.cursor()
+        cursor.execute("SELECT * FROM Company WHERE Company_ID = %s", (company_id,))
+        company = cursor.fetchone()
+        cursor.close()
+
+        if company:
+            company_id = company[0]
+            company_name = company[1]
+            company_website = company[2]
+            contact_number = company[4]
+            person_in_charge = company[5]
+            email = company[6]
+            total_staff = company[9]
+            product_service = company[10]
+            ot_claim = company[12]
+            remarks = company[13]
+            
+            company_logo = "company-" + str(company_id) + "-logo"
+            company_image_url = s3.meta.client.generate_presigned_url(
+                'get_object',
+                Params={'Bucket': bucket, 'Key': company_logo},
+                ExpiresIn=3600
+            )
+            return render_template('company_info_edit.html', 
+                                    company_name=company_name,
+                                    total_staff=total_staff,
+                                    product_service=product_service,
+                                    company_website=company_website,
+                                    ot_claim=ot_claim,
+                                    remarks=remarks,
+                                    person_in_charge=person_in_charge,
+                                    contact_number=contact_number,
+                                    email=email,
+                                    company_image_url=company_image_url,
+                                    )
 
 @app.route('/save_job_details', methods=['POST'])
 def save_job_details():
