@@ -409,8 +409,55 @@ def company_profile_edit():
             ))
 
             db_conn.commit()
-            cursor.close()
-            return render_template('company_info_edit.html')
+
+            cursor.execute("SELECT * FROM Company WHERE Company_ID = %s", (company_id,))
+            company = cursor.fetchone()
+            if company:
+                company_id = company[0]
+                company_name = company[1]
+                company_website = company[2]
+                state = company[3]
+                contact_number = company[4]
+                person_in_charge = company[5]
+                email = company[6]
+                industry = company[7]
+                company_address = company[8]
+                total_staff = company[9]
+                product_service = company[10]
+                nature_of_job = company[11]
+                ot_claim = company[12]
+                remarks = company[13]
+                status = company[14]
+
+                company_logo = "company-" + str(company_id) + "-logo"
+                company_image_url = s3.meta.client.generate_presigned_url(
+                    'get_object',
+                    Params={'Bucket': bucket, 'Key': company_logo},
+                    ExpiresIn=3600
+                )
+            
+                cursor.execute("SELECT * FROM Job_Details WHERE Company_ID = %s", (company_id,))
+                companyjobs = cursor.fetchall()  # Fetch all job listings
+                cursor.close()
+
+            return render_template('company_dashboard.html',
+                                   company_name=company_name,
+                                   industry=industry,
+                                   total_staff=total_staff,
+                                   product_service=product_service,
+                                   company_website=company_website,
+                                   nature_of_job=nature_of_job,
+                                   ot_claim=ot_claim,
+                                   company_address=company_address,
+                                   state=state,
+                                   remarks=remarks,
+                                   person_in_charge=person_in_charge,
+                                   contact_number=contact_number,
+                                   email=email,
+                                   company_image_url=company_image_url,
+                                   status=status,
+                                   companyjobs=companyjobs,
+                                   )
         
         return redirect(url_for('addjobpage'))
 
@@ -988,6 +1035,3 @@ def update_company_status():
 
 if __name__ == '__main__':
     app.run(host='0.0.0.0', port=80, debug=True)
-
-
-
