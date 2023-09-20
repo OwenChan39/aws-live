@@ -114,27 +114,27 @@
 
             <!-- Update Company Information Form -->
             <div class="container">
-                <form action="/update_company_info" method="POST">
+                <form action="/company_profile_edit" method="POST">
 
                     <br>
                     <!-- Total Staff -->
                     <div class="form-group">
                         <label for="total_staff">Total Staff:</label>
-                        <input type="number" class="form-control" id="total_staff" name="total_staff" value="{{ company.total_staff }}" required>
+                        <input type="number" class="form-control" id="total_staff" name="total_staff" value="{{ company[9] }}">
                     </div>
 
                     <br>
                     <!-- Product or Service -->
                     <div class="form-group">
                         <label for="product_service">Product or Service:</label>
-                        <textarea class="form-control" id="product_service" name="product_service" rows="4" required>{{ company.product_service }}</textarea>
+                        <textarea class="form-control" id="product_service" name="product_service" rows="4" required>{{ company[10] }}</textarea>
                     </div>
 
                     <br>
                     <!-- Company Website -->
                     <div class="form-group">
                         <label for="company_website">Company Website:</label>
-                        <input type="url" class="form-control" id="company_website" name="company_website" value="{{ company.company_website }}" required>
+                        <input type="url" class="form-control" id="company_website" name="company_website" value="{{ company[2] }}">
                     </div>
 
                     <br>
@@ -142,8 +142,8 @@
                     <div class="form-group">
                         <label for="ot_claim">OT Claim (YES/NO):</label>
                         <select class="form-control" id="ot_claim" name="ot_claim" required>
-                            <option value="YES" {% if company.ot_claim == "YES" %}selected{% endif %}>YES</option>
-                            <option value="NO" {% if company.ot_claim == "NO" %}selected{% endif %}>NO</option>
+                            <option value="YES" {% if company[12] == "YES" %}selected{% endif %}>YES</option>
+                            <option value="NO" {% if company[12] == "NO" %}selected{% endif %}>NO</option>
                         </select>
                     </div>
 
@@ -151,28 +151,28 @@
                     <!-- Remarks -->
                     <div class="form-group">
                         <label for="remarks">Remarks:</label>
-                        <textarea class="form-control" id="remarks" name="remarks" rows="4">{{ company.remarks }}</textarea>
+                        <textarea class="form-control" id="remarks" name="remarks" rows="4">{{ company[13] }}</textarea>
                     </div>
 
                     <br>
                     <!-- Person in Charge -->
                     <div class="form-group">
                         <label for="person_in_charge">Person in Charge Name:</label>
-                        <input type="text" class="form-control" id="person_in_charge" name="person_in_charge" value="{{ company.person_in_charge }}" required>
+                        <input type="text" class="form-control" id="person_in_charge" name="person_in_charge" value="{{ company[5] }}">
                     </div>
 
                     <br>
                     <!-- Contact Number -->
                     <div class="form-group">
                         <label for="contact_number">Contact Number:</label>
-                        <input type="tel" class="form-control" id="contact_number" name="contact_number" value="{{ company.contact_number }}" required>
+                        <input type="tel" class="form-control" id="contact_number" name="contact_number" value="{{ company[4] }}">
                     </div>
 
                     <br>
                     <!-- Email -->
                     <div class="form-group">
                         <label for="email">Email:</label>
-                        <input type="email" class="form-control" id="email" name="email" value="{{ company.email }}" required>
+                        <input type="email" class="form-control" id="email" name="email" value="{{ company[6] }}">
                     </div>
 
                     <br>
@@ -184,7 +184,6 @@
                     </div>
                 </form>
             </div>
-
         </div>
 
         <div class="job-offer" id='job-offer'>
