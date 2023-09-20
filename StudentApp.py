@@ -282,8 +282,6 @@ def company_dashboard():
     else:
         return "Unauthorized"
 
-    
-
 @app.route("/addjobpage")
 def addjobpage():
     return render_template('company_info_edit.html')
@@ -319,29 +317,13 @@ def save_job_details():
             cursor.close()
 
             # Redirect to a success page or any other appropriate action
-            return render_template('company_info_edit.html')
+            return redirect(url_for('company_dashboard'))
 
         except Exception as e:
             return str(e)  # Handle database insertion errors here
 
     # Handle GET requests or other cases
     return render_template('company_info_edit.html')  # Render the form page again if not a POST request
-
-@app.route('/company_jobs_list', methods=['GET', 'POST'])
-def company_jobs_list():
-    if 'company_id' in session:
-        company_id = session['company_id']
-        cursor = db_conn.cursor()
-        cursor.execute("SELECT * FROM Job_Details WHERE Company_ID = %s", (company_id,))
-        companyjobs = cursor.fetchall()  # Fetch all job listings
-        cursor.close()
-
-        if companyjobs:
-            return render_template('company_dashboard.html', companyjobs=companyjobs)
-        else:
-            return "Company jobs not found"
-    else:
-        return "Unauthorized"
 
 
 
@@ -687,3 +669,6 @@ def view_student_progress():
 
 if __name__ == '__main__':
     app.run(host='0.0.0.0', port=80, debug=True)
+
+
+
