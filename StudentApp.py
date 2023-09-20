@@ -667,33 +667,34 @@ def view_student_progress():
 
     return redirect(url_for('login'))
 
-@app.route('/student_company_jobs_posting')
-def student_company_jobs_posting():
-    if 'role' in session and session['role'] == 'student':
-        if 'company_id' in session:
-            company_id = session['company_id']
-            cursor = db_conn.cursor()
-            cursor.execute("""
-                SELECT JD.JobPosition, C.Comp_name, JD.JobDescription, JD.CareerLevel
-                FROM Job_Details JD
-                JOIN Company C ON JD.Company_ID = C.Company_ID
-                WHERE JD.Company_ID = %s
-            """, (company_id,))
-            job_company_data = cursor.fetchall()
-            cursor.close()
+@app.route('/student_company_jobs_posting/<int:company_id>')
+def student_company_jobs_posting(company_id):
+    if is_valid_company_id(company_id):  # Implement this function to validate the company_id
+        cursor = db_conn.cursor()
+        cursor.execute("""
+            SELECT JD.JobPosition, C.Comp_name, JD.JobDescription, JD.CareerLevel
+            FROM Job_Details JD
+            JOIN Company C ON JD.Company_ID = C.Company_ID
+            WHERE JD.Company_ID = %s
+        """, (company_id,))
+        job_company_data = cursor.fetchall()
+        cursor.close()
 
-            if job_company_data:
-                for row in job_company_data:
-                    print(row)  # Add this line for debugging
-                return render_template('student_company_jobs_posting.html', job_company_data=job_company_data)
-            else:
-                return "Company not found"
+        if job_company_data:
+            for row in job_company_data:
+                print(row)  # Add this line for debugging
+            return render_template('student_company_jobs_posting.html', job_company_data=job_company_data)
         else:
-            return "Unauthorized"
+            return "Company not found"
     else:
         return "Unauthorized"
-
-
+    
+def is_valid_company_id(company_id):
+    cursor = db_conn.cursor()
+    cursor.execute("SELECT COUNT(*) FROM Company WHERE Company_ID = %s", (company_id,))
+    count = cursor.fetchone()[0]
+    cursor.close()
+    return count > 0
 
 if __name__ == '__main__':
     app.run(host='0.0.0.0', port=80, debug=True)
