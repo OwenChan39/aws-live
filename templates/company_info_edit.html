@@ -141,8 +141,8 @@
                     <div class="form-group">
                         <label for="ot_claim">OT Claim (YES/NO):</label>
                         <select class="form-control" id="ot_claim" name="ot_claim" required>
-                            <option value="YES" {% if ot_claim == 'YES' %}selected{% endif %}>YES</option>
-                            <option value="NO"{% if ot_claim == 'NO' %}selected{% endif %}>NO</option>
+                            <option value="YES" {% if ot_claim = 'YES' %}selected{% endif %}>YES</option>
+                            <option value="NO"{% if ot_claim = 'NO' %}selected{% endif %}>NO</option>
                         </select>
                     </div>
 
