@@ -356,14 +356,14 @@ def company_profile_edit():
 
                 # You can add more fields as needed
 
-                if update_company_profile(company_id, updates):
+                if update_company_profile(company_id, updates) is True:
                     flash('Company information updated successfully', 'success')
                 else:
                     flash('Error updating company information', 'error')
 
                 return redirect(url_for('company_dashboard'))
 
-            return render_template('company_dashboard.html', company=company)
+            return render_template('company_info_edit.html', company=company)
 
     return redirect(url_for('login'))
 
