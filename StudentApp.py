@@ -315,7 +315,6 @@ def company_profile_edit():
         cursor = db_conn.cursor()
         cursor.execute("SELECT * FROM Company WHERE Company_ID = %s", (company_id,))
         company = cursor.fetchone()
-        print(company)
         cursor.close()
 
         if company:
@@ -325,19 +324,19 @@ def company_profile_edit():
 
                 if 'total_staff' in updated_fields:
                     new_total_staff = request.form.get('total_staff')
-                    updates['Total_Staff'] = new_total_staff
+                    updates['Total_staff'] = new_total_staff
 
                 if 'product_service' in updated_fields:
                     new_product_service = request.form.get('product_service')
-                    updates['Product_Service'] = new_product_service
+                    updates['Product_or_service'] = new_product_service
 
                 if 'company_website' in updated_fields:
                     new_company_website = request.form.get('company_website')
-                    updates['Company_Website'] = new_company_website
+                    updates['Comp_website'] = new_company_website
 
                 if 'ot_claim' in updated_fields:
                     new_ot_claim = request.form.get('ot_claim')
-                    updates['OT_Claim'] = new_ot_claim
+                    updates['OT_claim'] = new_ot_claim
 
                 if 'remarks' in updated_fields:
                     new_remarks = request.form.get('remarks')
@@ -345,15 +344,15 @@ def company_profile_edit():
 
                 if 'person_in_charge' in updated_fields:
                     new_person_in_charge = request.form.get('person_in_charge')
-                    updates['Person_in_Charge'] = new_person_in_charge
+                    updates['Person_in_charge'] = new_person_in_charge
 
                 if 'contact_number' in updated_fields:
                     new_contact_number = request.form.get('contact_number')
-                    updates['Contact_Number'] = new_contact_number
+                    updates['Contact_number'] = new_contact_number
 
                 if 'email' in updated_fields:
                     new_email = request.form.get('email')
-                    updates['Email'] = new_email
+                    updates['EmailAddress'] = new_email
 
                 # You can add more fields as needed
 
