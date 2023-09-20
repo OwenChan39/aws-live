@@ -430,26 +430,6 @@ def student_dashboard():
     # If the student is not logged in, redirect to the login page
     return redirect(url_for('login'))
 
-@app.route("/adminProfile", methods=["GET", "POST"])
-def adminProfile():
-    if "admin_username" in session and "role" in session and session["role"] == "admin":
-        admin_username = session["admin_username"]
-        cursor = db_conn.cursor()
-        cursor.execute("SELECT * FROM Admin WHERE admin_username = %s", (admin_username,))
-        admin = cursor.fetchone()
-
-        if admin:
-            admin_name = admin[0]
-            admin_username = admin[1]
-            admin_password = admin[2]
-        else:
-            admin_name = "Unknown Admin"  # Default if lecturer not found
-
-        cursor.close()
-
-        # Pass the lecturer_name to the template
-        return render_template("adminProfile.html", admin=admin)
-
 def update_student_profile(student_id, updates):
     cursor = db_conn.cursor()
     update_sql = "UPDATE Student SET "
@@ -689,24 +669,27 @@ def view_student_progress():
 
 @app.route('/student_company_jobs_posting')
 def student_company_jobs_posting():
-    if 'company_id' in session:
-        company_id = session['company_id']
-        cursor = db_conn.cursor()
-        cursor.execute("""
-            SELECT JD.JobPosition, C.Comp_name, JD.JobDescription, JD.CareerLevel
-            FROM Job_Details JD
-            JOIN Company C ON JD.Company_ID = C.Company_ID
-            WHERE JD.Company_ID = %s
-        """, (company_id,))
-        job_company_data = cursor.fetchall()
-        cursor.close()
+    if 'role' in session and session['role'] == 'student':
+        if 'company_id' in session:
+            company_id = session['company_id']
+            cursor = db_conn.cursor()
+            cursor.execute("""
+                SELECT JD.JobPosition, C.Comp_name, JD.JobDescription, JD.CareerLevel
+                FROM Job_Details JD
+                JOIN Company C ON JD.Company_ID = C.Company_ID
+                WHERE JD.Company_ID = %s
+            """, (company_id,))
+            job_company_data = cursor.fetchall()
+            cursor.close()
 
-        if job_company_data:
-            for row in job_company_data:
-                print(row)  # Add this line for debugging
-            return render_template('student_company_jobs_posting.html', job_company_data=job_company_data)
+            if job_company_data:
+                for row in job_company_data:
+                    print(row)  # Add this line for debugging
+                return render_template('student_company_jobs_posting.html', job_company_data=job_company_data)
+            else:
+                return "Company not found"
         else:
-            return "Company not found"
+            return "Unauthorized"
     else:
         return "Unauthorized"
 
