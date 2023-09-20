@@ -848,6 +848,73 @@ def student_company_jobs_posting():
     else:
         return "No job postings available"
 
+@app.route('/company_database', methods=["GET"])
+def company_database():
+    cursor = db_conn.cursor()
+
+    # Retrieve data for new applications
+    cursor.execute(
+        "SELECT Comp_name, EmailAddress, Contact_number, Comp_address, Person_in_charge, Status FROM Company WHERE Status = 'Pending' ORDER BY Comp_name"
+    )
+    new_applications = cursor.fetchall()
+    num_of_new = len(new_applications)
+    enumerated_new = enumerate(new_applications)
+
+    # Retrieve data for approved companies
+    cursor.execute(
+        "SELECT Comp_name, EmailAddress, Contact_number, Comp_address, Person_in_charge, Status FROM Company WHERE Status = 'Approved' ORDER BY Comp_name"
+    )
+    approved_companies = cursor.fetchall()
+    num_of_approved = len(approved_companies)
+    enumerated_approved = enumerate(approved_companies)
+
+    # Retrieve data for rejected companies
+    cursor.execute(
+        "SELECT Comp_name, EmailAddress, Contact_number, Comp_address, Person_in_charge, Status FROM Company WHERE Status = 'Rejected' ORDER BY Comp_name"
+    )
+    rejected_companies = cursor.fetchall()
+    num_of_rejected = len(rejected_companies)
+    enumerated_rejected = enumerate(rejected_companies)
+
+    cursor.close()
+
+    return render_template("adminCompany.html",
+                           new_applications=enumerated_new,
+                           num_of_new=num_of_new,
+                           approved_companies=enumerated_approved,
+                           num_of_approved=num_of_approved,
+                           rejected_companies=enumerated_rejected,
+                           num_of_rejected=num_of_rejected)
+
+@app.route('/adminDeleteCompany/<string:company_name>', methods=["GET"])
+def admin_delete_company(company_name):
+    # Implement code to delete the student with the given student_id from the database or list
+    # You can use a database ORM or manipulate the list directly
+    cursor = db_conn.cursor()
+
+    # Example using a list:
+    delete_query = "DELETE FROM Company WHERE Comp_name = %s"
+    cursor.execute(delete_query, (company_name,))
+    db_conn.commit()
+
+    cursor.close()
+    return redirect(url_for("company_database"))
+
+@app.route('/update_company_status', methods=['POST'])
+def update_company_status():
+    cursor = db_conn.cursor()
+    # Get the company ID from the submitted form
+    company_name = str(request.form.get('company_name'))
+    action = str(request.form.get('action'))
+
+    if action == 'approve':
+        cursor.execute("UPDATE Company SET Status = 'Approved' WHERE Comp_name = %s", (company_name,))
+    elif action == 'reject':
+        cursor.execute("UPDATE Company SET Status = 'Rejected' WHERE Comp_name = %s", (company_name,))
+    
+    db_conn.commit()
+    cursor.close()
+    return redirect(url_for("company_database"))
 
 if __name__ == '__main__':
     app.run(host='0.0.0.0', port=80, debug=True)
