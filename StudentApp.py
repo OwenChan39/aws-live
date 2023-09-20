@@ -488,6 +488,30 @@ def student_dashboard():
     # If the student is not logged in, redirect to the login page
     return redirect(url_for('login'))
 
+@app.route("/adminLanding")
+def adminLanding():
+    return render_template("adminLanding.html")
+    
+@app.route("/adminProfile", methods=["GET", "POST"])
+def adminProfile():
+    if "admin_username" in session and "role" in session and session["role"] == "admin":
+        admin_username = session["admin_username"]
+        cursor = db_conn.cursor()
+        cursor.execute("SELECT * FROM Admin WHERE admin_username = %s", (admin_username,))
+        admin = cursor.fetchone()
+
+        if admin:
+            admin_name = admin[0]
+            admin_username = admin[1]
+            admin_password = admin[2]
+        else:
+            admin_name = "Unknown Admin"  # Default if lecturer not found
+
+        cursor.close()
+
+        # Pass the lecturer_name to the template
+        return render_template("adminProfile.html", admin=admin)
+
 def update_student_profile(student_id, updates):
     cursor = db_conn.cursor()
     update_sql = "UPDATE Student SET "
@@ -664,6 +688,87 @@ def student_database():
 
     return render_template('studentdatabase.html', students=students)
 
+@app.route("/adminStudent", methods=["GET"])
+def adminStudent():
+    cursor = db_conn.cursor()
+
+    # Get the search query from the URL parameter
+    query = request.args.get("query", "")
+
+    # Use the search query to filter the student data
+    if query:
+        # Execute a SQL query to retrieve matching students
+        cursor.execute(
+            "SELECT Stud_ID, Stud_name, Gender, Programme_of_Study, Intern_batch, Personal_emailAddress FROM Student WHERE Stud_name LIKE %s OR Stud_ID LIKE %s",
+            ("%" + query + "%", "%" + query + "%"),
+        )
+    else:
+        # If no query provided, retrieve all students
+        cursor.execute(
+            "SELECT Stud_ID, Stud_name, Gender, Programme_of_Study, Intern_batch, Personal_emailAddress FROM Student ORDER BY Stud_name"
+        )
+
+    students = cursor.fetchall()
+    number_of_students = len(students)
+    enumerated_students = enumerate(students)
+    cursor.close()
+
+    return render_template("adminStudent.html", students=enumerated_students, number_of_students=number_of_students)
+
+@app.route('/adminDeleteStudent/<string:student_id>', methods=["GET"])
+def admin_delete_student(student_id):
+    # Implement code to delete the student with the given student_id from the database or list
+    # You can use a database ORM or manipulate the list directly
+    cursor = db_conn.cursor()
+
+    # Example using a list:
+    delete_query = "DELETE FROM Student WHERE Stud_ID = %s"
+    cursor.execute(delete_query, (student_id,))
+    db_conn.commit()
+
+    cursor.close()
+    return redirect(url_for("adminStudent"))
+
+@app.route("/adminLecturer", methods=["GET"])
+def adminLecturer():
+    cursor = db_conn.cursor()
+
+    # Get the search query from the URL parameter
+    query = request.args.get("query", "")
+
+    # Use the search query to filter the student data
+    if query:
+        # Execute a SQL query to retrieve matching students
+        cursor.execute(
+            "SELECT Lect_name, Lect_ID, Lect_emailAddress, Lect_IC, Lect_position FROM Lecturer WHERE Lect_name LIKE %s OR Lect_ID LIKE %s",
+            ("%" + query + "%", "%" + query + "%"),
+        )
+    else:
+        # If no query provided, retrieve all students
+        cursor.execute(
+            "SELECT Lect_name, Lect_ID, Lect_emailAddress, Lect_IC, Lect_position FROM Lecturer ORDER BY Lect_name"
+        )
+
+    lecturers = cursor.fetchall()
+    number_of_lecturers = len(lecturers)
+    enumerated_lecturers = enumerate(lecturers)
+    cursor.close()
+
+    return render_template("adminLecturer.html", lecturers=enumerated_lecturers, number_of_lecturers=number_of_lecturers)
+
+@app.route('/adminDeleteLecturer/<string:lecturer_id>', methods=["GET"])
+def admin_delete_lecturer(lecturer_id):
+    # Implement code to delete the lecturer with the given lecturer_id from the database or list
+    # You can use a database ORM or manipulate the list directly
+    cursor = db_conn.cursor()
+
+    # Example using a list:
+    delete_query = "DELETE FROM Lecturer WHERE Lect_ID = %s"
+    cursor.execute(delete_query, (lecturer_id,))
+    db_conn.commit()
+
+    cursor.close()
+    return redirect(url_for("adminLecturer"))
 
 @app.route('/view_student_progress', methods=['GET'])
 def view_student_progress():
