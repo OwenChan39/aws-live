@@ -146,12 +146,12 @@
         <!-- Job Postings -->
         <div class="job-postings">
             <!-- Loop through the job_company_data and generate job posting boxes -->
-            {% for job, company in job_company_data %}
+            {% for row in job_company_data %}
             <div class="job-posting-box">
-                <h3>{{ job.job_title }}</h3>
-                <p>Company: {{ company.company_name }}</p>
-                <p>Description: {{ job.description }}</p>
-                <p>Career Level: {{ job.career_level }}</p>
+                <h3>{{ row[0] }}</h3>
+                <p>Company: {{ row[1] }}</p>
+                <p>Description: {{ row[2] }}</p>
+                <p>Career Level: {{ row[3] }}</p>
                 <a href="#" class="apply-button">Apply</a>
             </div>
             {% endfor %}
