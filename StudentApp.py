@@ -281,6 +281,49 @@ def company_dashboard():
         
     else:
         return "Unauthorized"
+    
+def update_company_info_in_db(company_id, total_staff, product_service, company_website, ot_claim, remarks, person_in_charge, contact_number, email):
+    try:
+        cursor = db_conn.cursor()
+        # Define your SQL UPDATE query here
+        update_query = """
+        UPDATE Company
+        SET Total_Staff = %s, Product_Service = %s, Company_Website = %s, OT_Claim = %s, Remarks = %s, Person_in_Charge = %s, Contact_Number = %s, Email = %s
+        WHERE Company_ID = %s
+        """
+        cursor.execute(update_query, (total_staff, product_service, company_website, ot_claim, remarks, person_in_charge, contact_number, email, company_id))
+        db_conn.commit()
+        cursor.close()
+        return True
+    except Exception as e:
+        print(str(e))
+        return False
+
+@app.route('/update_company_info', methods=['POST'])
+def update_company_info():
+    if 'company_id' in session:
+        company_id = session['company_id']
+        # Retrieve the form data
+        total_staff = request.form.get('total_staff')
+        product_service = request.form.get('product_service')
+        company_website = request.form.get('company_website')
+        ot_claim = request.form.get('ot_claim')
+        remarks = request.form.get('remarks')
+        person_in_charge = request.form.get('person_in_charge')
+        contact_number = request.form.get('contact_number')
+        email = request.form.get('email')
+        # You may also want to handle file uploads for certificate and logo here
+        
+        # Update the company information in the database
+        if update_company_info_in_db(company_id, total_staff, product_service, company_website, ot_claim, remarks, person_in_charge, contact_number, email):
+            flash('Company information updated successfully', 'success')
+        else:
+            flash('Error updating company information', 'error')
+
+        return redirect(url_for('company_dashboard'))
+    else:
+        return "Unauthorized"
+
 
 @app.route("/addjobpage")
 def addjobpage():
