@@ -1,269 +1,993 @@
-<!DOCTYPE html>
-<html lang="en">
+from flask import Flask, render_template, request, redirect, url_for,session, flash
+from pymysql import connections
+import os
+import boto3
+from botocore.exceptions import NoCredentialsError, ClientError  
+from config import *
+from werkzeug.utils import secure_filename
+import random
+import string
 
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <meta name="description" content="">
-    <meta name="author" content="">
-    <link rel="preconnect" href="https://fonts.gstatic.com">
-    <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@300;400;600;700;800&display=swap"
-        rel="stylesheet">
+app = Flask(__name__, static_folder='static')
+app.secret_key = '123456'
 
-    <title>Company info update - SEO Dream</title>
+# AWS S3 configuration
+bucket = custombucket
+region = customregion
+s3 = boto3.resource('s3')
 
-    <!-- Bootstrap core CSS -->
-    <link href="{{ url_for('static', filename='vendor/bootstrap/css/bootstrap.min.css') }}" rel="stylesheet">
+# Database configuration
+db_conn = connections.Connection(
+    host=customhost,
+    port=3306,
+    user=customuser,
+    password=custompass,
+    db=customdb
+)
 
-    <!-- Additional CSS Files -->
-    <link href="{{ url_for('static', filename='assets/css/fontawesome.css') }}" rel="stylesheet">
-    <link href="{{ url_for('static', filename='assets/css/templatemo-seo-dream.css') }}" rel="stylesheet">
-    <link href="{{ url_for('static', filename='assets/css/animated.css') }}" rel="stylesheet">
-    <link href="{{ url_for('static', filename='assets/css/owl.css') }}" rel="stylesheet">
-    <!-- Your head content -->
+@app.route("/")
+def home():
+    return render_template('index.html')
 
-    <style>
-        /* Header styles */
-        .header {
-            background-color: #33ccc5;
-            /* Change this color to match your index.html */
-            color: #fff;
-            padding: 10px 0;
-            text-align: center;
-        }
+@app.route("/login")
+def login():
+    return render_template('login.html')
 
-        .header h1 {
-            margin: 0;
-        }
+# Define a route for student sign-up
+@app.route("/student_sign_up", methods=['GET', 'POST'])
+def student_sign_up():
+    if request.method == 'POST':
+        # Get form data from the POST request
+        student_name = request.form['Stud_name']
+        student_id = request.form['Stud_ID']
+        nric_no = request.form['NRIC_Number']
+        gender = request.form['Gender']
+        programme = request.form['Programme_of_Study']
+        cgpa = request.form['CGPA']
+        student_email = request.form['TARUMT_emailAddress']
+        mobile_num = request.form['Mobile_number']
+        intern_batch = request.form['Intern_batch']
+        home_address = request.form['Home_Address']
+        personal_email = request.form['Personal_emailAddress']
+        student_image_file = request.files['studentImage']
 
-        .sidebar {
-            width: 250px;
-            background-color: #333;
-            /* Change this color to match your index.html */
-            color: #fff;
-            position: fixed;
-            height: 100%;
-            overflow: visible;
-        }
+        # Insert student data into the database
+        insert_sql = "INSERT INTO Student (Stud_name, Stud_ID, NRIC_Number, Gender, Programme_of_Study, CGPA, TARUMT_emailAddress, Mobile_number, Intern_batch, Home_Address, Personal_emailAddress) VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s)"
+        cursor = db_conn.cursor()
+        
+        try:
+            cursor.execute(insert_sql, (student_name, student_id, nric_no, gender, programme, cgpa, student_email, mobile_num, intern_batch, home_address, personal_email))
+            db_conn.commit()
 
-        .sidebar a {
-            padding: 15px;
-            text-decoration: none;
-            font-size: 18px;
-            color: #fff;
-            display: block;
-        }
+            # Upload student image to S3
+            if student_image_file.filename != "":
+                student_image_file_name_in_s3 = "student-id-" + str(student_id) + "_image_file"
+                s3.Bucket(bucket).put_object(Key=student_image_file_name_in_s3, Body=student_image_file)
 
-        .sidebar a:hover {
-            background-color: #555;
-        }
+            return render_template('signup_success.html', name=student_name)
+        except Exception as e:
+            return str(e)
+        finally:
+            cursor.close()
 
-        .content {
-            margin-left: 250px;
-            padding: 20px;
-        }
+    return render_template('student_sign_up.html')
 
-        .container {
-            background-color: #f2f2f2;
-            /* Grey background color */
-            padding: 20px;
-            border-radius: 10px;
-            margin-top: 10px;
-        }
+@app.route("/lecturer_sign_up", methods=['GET', 'POST'])
+def lecturer_sign_up():
+    if request.method == 'POST':
+        # Get form data from the POST request
+        full_name = request.form['full_name']
+        staff_id = request.form['staff_id']
+        email = request.form['email']
+        ic = request.form['ic']
+        position = request.form['position']
 
-        .job-offer {
-            margin-top: 50px;
-        }
+        # Insert lecturer data into the database
+        insert_sql = "INSERT INTO Lecturer (Lect_name, Lect_ID, Lect_emailAddress, Lect_IC, Lect_Position) VALUES (%s, %s, %s, %s, %s)"
+        cursor = db_conn.cursor()
+        
+        try:
+            cursor.execute(insert_sql, (full_name, staff_id, email, ic, position))
+            db_conn.commit()
 
-        .job-offer ul li {
-            margin-right: 10px;
-            /* Add space between job name and delete button */
-        }
+            return render_template('signup_success.html', name=full_name)
+        except Exception as e:
+            return str(e)
+        finally:
+            cursor.close()
 
-        /* Additional styles for job position input fields */
-        .job-inputs {
-            margin-top: 20px;
-        }
+    return render_template('lecturer_sign_up.html')
 
-        .job-inputs .form-group {
-            margin-bottom: 20px;
-        }
-    </style>
-</head>
+# Function to generate a random unique company ID
+def generate_company_id():
+    # Generate a random alphanumeric string, e.g., 'C001'
+    prefix = 'C'
+    unique_id = ''.join(random.choices(string.digits, k=3))
+    company_id = f'{prefix}{unique_id}'
+    # Check if the generated ID is already in use
+    while db_id_exists(company_id):
+        unique_id = ''.join(random.choices(string.digits, k=3))
+        company_id = f'{prefix}{unique_id}'
+    return company_id
 
-<body>
+# Function to check if the generated company ID already exists in the database
+def db_id_exists(company_id):
+    cursor = db_conn.cursor()
+    cursor.execute("SELECT COUNT(*) FROM Company WHERE Company_ID = %s", (company_id,))
+    count = cursor.fetchone()[0]
+    cursor.close()
+    return count > 0
 
-    <!-- ***** Header Start ***** -->
-    <div class="header">
-        <h1>Company Information Update</h1>
-    </div>
-    <!-- ***** Header End ***** -->
-    <div class="sidebar">
-        <a href="#company-info">Company Information</a>
-        <a href="#job-offer">Job Offered</a>
-        <!-- Add more navigation links as needed -->
-        <!-- <a href="#">Link 2</a> -->
-        <!-- <a href="#">Link 3</a> -->
-    </div>
-    <!-- ***** Company Information Form Start ***** -->
+@app.route("/company_signup", methods=['GET', 'POST'])
+def company_signup():
+    if request.method == 'POST':
+        # Get form data from the POST request
+        company_name = request.form['company_name']
+        industry = request.form['industry']
+        total_staff = request.form['total_staff']
+        product_service = request.form['product_service']
+        company_website = request.form['company_website']
+        nature_of_job = request.form['job-possition']
+        ot_claim = request.form['ot_claim']
+        company_address = request.form['company_address']
+        state = request.form['state']
+        remarks = request.form['remarks']
+        person_in_charge = request.form['person_in_charge']
+        contact_number = request.form['contact_number']
+        email = request.form['email']
 
-    <div class="content">
-        <div class="company-info" id="company-info">
+        certificate_upload = request.files['certificate_upload']
+        logo_upload = request.files['logo_upload']
 
-            <h3>Update <strong>{{ company_name }}</strong> Information</h3>
+        try:
+            # Generate a unique company ID
+            company_id = generate_company_id()
+            
+            # Insert company data into the database
+            insert_sql = "INSERT INTO Company (Company_ID, Comp_name, Comp_website, State, Contact_number, Person_in_charge, EmailAddress, Comp_industry, Comp_address, Total_staff, Product_or_service, Job_offer, OT_claim, Remarks, Status) VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s)"
+            cursor = db_conn.cursor()
 
-            <div class="container">
-                <form action="/company_profile_edit" method="POST">
-                    <br>
-                    <!-- Total Staff -->
-                    <div class="form-group">
-                        <label for="total_staff">Total Staff:</label>
-                        <input type="number" class="form-control" id="total_staff" name="total_staff"
-                            value="{{ total_staff }}" required>
-                    </div>
+            status = "Pending"
+            
+            cursor.execute(insert_sql, (
+                company_id, company_name, company_website, state, contact_number, person_in_charge, email, industry, company_address, total_staff, product_service, nature_of_job, ot_claim, remarks,status))
+            db_conn.commit()
 
-                    <br>
-                    <!-- Product or Service -->
-                    <div class="form-group">
-                        <label for="product_service">Product or Service:</label>
-                        <textarea class="form-control" id="product_service" name="product_service" rows="4"
-                            required>{{ product_service }}</textarea>
-                    </div>
+            # Upload company documents to S3
+            if certificate_upload.filename != "":
+                certificate_s3 = f"company-{company_id}-SSM_certificate"
+                s3.Bucket(bucket).put_object(Key=certificate_s3, Body=certificate_upload)
 
-                    <br>
-                    <!-- Company Website -->
-                    <div class="form-group">
-                        <label for="company_website">Company Website:</label>
-                        <input type="url" class="form-control" id="company_website" name="company_website"
-                            value="{{ company_website }}" required>
-                    </div>
+            if logo_upload.filename != "":
+                company_logo_s3 = f"company-{company_id}-logo"
+                s3.Bucket(bucket).put_object(Key=company_logo_s3, Body=logo_upload)
 
-                    <br>
-                    <!-- OT Claim (YES/NO) -->
-                    <div class="form-group">
-                        <label for="ot_claim">OT Claim (YES/NO):</label>
-                        <select class="form-control" id="ot_claim" name="ot_claim" required>
-                            <option value="YES" {% if ot_claim != 'NO' %}selected{% endif %}>YES</option>
-                            <option value="NO" {% if ot_claim != 'YES' %}selected{% endif %}>NO</option>
-                        </select>
-                    </div>
+            return render_template('signup_success.html', name=company_name)
+        except Exception as e:
+            return str(e)
+        finally:
+            cursor.close()
 
-                    <br>
-                    <!-- Remarks -->
-                    <div class="form-group">
-                        <label for="remarks">Remarks:</label>
-                        <textarea class="form-control" id="remarks" name="remarks" rows="4">{{ remarks }}</textarea>
-                    </div>
+    return render_template('company_signup.html')
 
-                    <br>
-                    <!-- Person in Charge -->
-                    <div class="form-group">
-                        <label for="person_in_charge">Person in Charge Name:</label>
-                        <input type="text" class="form-control" id="person_in_charge" name="person_in_charge"
-                            value="{{ person_in_charge }}" required>
-                    </div>
+# Function to encrypt a string
+def encrypt(text, key):
+    encrypted_text = ""
+    for char in text:
+        encrypted_char = chr(ord(char) ^ key)
+        encrypted_text += encrypted_char
+    return encrypted_text
 
-                    <br>
-                    <!-- Contact Number -->
-                    <div class="form-group">
-                        <label for="contact_number">Contact Number:</label>
-                        <input type="tel" class="form-control" id="contact_number" name="contact_number"
-                            value="{{ contact_number }}" required>
-                    </div>
+# Function to decrypt an encrypted string
+def decrypt(encrypted_text, key):
+    decrypted_text = ""
+    for char in encrypted_text:
+        decrypted_char = chr(ord(char) ^ key)
+        decrypted_text += decrypted_char
+    return decrypted_text
 
-                    <br>
-                    <!-- Email -->
-                    <div class="form-group">
-                        <label for="email">Email:</label>
-                        <input type="email" class="form-control" id="email" name="email" value="{{ email }}" required>
-                    </div>
+@app.route("/admin_signup", methods=["GET", "POST"])
+def admin_signup():
+    if request.method == "POST":
+        encrypt_key = 42
+        admin_name = request.form["admin_name"]
+        admin_username = request.form["admin_username"]
+        admin_password = encrypt(request.form["admin_password"], encrypt_key)
 
-                    <br>
-                    <!-- Upload SSM/Company Registration Certificate -->
-                    <!-- <div class="form-group">
-                        <label for="certificate_upload">Upload SSM/Company Registration Certificate:</label>
-                        <input type="file" class="form-control-file" id="certificate_upload" name="certificate_upload"
-                            value="{{ certificate_upload }}" required>
-                    </div>
+        insert_sql = "INSERT INTO Admin (admin_name, admin_username, admin_password) VALUES (%s, %s, %s)"
+        cursor = db_conn.cursor()
 
-                    <br> -->
-                    <!-- Upload Company Logo -->
-                    <!-- <div class="form-group">
-                        <label for="logo_upload">Upload Company Logo:</label>
-                        <input type="file" class="form-control-file" id="logo_upload" name="logo_upload" value="{{ logo_upload }}" required>
-                    </div> -->
+        try:
+            cursor.execute(insert_sql, (admin_name, admin_username, admin_password))
+            db_conn.commit()
 
-                    <div class="update-button">
-                        <div class="form-group">
-                            <button type="submit">Update</button>
-                        </div>
-                    </div>
-                </form>
-            </div>
-        </div>
+            return render_template("signup_success.html", name=admin_name)
 
-        <div class="job-offer" id='job-offer'>
-            <h3>Job Positions Offered</h3>
+        finally:
+            cursor.close()
+    
+    return render_template("adminSignup.html")
 
-            <!-- Additional input fields for job positions -->
-            <div class="job-inputs">
-                <h4>Add Job Position</h4>
-                <div class="container">
-                    <form action="/save_job_details" method="POST">
-                        <div class="form-group">
-                            <label for="job_position">Job Position:</label>
-                            <input type="text" class="form-control" id="job_position" name="job_position">
-                        </div>
-                        <div class="form-group">
-                            <label for="job_description">Job Description:</label>
-                            <textarea class="form-control" id="job_description" name="job_description"
-                                rows="4"></textarea>
-                        </div>
-                        <div class="form-group">
-                            <label for="job_requirements">Job Requirements:</label>
-                            <textarea class="form-control" id="job_requirements" name="job_requirements"
-                                rows="4"></textarea>
-                        </div>
-                        <div class="form-group">
-                            <label for="career_level">Career Level:</label>
-                            <input type="text" class="form-control" id="career_level" name="career_level">
-                        </div>
-                        <div class="form-group">
-                            <label for="qualification">Qualification:</label>
-                            <input type="text" class="form-control" id="qualification" name="qualification">
-                        </div>
-                        <div class="form-group">
-                            <label for="job_type">Job Type:</label>
-                            <input type="text" class="form-control" id="job_type" name="job_type">
-                        </div>
-                        <div class="form-group">
-                            <label for="years_experience">Years of Experience:</label>
-                            <input type="number" class="form-control" id="years_experience" name="years_experience">
-                        </div>
-                        <div class="form-group">
-                            <label for="salary">Salary:</label>
-                            <input type="text" class="form-control" id="salary" name="salary">
-                        </div>
-                        <div class="form-group">
-                            <button type="submit" class="main-green-button">Add</button>
-                        </div>
-                        <!-- ... (other form fields for additional job positions can be added here) ... -->
-                    </form>
-                </div>
-            </div>
+@app.route('/login', methods=['POST'], endpoint='login_role')
+def login():
+    if request.method == 'POST':
+        # Get the entered role, username, and password from the form
+        role = request.form['role']
+        username = request.form['username']
+        password = request.form['password']
 
-            <!-- Button to add another job position -->
-        </div>
+        # Query the database to check if the username and password match for the selected role
+        cursor = db_conn.cursor()
 
-    </div>
+        if role == 'student':
+            # Check if it's a student login
+            cursor.execute("SELECT * FROM Student WHERE Stud_ID = %s AND NRIC_Number = %s", (username, password))
+            student = cursor.fetchone()
 
-    <!-- ***** Company Information Form End ***** -->
+            if student:
+                # Student credentials are valid, redirect to the student dashboard
+                session['student_id'] = username
+                session['role'] = 'student'
+                return redirect(url_for('student_dashboard'))
+        
+        elif role == 'lecturer':
+            # Check if it's a lecturer login
+            cursor.execute("SELECT * FROM Lecturer WHERE Lect_ID = %s AND Lect_IC = %s", (username, password))
+            lecturer = cursor.fetchone()
 
-    <!-- ***** Footer Start ***** -->
-    <footer>
-        <!-- Add your footer content here, such as copyright information or links -->
-    </footer>
-    <!-- ***** Footer End ***** -->
+            if lecturer:
+                # Lecturer credentials are valid, redirect to the lecturer dashboard
+                session['lecturer_id'] = username
+                session['role'] = 'lecturer'
+                return redirect(url_for('lecturer_dashboard'))
+            
+        elif role == 'company':
+            # Check if it's a company login
+            cursor.execute("SELECT * FROM Company WHERE Company_ID = %s AND Contact_number = %s", (username, password))
+            company = cursor.fetchone()
+
+            if company:
+                session['company_id'] = username
+                session['role'] = 'company'
+                return redirect(url_for('company_dashboard'))
+
+        elif role == "admin":
+            encryption_key = 42
+            cursor.execute(
+                "SELECT admin_username, admin_password FROM Admin WHERE admin_username = %s",
+                (username)
+            )
+            result = cursor.fetchone()
+
+            if result:
+                stored_encrypted_password = result[1]
+
+                # Decrypt the stored encrypted password
+                stored_password = decrypt(stored_encrypted_password, encryption_key)
+
+                if stored_password == password:
+                    # Username and password match, it's a successful login
+                    session["admin_username"] = username
+                    session["role"] = "admin"
+                    return redirect(url_for("adminLanding"))
+
+        cursor.close()
+
+        # Invalid credentials or role, display an error message
+        flash('Invalid username, password, or role', 'error')
+
+    return render_template('login.html')
+
+@app.route('/company_dashboard', methods=['GET', 'POST'])
+def company_dashboard():
+    if 'company_id' in session:
+        company_id = session['company_id']
+        cursor = db_conn.cursor()
+        cursor.execute("SELECT * FROM Company WHERE Company_ID = %s", (company_id,))
+        company = cursor.fetchone()
+        cursor.close()
+        
+        if company:
+            company_id = company[0]
+            company_name = company[1]
+            company_website = company[2]
+            state = company[3]
+            contact_number = company[4]
+            person_in_charge = company[5]
+            email = company[6]
+            industry = company[7]
+            company_address = company[8]
+            total_staff = company[9]
+            product_service = company[10]
+            nature_of_job = company[11]
+            ot_claim = company[12]
+            remarks = company[13]
+            status = company[14]
+            
+            
+            company_logo = "company-" + str(company_id) + "-logo"
+            company_image_url = s3.meta.client.generate_presigned_url(
+                'get_object',
+                Params={'Bucket': bucket, 'Key': company_logo},
+                ExpiresIn=3600
+            )
+
+            cursor = db_conn.cursor()
+            cursor.execute("SELECT * FROM Job_Details WHERE Company_ID = %s", (company_id,))
+            companyjobs = cursor.fetchall()  # Fetch all job listings
+            cursor.close()
+
+            return render_template('company_dashboard.html',
+                                   company_name=company_name,
+                                   industry=industry,
+                                   total_staff=total_staff,
+                                   product_service=product_service,
+                                   company_website=company_website,
+                                   nature_of_job=nature_of_job,
+                                   ot_claim=ot_claim,
+                                   company_address=company_address,
+                                   state=state,
+                                   remarks=remarks,
+                                   person_in_charge=person_in_charge,
+                                   contact_number=contact_number,
+                                   email=email,
+                                   company_image_url=company_image_url,
+                                   status=status,
+                                   companyjobs=companyjobs,
+                                   )
+        else:
+            return "Company not found"
+        
+    else:
+        return "Unauthorized"
+
+@app.route("/addjobpage")
+def addjobpage():
+    if 'company_id' in session:
+        company_id = session['company_id']
+        cursor = db_conn.cursor()
+        cursor.execute("SELECT * FROM Company WHERE Company_ID = %s", (company_id,))
+        company = cursor.fetchone()
+        cursor.close()
+
+        if company:
+            company_id = company[0]
+            company_name = company[1]
+            company_website = company[2]
+            contact_number = company[4]
+            person_in_charge = company[5]
+            email = company[6]
+            total_staff = company[9]
+            product_service = company[10]
+            ot_claim = company[12]
+            remarks = company[13]
+            
+            company_logo = "company-" + str(company_id) + "-logo"
+            company_image_url = s3.meta.client.generate_presigned_url(
+                'get_object',
+                Params={'Bucket': bucket, 'Key': company_logo},
+                ExpiresIn=3600
+            )
+            return render_template('company_info_edit.html', 
+                                    company_name=company_name,
+                                    total_staff=total_staff,
+                                    product_service=product_service,
+                                    company_website=company_website,
+                                    ot_claim=ot_claim,
+                                    remarks=remarks,
+                                    person_in_charge=person_in_charge,
+                                    contact_number=contact_number,
+                                    email=email,
+                                    company_image_url=company_image_url,
+                                    )
+
+@app.route('/company_profile_edit', methods=['GET', 'POST'])
+def company_profile_edit():
+    if 'company_id' in session:
+        if request.method == 'POST':
+            company_id = session['company_id']
+            cursor = db_conn.cursor()
+            total_staff = request.form['total_staff']
+            product_service = request.form['product_service']
+            company_website = request.form['company_website']
+            remarks = request.form['remarks']
+            person_in_charge = request.form['person_in_charge']
+            contact_number = request.form['contact_number']
+            email = request.form['email']
+
+            # Perform the SQL UPDATE operation to update the company's data
+            update_query = """
+                UPDATE Company
+                SET Total_Staff = %s, Product_Service = %s, Company_Website = %s, Remarks = %s,
+                Person_In_Charge = %s, Contact_Number = %s, Email = %s
+                WHERE Company_ID = %s
+            """
+
+            cursor.execute(update_query, (
+                total_staff, product_service, company_website, remarks,
+                person_in_charge, contact_number, email, company_id
+            ))
+
+            db_conn.commit()
+            cursor.close()
+            return render_template('company_dashboard.html')
+        
+        return redirect(url_for('company_info_edit'))
 
 
-</html>
+@app.route('/save_job_details', methods=['POST'])
+def save_job_details():
+    if request.method == 'POST':
+        # Get job details from the form
+        company_id = session.get('company_id')  # Assuming you store company_id in session after login
+        job_position = request.form['job_position']
+        job_description = request.form['job_description']
+        job_requirements = request.form['job_requirements']
+        career_level = request.form['career_level']
+        qualification = request.form['qualification']
+        job_type = request.form['job_type']
+        years_experience = request.form['years_experience']
+        salary = request.form['salary']
+
+        try:
+            # Insert job details into the database
+            insert_sql = """
+                INSERT INTO Job_Details (
+                    company_id, JobPosition, JobDescription, JobRequirements,
+                    CareerLevel, Qualification, JobType, YearsExperience, Salary
+                ) VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s)
+            """
+            cursor = db_conn.cursor()
+            cursor.execute(insert_sql, (
+                company_id, job_position, job_description, job_requirements,
+                career_level, qualification, job_type, years_experience, salary
+            ))
+            db_conn.commit()
+            cursor.close()
+
+            # Redirect to a success page or any other appropriate action
+            return redirect(url_for('company_dashboard'))
+
+        except Exception as e:
+            return str(e)  # Handle database insertion errors here
+
+    # Handle GET requests or other cases
+    return render_template('company_info_edit.html')  # Render the form page again if not a POST request
+
+
+
+@app.route('/lecturer_dashboard', methods=['GET', 'POST'])
+def lecturer_dashboard():
+    if 'lecturer_id' in session and 'role' in session and session['role'] == 'lecturer':
+        lecturer_id = session['lecturer_id']
+        cursor = db_conn.cursor()
+        cursor.execute("SELECT * FROM Lecturer WHERE Lect_ID = %s", (lecturer_id,))
+        lecturer = cursor.fetchone()
+
+        if lecturer:
+            lecturer_name = lecturer[0]
+        else:
+            lecturer_name = "Unknown Lecturer"  # Default if lecturer not found
+
+        cursor.close()
+
+        # Pass the lecturer_name to the template
+        return render_template('lecturer_dashboard.html', lecturer_name=lecturer_name)
+
+
+@app.route('/student_dashboard', methods=['GET', 'POST'])
+def student_dashboard():
+    if 'student_id' in session:
+        student_id = session['student_id']
+        cursor = db_conn.cursor()
+        cursor.execute("SELECT * FROM Student WHERE Stud_ID = %s", (student_id,))
+        student = cursor.fetchone()
+        cursor.close()
+
+        if student:
+            # Access the elements of the tuple by their indices
+            Stud_name = student[0]
+            Stud_ID = student[1]
+            NRIC_Number = student[2]
+            Gender = student[3]
+            Programme_of_Study = student[4]
+            CGPA = student[5]
+            TARUMT_emailAddress = student[6]
+            Mobile_number = student[7]
+            Intern_batch = student[8]
+            Home_Address = student[9]
+            Personal_emailAddress = student[10]
+
+            student_image_file_name_in_s3 = "student-id-" + str(student_id) + "_image_file"
+            student_image_url = s3.meta.client.generate_presigned_url(
+                'get_object',
+                Params={'Bucket': bucket, 'Key': student_image_file_name_in_s3},
+                ExpiresIn=3600
+            )
+
+            # Check if a resume file exists in S3
+            resume_filename = f"student-{student_id}-resume.pdf"  # Adjust the filename format as needed
+            student_resume_url = None
+
+            try:
+                s3.Object(bucket, resume_filename).load()
+                student_resume_url = s3.meta.client.generate_presigned_url(
+                    'get_object',
+                    Params={'Bucket': bucket, 'Key': resume_filename},
+                    ExpiresIn=3600
+                )
+            except Exception as e:
+                pass
+
+            if request.method == 'POST' and 'resume_file' in request.files:
+                student_resume_file = request.files['resume_file']
+
+                # Ensure a file was selected for upload
+                if student_resume_file and student_resume_file.filename != '':
+                    resume_filename = f"student-{student_id}-resume.pdf"  # Adjust the filename format as needed
+
+                    try:
+                        s3.Bucket(bucket).put_object(Key=resume_filename, Body=student_resume_file)
+
+                        student_resume_url = s3.meta.client.generate_presigned_url(
+                            'get_object',
+                            Params={'Bucket': bucket, 'Key': resume_filename},
+                            ExpiresIn=3600
+                        )
+
+                        flash('Resume uploaded successfully', 'success')
+                    except NoCredentialsError:
+                        flash('S3 credentials are missing or incorrect. Unable to upload resume.', 'error')
+                    except Exception as e:
+                        flash(f'Error uploading resume: {str(e)}', 'error')
+                else:
+                    flash('No resume file selected for upload', 'error')
+
+            if student_resume_url:
+                resume_button_text = "View Resume"
+            else:
+                resume_button_text = "Upload Resume"
+
+            return render_template('student_dashboard.html', Stud_name=Stud_name, Stud_ID=Stud_ID,
+                                   NRIC_Number=NRIC_Number, Gender=Gender, Programme_of_Study=Programme_of_Study,
+                                   CGPA=CGPA, TARUMT_emailAddress=TARUMT_emailAddress, Mobile_number=Mobile_number,
+                                   Intern_batch=Intern_batch, Home_Address=Home_Address,
+                                   Personal_emailAddress=Personal_emailAddress, student_image_url=student_image_url,
+                                   student_resume_url=student_resume_url, resume_button_text=resume_button_text)
+
+    # If the student is not logged in, redirect to the login page
+    return redirect(url_for('login'))
+
+@app.route("/adminLanding")
+def adminLanding():
+    return render_template("adminLanding.html")
+    
+@app.route("/adminProfile", methods=["GET", "POST"])
+def adminProfile():
+    if "admin_username" in session and "role" in session and session["role"] == "admin":
+        admin_username = session["admin_username"]
+        cursor = db_conn.cursor()
+        cursor.execute("SELECT * FROM Admin WHERE admin_username = %s", (admin_username,))
+        admin = cursor.fetchone()
+
+        if admin:
+            admin_name = admin[0]
+            admin_username = admin[1]
+            admin_password = admin[2]
+        else:
+            admin_name = "Unknown Admin"  # Default if lecturer not found
+
+        cursor.close()
+
+        # Pass the lecturer_name to the template
+        return render_template("adminProfile.html", admin=admin)
+
+def update_student_profile(student_id, updates):
+    cursor = db_conn.cursor()
+    update_sql = "UPDATE Student SET "
+    update_values = []
+
+    for field, value in updates.items():
+        if value is not None:
+            update_sql += f"{field} = %s, "
+            update_values.append(value)
+
+    # Remove the trailing comma and space
+    update_sql = update_sql.rstrip(', ')
+
+    update_sql += " WHERE Stud_ID = %s"
+    update_values.append(student_id)
+
+    try:
+        cursor.execute(update_sql, tuple(update_values))
+        db_conn.commit()
+        return True  # Profile updated successfully
+    except Exception as e:
+        db_conn.rollback()
+        return str(e)  # Error updating profile
+    finally:
+        cursor.close()
+
+@app.route('/student_profile_edit', methods=['GET', 'POST'])
+def student_profile_edit():
+    if 'student_id' in session:
+        student_id = session['student_id']
+        cursor = db_conn.cursor()
+        cursor.execute("SELECT * FROM Student WHERE Stud_ID = %s", (student_id,))
+        student = cursor.fetchone()
+        cursor.close()
+
+        if student:
+            if request.method == 'POST':
+                updated_fields = request.form.getlist('update_fields[]')
+                updates = {}
+
+                if 'cgpa' in updated_fields:
+                    new_cgpa = request.form.get('cgpa')
+                    updates['CGPA'] = new_cgpa
+
+                if 'mobile' in updated_fields:
+                    new_mobile_number = request.form.get('mobileNumber')
+                    updates['Mobile_number'] = new_mobile_number
+
+                if 'address' in updated_fields:
+                    new_home_address = request.form.get('homeAddress')
+                    updates['Home_Address'] = new_home_address
+
+                if 'email' in updated_fields:
+                    new_personal_email = request.form.get('personalEmail')
+                    updates['Personal_emailAddress'] = new_personal_email
+
+                if update_student_profile(student_id, updates) is True:
+                    flash('Profile updated successfully', 'success')
+                else:
+                    flash('Error updating profile', 'error')
+
+                return redirect(url_for('student_dashboard'))
+
+            return render_template('try_student_update.html', student=student)
+
+    return redirect(url_for('login'))
+
+# Define a route for uploading the resume
+@app.route('/upload_resume', methods=['POST'])
+def upload_resume():
+    if 'student_id' in session:
+        student_id = session['student_id']
+        student_resume_file = request.files['resume_file']
+
+        # Ensure a file was selected for upload
+        if student_resume_file and student_resume_file.filename != '':
+            # Generate a unique filename for the resume, e.g., using the student's ID
+            resume_filename = f"student-{student_id}-resume.pdf"  # Adjust the filename format as needed
+
+            # Upload the resume file to your S3 bucket
+            try:
+                s3.Bucket(bucket).put_object(Key=resume_filename, Body=student_resume_file)
+
+                # Update the database to store the resume information
+                update_sql = "UPDATE Student SET ResumeFileName = %s WHERE Stud_ID = %s"
+                cursor = db_conn.cursor()
+                cursor.execute(update_sql, (resume_filename, student_id))
+                db_conn.commit()
+
+                flash('Resume uploaded successfully', 'success')
+            except NoCredentialsError:
+                flash('S3 credentials are missing or incorrect. Unable to upload resume.', 'error')
+            except Exception as e:
+                flash(f'Error uploading resume: {str(e)}', 'error')
+        else:
+            flash('No resume file selected for upload', 'error')
+
+    return redirect(url_for('student_dashboard'))
+
+@app.route('/student_upload_documents_page')
+def student_upload_documents_page():
+    return render_template('Student_Upload_Documents.html')
+
+@app.route('/student_upload_documents', methods=['POST'])
+def upload_documents():
+    if request.method == 'POST':
+        if 'student_id' in session:
+            student_id = session['student_id']
+
+        # Handle combined submission (Letter of Indemnity, Company Acceptance Letter, Parent's Acknowledgment Form)
+        for field_name in ['letter_of_indemnity', 'company_acceptance_letter', 'parents_acknowledgment_form']:
+            if field_name in request.files:
+                file = request.files[field_name]
+                if file.filename != '':
+                    # Construct the S3 object key with the desired naming convention
+                    s3_object_key = f"student-{student_id}-{field_name}.pdf"
+                    s3.Bucket(bucket).put_object(Key=s3_object_key, Body=file)
+
+        # Redirect to a success page or render a success message
+        return redirect(url_for('student_upload_documents_page'))
+    
+
+@app.route('/student_upload_documents_progress', methods=['POST'])
+def upload_progress_report():
+    if request.method == 'POST':
+        if 'student_id' in session:
+            student_id = session['student_id']
+
+        # Handle progress report submission
+        if 'progress_report' in request.files:
+            file = request.files['progress_report']
+            if file.filename != '':
+                # Construct the S3 object key with the desired naming convention
+                s3_object_key = f"student-{student_id}-progress-report.pdf"
+                s3.Bucket(bucket).put_object(Key=s3_object_key, Body=file)
+
+        # Redirect to a success page or render a success message
+        return redirect(url_for('student_upload_documents_page'))
+
+@app.route('/student_upload_documents_final', methods=['POST'])
+def upload_final_report():
+    if request.method == 'POST':
+        if 'student_id' in session:
+            student_id = session['student_id']
+
+        # Handle final report submission
+        if 'final_report' in request.files:
+            file = request.files['final_report']
+            if file.filename != '':
+                # Construct the S3 object key with the desired naming convention
+                s3_object_key = f"student-{student_id}-final-report.pdf"
+                s3.Bucket(bucket).put_object(Key=s3_object_key, Body=file)
+
+        # Redirect to a success page or render a success message
+        return redirect(url_for('student_upload_documents_page'))
+
+@app.route('/studentdatabase', methods=['GET'])
+def student_database():
+    cursor = db_conn.cursor()
+
+    # Get the search query from the URL parameter
+    query = request.args.get('query', '')
+
+    # Use the search query to filter the student data
+    if query:
+        # Execute a SQL query to retrieve matching students
+        cursor.execute("SELECT Stud_ID, Stud_name, Gender, Programme_of_Study, Intern_batch, Personal_emailAddress FROM Student WHERE Stud_name LIKE %s OR Stud_ID LIKE %s", ('%' + query + '%', '%' + query + '%'))
+    else:
+        # If no query provided, retrieve all students
+        cursor.execute("SELECT Stud_ID, Stud_name, Gender, Programme_of_Study, Intern_batch, Personal_emailAddress FROM Student")
+
+    students = cursor.fetchall()
+    cursor.close()
+
+    return render_template('studentdatabase.html', students=students)
+
+@app.route("/adminStudent", methods=["GET"])
+def adminStudent():
+    cursor = db_conn.cursor()
+
+    # Get the search query from the URL parameter
+    query = request.args.get("query", "")
+
+    # Use the search query to filter the student data
+    if query:
+        # Execute a SQL query to retrieve matching students
+        cursor.execute(
+            "SELECT Stud_ID, Stud_name, Gender, Programme_of_Study, Intern_batch, Personal_emailAddress FROM Student WHERE Stud_name LIKE %s OR Stud_ID LIKE %s",
+            ("%" + query + "%", "%" + query + "%"),
+        )
+    else:
+        # If no query provided, retrieve all students
+        cursor.execute(
+            "SELECT Stud_ID, Stud_name, Gender, Programme_of_Study, Intern_batch, Personal_emailAddress FROM Student ORDER BY Stud_name"
+        )
+
+    students = cursor.fetchall()
+    number_of_students = len(students)
+    enumerated_students = enumerate(students)
+    cursor.close()
+
+    return render_template("adminStudent.html", students=enumerated_students, number_of_students=number_of_students)
+
+@app.route('/adminDeleteStudent/<string:student_id>', methods=["GET"])
+def admin_delete_student(student_id):
+    # Implement code to delete the student with the given student_id from the database or list
+    # You can use a database ORM or manipulate the list directly
+    cursor = db_conn.cursor()
+
+    # Example using a list:
+    delete_query = "DELETE FROM Student WHERE Stud_ID = %s"
+    cursor.execute(delete_query, (student_id,))
+    db_conn.commit()
+
+    cursor.close()
+    return redirect(url_for("adminStudent"))
+
+@app.route("/adminLecturer", methods=["GET"])
+def adminLecturer():
+    cursor = db_conn.cursor()
+
+    # Get the search query from the URL parameter
+    query = request.args.get("query", "")
+
+    # Use the search query to filter the student data
+    if query:
+        # Execute a SQL query to retrieve matching students
+        cursor.execute(
+            "SELECT Lect_name, Lect_ID, Lect_emailAddress, Lect_IC, Lect_position FROM Lecturer WHERE Lect_name LIKE %s OR Lect_ID LIKE %s",
+            ("%" + query + "%", "%" + query + "%"),
+        )
+    else:
+        # If no query provided, retrieve all students
+        cursor.execute(
+            "SELECT Lect_name, Lect_ID, Lect_emailAddress, Lect_IC, Lect_position FROM Lecturer ORDER BY Lect_name"
+        )
+
+    lecturers = cursor.fetchall()
+    number_of_lecturers = len(lecturers)
+    enumerated_lecturers = enumerate(lecturers)
+    cursor.close()
+
+    return render_template("adminLecturer.html", lecturers=enumerated_lecturers, number_of_lecturers=number_of_lecturers)
+
+@app.route('/adminDeleteLecturer/<string:lecturer_id>', methods=["GET"])
+def admin_delete_lecturer(lecturer_id):
+    # Implement code to delete the lecturer with the given lecturer_id from the database or list
+    # You can use a database ORM or manipulate the list directly
+    cursor = db_conn.cursor()
+
+    # Example using a list:
+    delete_query = "DELETE FROM Lecturer WHERE Lect_ID = %s"
+    cursor.execute(delete_query, (lecturer_id,))
+    db_conn.commit()
+
+    cursor.close()
+    return redirect(url_for("adminLecturer"))
+
+@app.route('/view_student_progress', methods=['GET'])
+def view_student_progress():
+    if 'lecturer_id' in session and session['role'] == 'lecturer':
+        # Retrieve student data and file status from your database
+        cursor = db_conn.cursor()
+        cursor.execute("SELECT Stud_ID, Stud_name FROM Student")
+        students = cursor.fetchall()
+
+        # Dictionary to store file status and presigned URLs
+        student_files = {}
+
+        for student in students:
+            student_id = student[0]
+
+            # Initialize the file status as 'Completed' (green color)
+            status = {'text': 'Completed', 'status': 'completed'}
+            all_files_found = True  # Flag to track if all files are found
+
+            # Generate presigned URLs for each file (if they exist)
+            for file_name in ['letter_of_indemnity', 'company_acceptance_letter', 'parents_acknowledgment_form', 'progress-report', 'final-report']:
+                file_key = f"student-{student_id}-{file_name}.pdf"
+                presigned_url = None
+
+                try:
+                    s3_client = boto3.client('s3', region_name=region)
+                    s3_object = s3_client.head_object(Bucket=bucket, Key=file_key)
+
+                    if 'ContentLength' in s3_object:
+                        # File exists, generate a presigned URL
+                        presigned_url = s3_client.generate_presigned_url(
+                            'get_object',
+                            Params={'Bucket': bucket, 'Key': file_key},
+                            ExpiresIn=3600
+                        )
+                    else:
+                        # File does not exist, set the flag to False
+                        all_files_found = False
+                except NoCredentialsError:
+                    flash('S3 credentials are missing or incorrect.', 'error')
+                except ClientError as e:
+                    if e.response['Error']['Code'] == '404':
+                        # File does not exist, set the flag to False
+                        all_files_found = False
+
+                student_files.setdefault(student_id, {})[file_name] = {'url': presigned_url}
+
+            # Update the status to 'Completed' only if all files are found
+            if not all_files_found:
+                status['text'] = 'Pending'
+                status['status'] = 'pending'
+
+            # Store the status in the student_files dictionary
+            student_files[student_id]['Status'] = status
+
+        cursor.close()
+
+        return render_template('view_progress_reports.html', students=students, student_files=student_files)
+
+    return redirect(url_for('login'))
+
+@app.route('/student_company_jobs_posting')
+def student_company_jobs_posting():
+    cursor = db_conn.cursor()
+    cursor.execute("""
+        SELECT JD.JobPosition, C.Comp_name, JD.JobDescription, JD.CareerLevel
+        FROM Job_Details JD
+        JOIN Company C ON JD.Company_ID = C.Company_ID
+    """)
+    job_company_data = cursor.fetchall()
+    cursor.close()
+
+    if job_company_data:
+        for row in job_company_data:
+            print(row)  # Add this line for debugging
+        return render_template('student_company_jobs_posting.html', job_company_data=job_company_data)
+    else:
+        return "No job postings available"
+
+@app.route('/company_database', methods=["GET"])
+def company_database():
+    cursor = db_conn.cursor()
+
+    # Retrieve data for new applications
+    cursor.execute(
+        "SELECT Comp_name, EmailAddress, Contact_number, Comp_address, Person_in_charge, Status FROM Company WHERE Status = 'Pending' ORDER BY Comp_name"
+    )
+    new_applications = cursor.fetchall()
+    num_of_new = len(new_applications)
+    enumerated_new = enumerate(new_applications)
+
+    # Retrieve data for approved companies
+    cursor.execute(
+        "SELECT Comp_name, EmailAddress, Contact_number, Comp_address, Person_in_charge, Status FROM Company WHERE Status = 'Approved' ORDER BY Comp_name"
+    )
+    approved_companies = cursor.fetchall()
+    num_of_approved = len(approved_companies)
+    enumerated_approved = enumerate(approved_companies)
+
+    # Retrieve data for rejected companies
+    cursor.execute(
+        "SELECT Comp_name, EmailAddress, Contact_number, Comp_address, Person_in_charge, Status FROM Company WHERE Status = 'Rejected' ORDER BY Comp_name"
+    )
+    rejected_companies = cursor.fetchall()
+    num_of_rejected = len(rejected_companies)
+    enumerated_rejected = enumerate(rejected_companies)
+
+    cursor.close()
+
+    return render_template("adminCompany.html",
+                           new_applications=enumerated_new,
+                           num_of_new=num_of_new,
+                           approved_companies=enumerated_approved,
+                           num_of_approved=num_of_approved,
+                           rejected_companies=enumerated_rejected,
+                           num_of_rejected=num_of_rejected)
+
+@app.route('/adminDeleteCompany/<string:company_name>', methods=["GET"])
+def admin_delete_company(company_name):
+    # Implement code to delete the student with the given student_id from the database or list
+    # You can use a database ORM or manipulate the list directly
+    cursor = db_conn.cursor()
+
+    # Example using a list:
+    delete_query = "DELETE FROM Company WHERE Comp_name = %s"
+    cursor.execute(delete_query, (company_name,))
+    db_conn.commit()
+
+    cursor.close()
+    return redirect(url_for("company_database"))
+
+@app.route('/update_company_status', methods=['POST'])
+def update_company_status():
+    cursor = db_conn.cursor()
+    # Get the company ID from the submitted form
+    company_name = str(request.form.get('company_name'))
+    action = str(request.form.get('action'))
+
+    if action == 'approve':
+        cursor.execute("UPDATE Company SET Status = 'Approved' WHERE Comp_name = %s", (company_name,))
+    elif action == 'reject':
+        cursor.execute("UPDATE Company SET Status = 'Rejected' WHERE Comp_name = %s", (company_name,))
+    
+    db_conn.commit()
+    cursor.close()
+    return redirect(url_for("company_database"))
+
+if __name__ == '__main__':
+    app.run(host='0.0.0.0', port=80, debug=True)
+
+
+
