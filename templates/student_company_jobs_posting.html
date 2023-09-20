@@ -145,17 +145,18 @@
     <div class="content">
         <!-- Job Postings -->
         <div class="job-postings">
-            <!-- Loop through the companyjobs data and generate job posting boxes -->
-            {% for job in companyjobs %}
+            <!-- Loop through the job_company_data and generate job posting boxes -->
+            {% for job, company in job_company_data %}
             <div class="job-posting-box">
-                <h3>{{ job.job_title }}</h3>
-                <p>Company: {{ job[1] }}</p>
+                <h3>{{ job[1] }}</h3>
+                <p>Company: {{ company[1] }}</p>
                 <p>Description: {{ job[2] }}</p>
-                <p>CareerLevel: {{ job[4] }}</p>
+                <p>Career Level: {{ job.[4] }}</p>
                 <a href="#" class="apply-button">Apply</a>
             </div>
             {% endfor %}
         </div>
+    </div>
     <!-- ***** Job Postings End ***** -->
 
     <!-- ... (remaining HTML code) ... -->
