@@ -671,17 +671,22 @@ def student_company_jobs_posting():
     if 'company_id' in session:
         company_id = session['company_id']
         cursor = db_conn.cursor()
-        cursor.execute("SELECT * FROM Job_Details WHERE Company_ID = %s", (company_id,))
-        companyjobs = cursor.fetchall() 
+        cursor.execute("""
+            SELECT JD.job_title, C.company_name, JD.description, JD.career_level
+            FROM Job_Details JD
+            JOIN Company C ON JD.Company_ID = C.Company_ID
+            WHERE JD.Company_ID = %s
+        """, (company_id,))
+        job_company_data = cursor.fetchall()
         cursor.close()
 
-        if companyjobs:
-            return render_template('student_company_jobs_posting.html',companyjobs=companyjobs)
-        
+        if job_company_data:
+            return render_template('student_company_jobs_posting.html', job_company_data=job_company_data)
         else:
             return "Company not found"
     else:
         return "Unauthorized"
+
 
 if __name__ == '__main__':
     app.run(host='0.0.0.0', port=80, debug=True)
