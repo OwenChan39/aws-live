@@ -341,6 +341,10 @@ def company_dashboard():
     else:
         return "Unauthorized"
 
+@app.route("/adminLanding")
+def adminLanding():
+    return render_template("adminLanding.html")
+
 @app.route("/addjobpage")
 def addjobpage():
     return render_template('company_info_edit.html')
