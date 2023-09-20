@@ -381,6 +381,40 @@ def addjobpage():
                                     company_image_url=company_image_url,
                                     )
 
+@app.route('/company_profile_edit', methods=['GET', 'POST'])
+def company_profile_edit():
+    if 'company_id' in session:
+        if request.method == 'POST':
+            company_id = session['company_id']
+            cursor = db_conn.cursor()
+            total_staff = request.form['total_staff']
+            product_service = request.form['product_service']
+            company_website = request.form['company_website']
+            remarks = request.form['remarks']
+            person_in_charge = request.form['person_in_charge']
+            contact_number = request.form['contact_number']
+            email = request.form['email']
+
+            # Perform the SQL UPDATE operation to update the company's data
+            update_query = """
+                UPDATE Company
+                SET Total_Staff = %s, Product_Service = %s, Company_Website = %s, Remarks = %s,
+                Person_In_Charge = %s, Contact_Number = %s, Email = %s
+                WHERE Company_ID = %s
+            """
+
+            cursor.execute(update_query, (
+                total_staff, product_service, company_website, remarks,
+                person_in_charge, contact_number, email, company_id
+            ))
+
+            db_conn.commit()
+            cursor.close()
+            return render_template('company_dashboard.html')
+        
+        return redirect(url_for('company_info_edit'))
+
+
 @app.route('/save_job_details', methods=['POST'])
 def save_job_details():
     if request.method == 'POST':
