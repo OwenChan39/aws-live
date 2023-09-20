@@ -668,7 +668,20 @@ def view_student_progress():
 
 @app.route('/student_company_jobs_posting')
 def student_company_jobs_posting():
-    return render_template('student_company_jobs_posting.html')
+    if 'company_id' in session:
+        company_id = session['company_id']
+        cursor = db_conn.cursor()
+        cursor.execute("SELECT * FROM Job_Details WHERE Company_ID = %s", (company_id,))
+        companyjobs = cursor.fetchall() 
+        cursor.close()
+
+        if companyjobs:
+            return render_template('student_company_jobs_posting.html',companyjobs=companyjobs)
+        
+        else:
+            return "Company not found"
+    else:
+        return "Unauthorized"
 
 if __name__ == '__main__':
     app.run(host='0.0.0.0', port=80, debug=True)
