@@ -132,9 +132,21 @@
         .offer {
             background-color: #f2f2f2;
             /* Grey background color */
-            padding: 20px;
             border-radius: 10px;
-            margin-top: 10px;
+            padding: 20px;
+        }
+
+        .job-container {
+            border: 1px solid #ddd;
+            /* Add a border to separate job boxes */
+            border-radius: 10px;
+            margin-top: 20px; /* Add spacing between job boxes */
+            padding: 10px;
+        }
+
+        /* Style for the first job container */
+        .job-container:first-child {
+            margin-top: 0;
         }
 
         .offerHead h3 #editButton {
@@ -163,14 +175,6 @@
             /* Vertically center the text and button */
             color: #333;
             margin-bottom: 10px;
-        }
-
-        .offer .job-container {
-            background-color: #f2f2f2;
-            /* Grey background color */
-            border-radius: 10px;
-            margin-top: 10px;
-            padding: 10px;
         }
 
         .sign-out-link {
