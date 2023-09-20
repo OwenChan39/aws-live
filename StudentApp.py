@@ -684,54 +684,6 @@ def student_company_jobs_posting():
         return render_template('student_company_jobs_posting.html', job_company_data=job_company_data)
     else:
         return "No job postings available"
-    
-@app.route('/company_profile_edit', methods=['GET', 'POST'])
-def company_profile_edit():
-    if request.method == 'GET':
-        # Retrieve existing company information from the database (replace 'company_id' with the actual company ID)
-        company_id = session.get('company_id')  # You may have a different way to identify the company
-        cursor = db_conn.cursor()
-        cursor.execute("""
-            SELECT Total_staff, Product_or_service, Comp_website, OT_claim, Remarks, Person_in_charge,
-                   Contact_number, EmailAddress
-            FROM Company
-            WHERE Company_ID = %s
-        """, (company_id,))
-        company_info = cursor.fetchone()
-        cursor.close()
-
-        if company_info:
-            # Pass the existing company information to the template
-            return render_template('company_profile_edit.html', company_info=company_info)
-        else:
-            return "Company not found"
-
-    elif request.method == 'POST':
-        # Handle the form submission to update company information
-        company_id = session.get('company_id')  # You may have a different way to identify the company
-        total_staff = request.form['total_staff']
-        product_service = request.form['product_service']
-        company_website = request.form['company_website']
-        ot_claim = request.form['ot_claim']
-        remarks = request.form['remarks']
-        person_in_charge = request.form['person_in_charge']
-        contact_number = request.form['contact_number']
-        email = request.form['email']
-
-        # Update the database with the new information
-        cursor = db_conn.cursor()
-        cursor.execute("""
-            UPDATE Company
-            SET Total_staff = %s, Product_or_service = %s, Comp_website = %s, OT_claim = %s,
-                Remarks = %s, Person_in_charge = %s, Contact_number = %s, EmailAddress = %s
-            WHERE Company_ID = %s
-        """, (total_staff, product_service, company_website, ot_claim, remarks,
-              person_in_charge, contact_number, email, company_id))
-        db_conn.commit()
-        cursor.close()
-
-        return "Company information updated successfully"
-
 
 
 if __name__ == '__main__':
