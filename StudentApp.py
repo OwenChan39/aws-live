@@ -1,4 +1,4 @@
-from flask import Flask, render_template, request, redirect, url_for,session, flash
+from flask import Flask, render_template, request, redirect, url_for,session, flash,g
 from pymysql import connections
 import os
 import boto3
@@ -316,10 +316,10 @@ def company_profile_edit():
         company_id = session['company_id']
         cursor = db_conn.cursor()
         cursor.execute("SELECT * FROM Company WHERE Company_ID = %s", (company_id,))
-        company = cursor.fetchone()
+        g.company = cursor.fetchone()
         cursor.close()
 
-        if company:
+        if g.company:
             if request.method == 'POST':
                 updated_fields = request.form.getlist('update_fields[]')
                 updates = {}
@@ -365,7 +365,7 @@ def company_profile_edit():
 
                 return redirect(url_for('company_dashboard'))
 
-            return render_template('company_info_edit.html', company=company)
+            return render_template('company_info_edit.html')
 
     return redirect(url_for('login'))
 
