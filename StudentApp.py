@@ -1,4 +1,4 @@
-from flask import Flask, render_template, request, redirect, url_for,session, flash,g
+from flask import Flask, render_template, request, redirect, url_for,session, flash
 from pymysql import connections
 import os
 import boto3
@@ -282,93 +282,6 @@ def company_dashboard():
         
     else:
         return "Unauthorized"
-
-def update_company_profile(company_id, updates):
-    cursor = db_conn.cursor()
-    update_sql = "UPDATE Company SET "
-    update_values = []
-
-    for field, value in updates.items():
-        if value is not None:
-            update_sql += f"{field} = %s, "
-            update_values.append(value)
-
-    # Remove the trailing comma and space
-    update_sql = update_sql.rstrip(', ')
-
-    update_sql += " WHERE Company_ID = %s"
-    update_values.append(company_id)
-
-    try:
-        cursor.execute(update_sql, tuple(update_values))
-        db_conn.commit()
-        return True  # Profile updated successfully
-    except Exception as e:
-        db_conn.rollback()
-        return str(e)  # Error updating profile
-    finally:
-        cursor.close()
-
-
-@app.route('/company_profile_edit', methods=['GET', 'POST'])
-def company_profile_edit():
-    if 'company_id' in session:
-        company_id = session['company_id']
-        cursor = db_conn.cursor()
-        cursor.execute("SELECT * FROM Company WHERE Company_ID = %s", (company_id,))
-        g.company = cursor.fetchone()
-        cursor.close()
-
-        if g.company:
-            if request.method == 'POST':
-                updated_fields = request.form.getlist('update_fields[]')
-                updates = {}
-
-                if 'total_staff' in updated_fields:
-                    new_total_staff = request.form.get('total_staff')
-                    updates['Total_staff'] = new_total_staff
-
-                if 'product_service' in updated_fields:
-                    new_product_service = request.form.get('product_service')
-                    updates['Product_or_service'] = new_product_service
-
-                if 'company_website' in updated_fields:
-                    new_company_website = request.form.get('company_website')
-                    updates['Comp_website'] = new_company_website
-
-                if 'ot_claim' in updated_fields:
-                    new_ot_claim = request.form.get('ot_claim')
-                    updates['OT_claim'] = new_ot_claim
-
-                if 'remarks' in updated_fields:
-                    new_remarks = request.form.get('remarks')
-                    updates['Remarks'] = new_remarks
-
-                if 'person_in_charge' in updated_fields:
-                    new_person_in_charge = request.form.get('person_in_charge')
-                    updates['Person_in_charge'] = new_person_in_charge
-
-                if 'contact_number' in updated_fields:
-                    new_contact_number = request.form.get('contact_number')
-                    updates['Contact_number'] = new_contact_number
-
-                if 'email' in updated_fields:
-                    new_email = request.form.get('email')
-                    updates['EmailAddress'] = new_email
-
-                # You can add more fields as needed
-
-                if update_company_profile(company_id, updates) is True:
-                    flash('Company information updated successfully', 'success')
-                else:
-                    flash('Error updating company information', 'error')
-
-                return redirect(url_for('company_dashboard'))
-
-            return render_template('company_info_edit.html')
-
-    return redirect(url_for('login'))
-
 
 @app.route("/addjobpage")
 def addjobpage():
