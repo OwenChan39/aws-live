@@ -667,6 +667,9 @@ def view_student_progress():
 
     return redirect(url_for('login'))
 
+@app.route('/student_company_jobs_posting')
+def student_company_jobs_posting():
+    return render_template('student_company_jobs_posting.html')
 
 if __name__ == '__main__':
     app.run(host='0.0.0.0', port=80, debug=True)
