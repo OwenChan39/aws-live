@@ -281,8 +281,6 @@ def company_dashboard():
         
     else:
         return "Unauthorized"
-    
-
 
 @app.route("/addjobpage")
 def addjobpage():
