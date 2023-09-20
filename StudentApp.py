@@ -324,32 +324,13 @@ def company_jobs_list():
         company_id = session['company_id']
         cursor = db_conn.cursor()
         cursor.execute("SELECT * FROM Job_Details WHERE Company_ID = %s", (company_id,))
-        companyjobs = cursor.fetchone()
+        companyjobs = cursor.fetchall()  # Fetch all job listings
         cursor.close()
 
         if companyjobs:
-            company_id = companyjobs[0]
-            jobposition = companyjobs[1]
-            jobdescription = companyjobs[2]
-            jobrequiremnts = companyjobs[3]
-            careerlevel = companyjobs[4]
-            qualification = companyjobs[5]
-            jobtype = companyjobs[6]
-            yearsexperience = companyjobs[7]
-            salary = companyjobs[8]
-
-            return render_template('company_dashboard.html',
-                                   jobposition=jobposition,
-                                   jobdescription=jobdescription,
-                                   jobrequiremnts=jobrequiremnts,
-                                   careerlevel=careerlevel,
-                                   qualification=qualification,
-                                   jobtype=jobtype,
-                                   yearsexperience=yearsexperience,
-                                   salary=salary
-                                   )
+            return render_template('company_dashboard.html', companyjobs=companyjobs)
         else:
-            return "Company jobs not found" 
+            return "Company jobs not found"
     else:
         return "Unauthorized"
 
