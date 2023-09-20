@@ -127,7 +127,7 @@
                     <!-- Product or Service -->
                     <div class="form-group">
                         <label for="product_service">Product or Service:</label>
-                        <textarea class="form-control" id="product_service" name="product_service" rows="4" required>{{ company[10] }}</textarea>
+                        <textarea class="form-control" id="product_service" name="product_service" rows="4">{{ company[10] }}</textarea>
                     </div>
 
                     <br>
@@ -141,7 +141,7 @@
                     <!-- OT Claim (YES/NO) -->
                     <div class="form-group">
                         <label for="ot_claim">OT Claim (YES/NO):</label>
-                        <select class="form-control" id="ot_claim" name="ot_claim" required>
+                        <select class="form-control" id="ot_claim" name="ot_claim" >
                             <option value="YES" {% if company[12] == "YES" %}selected{% endif %}>YES</option>
                             <option value="NO" {% if company[12] == "NO" %}selected{% endif %}>NO</option>
                         </select>
