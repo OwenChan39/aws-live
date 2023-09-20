@@ -406,7 +406,7 @@ def company_profile_edit():
 
             cursor.execute(update_query, (
                 total_staff, product_service, company_website, remarks,
-                person_in_charge, contact_number, email, company_id, ot_claim
+                person_in_charge, contact_number, email, ot_claim, company_id, 
             ))
 
             db_conn.commit()
