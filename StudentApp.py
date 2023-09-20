@@ -251,7 +251,7 @@ def login():
                 session['role'] = 'company'
                 return redirect(url_for('company_dashboard'))
 
-                elif role == "admin":
+        elif role == "admin":
             encryption_key = 42
             cursor.execute(
                 "SELECT admin_username, admin_password FROM Admin WHERE admin_username = %s",
