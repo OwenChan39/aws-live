@@ -394,18 +394,19 @@ def company_profile_edit():
             person_in_charge = request.form['person_in_charge']
             contact_number = request.form['contact_number']
             email = request.form['email']
+            ot_claim=request.form['ot_claim']
 
             # Perform the SQL UPDATE operation to update the company's data
             update_query = """
                 UPDATE Company
                 SET Total_Staff = %s, Product_or_Service = %s, Comp_Website = %s, Remarks = %s,
-                Person_In_Charge = %s, Contact_Number = %s, EmailAddress = %s
+                Person_In_Charge = %s, Contact_Number = %s, EmailAddress = %s, ot_claim = %s
                 WHERE Company_ID = %s
             """
 
             cursor.execute(update_query, (
                 total_staff, product_service, company_website, remarks,
-                person_in_charge, contact_number, email, company_id
+                person_in_charge, contact_number, email, company_id, ot_claim
             ))
 
             db_conn.commit()
@@ -1035,3 +1036,6 @@ def update_company_status():
 
 if __name__ == '__main__':
     app.run(host='0.0.0.0', port=80, debug=True)
+
+
+
