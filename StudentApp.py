@@ -228,7 +228,7 @@ def company_dashboard():
         cursor.execute("SELECT * FROM Company WHERE Company_ID = %s", (company_id,))
         company = cursor.fetchone()
         cursor.close()
-
+        
         if company:
             company_id = company[0]
             company_name = company[1]
@@ -272,8 +272,23 @@ def company_dashboard():
                                    )
         else:
             return "Company not found"  # Handle the case where the company is not in the database
+        
+    if 'company_id' in session:
+        company_id = session['company_id']
+        cursor = db_conn.cursor()
+        cursor.execute("SELECT * FROM Job_Details WHERE Company_ID = %s", (company_id,))
+        companyjobs = cursor.fetchall()  # Fetch all job listings
+        cursor.close()
+
+        if companyjobs:
+            return render_template('company_jobs_list.html', companyjobs=companyjobs)
+        else:
+            return "Company jobs not found"
+        
     else:
         return "Unauthorized"
+
+    
 
 @app.route("/addjobpage")
 def addjobpage():
@@ -327,16 +342,12 @@ def company_jobs_list():
         companyjobs = cursor.fetchall()  # Fetch all job listings
         cursor.close()
 
-        print("Company ID:", company_id)  # Print company ID for debugging
-        print("Company Jobs:", companyjobs)  # Print job listings for debugging
-
         if companyjobs:
             return render_template('company_dashboard.html', companyjobs=companyjobs)
         else:
             return "Company jobs not found"
     else:
         return "Unauthorized"
-
 
 
 
