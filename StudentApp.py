@@ -667,7 +667,7 @@ def view_student_progress():
 
     return redirect(url_for('login'))
 
-@app.route('/student_company_jobs_posting/<int:company_id>')
+@app.route('/student_company_jobs_posting')
 def student_company_jobs_posting(company_id):
     if is_valid_company_id(company_id):  # Implement this function to validate the company_id
         cursor = db_conn.cursor()
