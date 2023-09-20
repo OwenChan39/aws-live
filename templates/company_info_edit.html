@@ -118,14 +118,15 @@
                     <!-- Total Staff -->
                     <div class="form-group">
                         <label for="total_staff">Total Staff:</label>
-                        <input type="number" class="form-control" id="total_staff" name="total_staff" value="{{ total_staff }}" required>
+                        <input type="number" class="form-control" id="total_staff" name="total_staff"
+                            value="{{ total_staff }}" required>
                     </div>
 
                     <br>
                     <!-- Product or Service -->
                     <div class="form-group">
                         <label for="product_service">Product or Service:</label>
-                        <textarea class="form-control" id="product_service" name="product_service" rows="4" 
+                        <textarea class="form-control" id="product_service" name="product_service" rows="4"
                             required>{{ product_service }}</textarea>
                     </div>
 
@@ -133,7 +134,8 @@
                     <!-- Company Website -->
                     <div class="form-group">
                         <label for="company_website">Company Website:</label>
-                        <input type="url" class="form-control" id="company_website" name="company_website" value="{{ company_website }}" required>
+                        <input type="url" class="form-control" id="company_website" name="company_website"
+                            value="{{ company_website }}" required>
                     </div>
 
                     <br>
@@ -141,8 +143,8 @@
                     <div class="form-group">
                         <label for="ot_claim">OT Claim (YES/NO):</label>
                         <select class="form-control" id="ot_claim" name="ot_claim" required>
-                            <option value="YES" {% if ot_claim = 'YES' %}selected{% endif %}>YES</option>
-                            <option value="NO"{% if ot_claim = 'NO' %}selected{% endif %}>NO</option>
+                            <option value="YES" {% if ot_claim=='YES' %}selected{% endif %}>YES</option>
+                            <option value="NO" {% if ot_claim=='NO' %}selected{% endif %}>NO</option>
                         </select>
                     </div>
 
@@ -157,14 +159,16 @@
                     <!-- Person in Charge -->
                     <div class="form-group">
                         <label for="person_in_charge">Person in Charge Name:</label>
-                        <input type="text" class="form-control" id="person_in_charge" name="person_in_charge" value="{{ person_in_charge }}" required>
+                        <input type="text" class="form-control" id="person_in_charge" name="person_in_charge"
+                            value="{{ person_in_charge }}" required>
                     </div>
 
                     <br>
                     <!-- Contact Number -->
                     <div class="form-group">
                         <label for="contact_number">Contact Number:</label>
-                        <input type="tel" class="form-control" id="contact_number" name="contact_number" value="{{ contact_number }}" required>
+                        <input type="tel" class="form-control" id="contact_number" name="contact_number"
+                            value="{{ contact_number }}" required>
                     </div>
 
                     <br>
@@ -212,11 +216,13 @@
                         </div>
                         <div class="form-group">
                             <label for="job_description">Job Description:</label>
-                            <textarea class="form-control" id="job_description" name="job_description" rows="4"></textarea>
+                            <textarea class="form-control" id="job_description" name="job_description"
+                                rows="4"></textarea>
                         </div>
                         <div class="form-group">
                             <label for="job_requirements">Job Requirements:</label>
-                            <textarea class="form-control" id="job_requirements" name="job_requirements" rows="4"></textarea>
+                            <textarea class="form-control" id="job_requirements" name="job_requirements"
+                                rows="4"></textarea>
                         </div>
                         <div class="form-group">
                             <label for="career_level">Career Level:</label>
