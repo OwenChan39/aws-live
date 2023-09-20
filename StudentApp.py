@@ -284,7 +284,7 @@ def company_dashboard():
 
 @app.route("/addjobpage")
 def addjobpage():
-    return render_template('company_info_edit.html')
+    return render_template('company_info_edit#company-info.html')
 
 @app.route('/save_job_details', methods=['POST'])
 def save_job_details():
