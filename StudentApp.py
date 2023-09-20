@@ -228,8 +228,12 @@ def company_dashboard():
         cursor.execute("SELECT * FROM Company WHERE Company_ID = %s", (company_id,))
         company = cursor.fetchone()
         cursor.close()
+        cursor = db_conn.cursor()
+        cursor.execute("SELECT * FROM Job_Details WHERE Company_ID = %s", (company_id,))
+        companyjobs = cursor.fetchall()  # Fetch all job listings
+        cursor.close()
         
-        if company:
+        if company and companyjobs:
             company_id = company[0]
             company_name = company[1]
             company_website = company[2]
@@ -245,6 +249,7 @@ def company_dashboard():
             ot_claim = company[12]
             remarks = company[13]
             status = company[14]
+            
             
             company_logo = "company-" + str(company_id) + "-logo"
             company_image_url = s3.meta.client.generate_presigned_url(
@@ -268,22 +273,11 @@ def company_dashboard():
                                    contact_number=contact_number,
                                    email=email,
                                    company_image_url=company_image_url,
-                                   status=status
+                                   status=status,
+                                   companyjobs=companyjobs
                                    )
         else:
             return "Company not found"  # Handle the case where the company is not in the database
-        
-    if 'company_id' in session:
-        company_id = session['company_id']
-        cursor = db_conn.cursor()
-        cursor.execute("SELECT * FROM Job_Details WHERE Company_ID = %s", (company_id,))
-        companyjobs = cursor.fetchall()  # Fetch all job listings
-        cursor.close()
-
-        if companyjobs:
-            return render_template('company_jobs_list.html', companyjobs=companyjobs)
-        else:
-            return "Company jobs not found"
         
     else:
         return "Unauthorized"
