@@ -669,29 +669,22 @@ def view_student_progress():
 
 @app.route('/student_company_jobs_posting')
 def student_company_jobs_posting():
-    if 'role' in session and session['role'] == 'student':
-        if 'company_id' in session:
-            company_id = session['company_id']
-            cursor = db_conn.cursor()
-            cursor.execute("""
-                SELECT JD.JobPosition, C.Comp_name, JD.JobDescription, JD.CareerLevel
-                FROM Job_Details JD
-                JOIN Company C ON JD.Company_ID = C.Company_ID
-                WHERE JD.Company_ID = %s
-            """, (company_id,))
-            job_company_data = cursor.fetchall()
-            cursor.close()
+    cursor = db_conn.cursor()
+    cursor.execute("""
+        SELECT JD.JobPosition, C.Comp_name, JD.JobDescription, JD.CareerLevel
+        FROM Job_Details JD
+        JOIN Company C ON JD.Company_ID = C.Company_ID
+    """)
+    job_company_data = cursor.fetchall()
+    cursor.close()
 
-            if job_company_data:
-                for row in job_company_data:
-                    print(row)  # Add this line for debugging
-                return render_template('student_company_jobs_posting.html', job_company_data=job_company_data)
-            else:
-                return "Company not found"
-        else:
-            return "Unauthorized"
+    if job_company_data:
+        for row in job_company_data:
+            print(row)  # Add this line for debugging
+        return render_template('student_company_jobs_posting.html', job_company_data=job_company_data)
     else:
-        return "Unauthorized"
+        return "No job postings available"
+
 
 if __name__ == '__main__':
     app.run(host='0.0.0.0', port=80, debug=True)
