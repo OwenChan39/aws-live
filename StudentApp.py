@@ -309,6 +309,7 @@ def update_company_profile(company_id, updates):
     finally:
         cursor.close()
 
+
 @app.route('/company_profile_edit', methods=['GET', 'POST'])
 def company_profile_edit():
     if 'company_id' in session:
@@ -363,10 +364,10 @@ def company_profile_edit():
                     flash('Error updating company information', 'error')
 
                 return redirect(url_for('company_dashboard'))
-            
-            return render_template('company_info_edit.html', company=company)
-    return redirect(url_for('login'))
 
+            return render_template('company_info_edit.html', company=company)
+
+    return redirect(url_for('login'))
 
 
 @app.route("/addjobpage")
