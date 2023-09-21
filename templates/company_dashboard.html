@@ -25,8 +25,17 @@
     <style>
         /* Example styles for the main content */
         .content {
-            margin-left: 10px;
-            padding: 20px;
+            margin-left: 50px;
+            padding: 150px;
+        }
+
+        .sign-out-link {
+            position: absolute;
+            top: 38px;
+            right: 30px;
+            color: #fff;
+            text-decoration: none;
+            font-weight: bold;
         }
 
         .status {
@@ -202,16 +211,52 @@
             font-weight: bold;
             color: #555;
         }
+
+        .logo-banner-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+    
+        .banner-links {
+            display: flex;
+            align-items: center;
+        }
+    
+        .banner-links a {
+            margin-left: 40px; /* Add spacing between banner links */
+            text-decoration: none;
+            color: #fff;
+            font-size: 18px;
+            font-weight: bold;
+        }
+
+        .banner-links a:hover {
+            color: #1e8c8b; /* Change the color on hover to your desired color */
+        }
     </style>
 </head>
 
 <body>
-    <!-- ***** Header Start ***** -->
-    <div class="header">
-        <h1>Company Dashboard</h1>
-        <a href="/login" class="sign-out-link">Sign Out</a>
-    </div>
-    <!-- ***** Header End ***** -->
+  <!-- ***** Header Area Start ***** -->
+    <header class="header-area header-sticky wow slideInDown" data-wow-duration="0.75s" data-wow-delay="0s">
+        <div class="container">
+            <div class="row">
+                <div class="col-12">
+                    <nav class="main-nav">
+                        <!-- ***** Logo and Banner Links Start ***** -->
+                        <div class="logo-banner-container">
+                            <a href="/login" class="logo">
+                                <h4>TAR UMT <img src="{{ url_for('static', filename='assets/images/logo-icon.png') }}" alt=""></h4>
+                            </a>
+                            <a href="/login" class="sign-out-link">Sign Out</a>
+                        </div>
+                    </nav>
+                </div>
+            </div>
+        </div>
+    </header>
+  <!-- ***** Header Area End ***** -->
 
     <div class="left-container">
         <!-- Left content goes here -->
