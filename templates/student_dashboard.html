@@ -7,25 +7,29 @@
     <meta name="author" content="">
     <link rel="preconnect" href="https://fonts.gstatic.com">
     <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@300;400;600;700;800&display=swap" rel="stylesheet">
+
     <title>Student Profile - SEO Dream</title>
+
     <!-- Bootstrap core CSS -->
     <link href="{{ url_for('static', filename='vendor/bootstrap/css/bootstrap.min.css') }}" rel="stylesheet">
+
     <!-- Additional CSS Files -->
     <link href="{{ url_for('static', filename='assets/css/fontawesome.css') }}" rel="stylesheet">
     <link href="{{ url_for('static', filename='assets/css/templatemo-seo-dream.css') }}" rel="stylesheet">
     <link href="{{ url_for('static', filename='assets/css/animated.css') }}" rel="stylesheet">
     <link href="{{ url_for('static', filename='assets/css/owl.css') }}" rel="stylesheet">
+
     <style>
         /* Add custom CSS styles for your student profile page */
-        /* Example styles for the sidebar */
+
+        /* Sidebar styles */
         .sidebar {
             width: 250px;
-            background-color: #333; /* Change this color to match your design */
+            background-color: #1e8c8b; /* Change this color to your desired sidebar background color */
             color: #fff;
             position: fixed;
             height: 100%;
             overflow: auto;
-            top: 0; /* Move the sidebar to the top */
         }
 
         .sidebar a {
@@ -37,10 +41,10 @@
         }
 
         .sidebar a:hover {
-            background-color: #555;
+            background-color: #1b7d7c; /* Change this color on hover */
         }
 
-        /* Example styles for the main content */
+        /* Main content styles */
         .content {
             margin-left: 250px;
             padding: 20px;
@@ -48,7 +52,7 @@
 
         /* Header styles */
         .header {
-            background-color: #33ccc5; /* Keep the header design */
+            background-color: #1e8c8b; /* Match the sidebar background color */
             color: #fff;
             padding: 10px 0;
             text-align: center;
@@ -76,8 +80,10 @@
         }
 
         .student-profile img {
-            max-width: 200px;
-            border-radius: 50%;
+            max-width: 180px;
+            height: 250px;
+            border: 2px solid #555; /* Add a border with a color of your choice */
+            border-radius: 0; /* Set border-radius to 0 to remove any rounded corners */
             margin-bottom: 20px;
         }
 
@@ -114,15 +120,37 @@
         }
 
         .edit-button:hover {
-            background-color: #1e8c8b;
+            background-color: #1e8c8b; /* Change this color on hover */
         }
 
-        .student-profile img {
-            max-width: 180px;
-            height: 250px;
-            border: 2px solid #555; /* Add a border with a color of your choice */
-            border-radius: 0; /* Set border-radius to 0 to remove any rounded corners */
-            margin-bottom: 20px;
+        /* Upload Resume button styles */
+        .upload-button {
+            background-color: #33ccc5;
+            color: #fff;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            text-decoration: none;
+            cursor: pointer;
+        }
+
+        .upload-button:hover {
+            background-color: #1e8c8b; /* Change this color on hover */
+        }
+
+        /* View Resume button styles */
+        .view-button {
+            background-color: #FA9D4D;
+            color: #fff;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            text-decoration: none;
+            cursor: pointer;
+        }
+
+        .view-button:hover {
+            background-color: #f67626; /* Change this color on hover */
         }
     </style>
 </head>
