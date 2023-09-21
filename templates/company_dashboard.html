@@ -2,26 +2,20 @@
 <html lang="en">
 
 <head>
-
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <meta name="description" content="">
     <meta name="author" content="">
     <link rel="preconnect" href="https://fonts.gstatic.com">
-    <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@300;400;600;700;800&display=swap"
-        rel="stylesheet">
-
+    <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@300;400;600;700;800&display=swap" rel="stylesheet">
     <title>TAR UMT - ITP System</title>
-
     <!-- Bootstrap core CSS -->
     <link href="{{ url_for('static', filename='vendor/bootstrap/css/bootstrap.min.css') }}" rel="stylesheet">
-
     <!-- Additional CSS Files -->
     <link href="{{ url_for('static', filename='assets/css/fontawesome.css') }}" rel="stylesheet">
     <link href="{{ url_for('static', filename='assets/css/templatemo-seo-dream.css') }}" rel="stylesheet">
     <link href="{{ url_for('static', filename='assets/css/animated.css') }}" rel="stylesheet">
     <link href="{{ url_for('static', filename='assets/css/owl.css') }}" rel="stylesheet">
-
     <style>
         /* Example styles for the main content */
         .content {
@@ -48,48 +42,34 @@
             font-size: 25px;
             font-weight: bold;
             color: #e74c3c;
-            /* Set color for pending status (e.g., red) */
         }
 
-        /* Custom styles for the Quote of the day and program boxes */
         /* Styling for Edit Button */
         .info h3 {
             display: flex;
             align-items: center;
-            /* Vertically center the text and button */
             color: #333;
             margin-bottom: 10px;
         }
 
         .infoHead h3 #editButton {
             font-size: 22px;
-
             margin-left: 10px;
-            /* Add some space between the heading text and the button */
             background-color: #ffffff;
-            /* Button background color */
             color: #1500ffb7;
-            /* Button text color */
             border: none;
-            /* Remove button border */
             border-radius: 5px;
-            /* Rounded corners */
             padding: 2px 10px;
-            /* Padding inside the button */
             cursor: pointer;
-            /* Show a hand cursor on hover */
             transition: color 0.3s;
-            /* Smooth color transition on hover */
         }
 
         .infoHead h3 #editButton:hover {
             color: #fa3232;
-            /* Change the text color on hover */
         }
 
         .info .info-container {
             background-color: #f2f2f2;
-            /* Grey background color */
             padding: 20px;
             border-radius: 10px;
             margin-top: 10px;
@@ -98,7 +78,6 @@
         /* Header styles */
         .header {
             background-color: #33ccc5;
-            /* Change this color to match your index.html */
             color: #fff;
             padding: 10px 0;
             text-align: center;
@@ -117,7 +96,6 @@
         .right-container {
             float: center;
             width: 85%;
-            /* Adjust the width as needed */
             background-color: #ffffff;
             padding: 20px;
         }
@@ -131,25 +109,21 @@
 
         .right-container .logo {
             width: 180px;
-            /* Adjust the width as needed */
             height: 200px;
-            /* This keeps the image's aspect ratio */
             padding-top: 20px;
             margin-left: 30px;
         }
 
         .offer {
             background-color: #f2f2f2;
-            /* Grey background color */
             border-radius: 10px;
             padding: 20px;
         }
 
         .job-container {
             border: 2px solid #4d4949;
-            /* Add a border to separate job boxes */
             border-radius: 10px;
-            margin-top: 20px; /* Add spacing between job boxes */
+            margin-top: 20px;
             padding: 10px;
         }
 
@@ -161,27 +135,18 @@
         .offerHead h3 #editButton {
             font-size: 22px;
             margin-left: 10px;
-            /* Add some space between the heading text and the button */
             background-color: #ffffff;
-            /* Button background color */
             color: #1500ffb7;
-            /* Button text color */
             border: none;
-            /* Remove button border */
             border-radius: 5px;
-            /* Rounded corners */
             padding: 2px 10px;
-            /* Padding inside the button */
             cursor: pointer;
-            /* Show a hand cursor on hover */
             transition: color 0.3s;
-            /* Smooth color transition on hover */
         }
 
         .offerHead h3 {
             display: flex;
             align-items: center;
-            /* Vertically center the text and button */
             color: #333;
             margin-bottom: 10px;
         }
@@ -208,14 +173,14 @@
             justify-content: space-between;
             align-items: center;
         }
-    
+
         .banner-links {
             display: flex;
             align-items: center;
         }
-    
+
         .banner-links a {
-            margin-left: 40px; /* Add spacing between banner links */
+            margin-left: 40px;
             text-decoration: none;
             color: #fff;
             font-size: 18px;
@@ -223,13 +188,13 @@
         }
 
         .banner-links a:hover {
-            color: #1e8c8b; /* Change the color on hover to your desired color */
+            color: #1e8c8b;
         }
     </style>
 </head>
 
 <body>
-  <!-- ***** Header Area Start ***** -->
+    <!-- ***** Header Area Start ***** -->
     <header class="header-area header-sticky wow slideInDown" data-wow-duration="0.75s" data-wow-delay="0s">
         <div class="container">
             <div class="row">
@@ -238,7 +203,8 @@
                         <!-- ***** Logo and Banner Links Start ***** -->
                         <div class="logo-banner-container">
                             <a href="/login" class="logo">
-                                <h4>TAR UMT <img src="{{ url_for('static', filename='assets/images/logo-icon.png') }}" alt=""></h4>
+                                <h4>TAR UMT <img src="{{ url_for('static', filename='assets/images/logo-icon.png') }}"
+                                        alt=""></h4>
                             </a>
                             <a href="/login" class="sign-out-link">Sign Out</a>
                         </div>
@@ -247,23 +213,21 @@
             </div>
         </div>
     </header>
-  <!-- ***** Header Area End ***** -->
+    <!-- ***** Header Area End ***** -->
 
     <!-- Container for right content -->
     <div class="right-container">
         <!-- Right content goes here -->
         <div class="content">
             <h2>Hello, {{ company_name }}!</h2>
-            <br>
 
             <div class="logo">
-            <img src="{{ company_image_url }}" alt="Company Logo">
+                <img src="{{ company_image_url }}" alt="Company Logo">
             </div>
-            
+
             <div class="status">
                 <p>Approval Status: <span id="approvalStatus">{{ status }}</span></p>
             </div>
-            <br>
 
             <!-- Info of the company -->
             <div class="infoHead">
@@ -271,11 +235,12 @@
             </div>
             <div class="info">
                 <div class="info-container">
-                    <p><strong>{{ company_name }}</strong> </p>
-                    <p><strong>{{ company_industry }}</strong> </p>
-                    <p><strong>Product or Service :</strong> {{ product_service }}</p>
-                    <p><strong>Company Website :</strong> <a href="{{ company_website }}" target="_blank">{{ company_website }}</a></p>
-                    <p><strong>OT Claim :</strong> {{ ot_claim }}</p>
+                    <p><strong>{{ company_name }}</strong></p>
+                    <p><strong>{{ company_industry }}</strong></p>
+                    <p><strong>Product or Service:</strong> {{ product_service }}</p>
+                    <p><strong>Company Website:</strong> <a href="{{ company_website }}"
+                            target="_blank">{{ company_website }}</a></p>
+                    <p><strong>OT Claim:</strong> {{ ot_claim }}</p>
                 </div>
                 <div class="info-container">
                     <p><strong>Address</strong></p>
@@ -290,45 +255,44 @@
                     <p>{{ email }}</p>
                 </div>
                 <div class="info-container">
-                    <p><strong>Remark :</strong></p>
+                    <p><strong>Remark:</strong></p>
                     <p>{{ remark }}</p>
                 </div>
             </div>
-            <br>
 
             <div class="offerHead">
                 <h3>Job Offers
                     {% if status == 'Approved' %}
-                        <a href="/addjobpage" class="edit-button">Edit Job Positions</a>
+                    <a href="/addjobpage" class="edit-button">Edit Job Positions</a>
                     {% endif %}
                 </h3>
             </div>
             <div class="offer">
                 {% if companyjobs %}
-                    {% for job in companyjobs %}
-                        <div class="job-container job-item">
-                            <div class="job-header">
-                                <h4>{{ job[1] }}</h4>
-                                <p class="job-type">{{ job[6] }}</p>
-                            </div>
-                            <p class="job-description">{{ job[2] }}</p>
-                            <p><strong>Job Requirements:</strong></p>
-                            <ul class="job-requirements">
-                                <li>{{ job[3] }}</li>
-                            </ul>
-                            <div class="job-details">
-                                <p><strong>Career Level:</strong> {{ job[4] }}</p>
-                                <p><strong>Qualification:</strong> {{ job[5] }}</p>
-                                <p><strong>Years of Experience:</strong> {{ job[7] }}</p>
-                                <p><strong>Salary:</strong> {{ job[8] }}</p>
-                            </div>
-                        </div>
-                    {% endfor %}
+                {% for job in companyjobs %}
+                <div class="job-container job-item">
+                    <div class="job-header">
+                        <h4>{{ job[1] }}</h4>
+                        <p class="job-type">{{ job[6] }}</p>
+                    </div>
+                    <p class="job-description">{{ job[2] }}</p>
+                    <p><strong>Job Requirements:</strong></p>
+                    <ul class="job-requirements">
+                        <li>{{ job[3] }}</li>
+                    </ul>
+                    <div class="job-details">
+                        <p><strong>Career Level:</strong> {{ job[4] }}</p>
+                        <p><strong>Qualification:</strong> {{ job[5] }}</p>
+                        <p><strong>Years of Experience:</strong> {{ job[7] }}</p>
+                        <p><strong>Salary:</strong> {{ job[8] }}</p>
+                    </div>
+                </div>
+                {% endfor %}
                 {% else %}
-                    <p>No job offers available.</p>
+                <p>No job offers available.</p>
                 {% endif %}
             </div>
-            
+
         </div>
     </div>
 
@@ -347,7 +311,7 @@
         function infoEdit() {
             window.location.href = "company_info_edit.html"; // Redirect to the desired page
         }
-    
+
         // Attach the click event to the button
         document.getElementById("editButton").addEventListener("click", infoEdit);
     </script>
