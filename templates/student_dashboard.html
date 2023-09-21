@@ -160,9 +160,15 @@
 
         /* Make the banner text responsive */
         @media (max-width: 768px) {
-            /* ... (your existing media query styles) ... */
+            .main-banner {
+                padding: 100px 0; /* Adjust for smaller screens */
+            }
 
-            /* Adjust margin for smaller screens */
+            .banner-links {
+                flex-direction: column;
+                margin-top: 10px;
+            }
+
             .banner-links a {
                 margin: 10px 0;
             }
