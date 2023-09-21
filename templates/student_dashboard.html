@@ -1,6 +1,5 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
@@ -8,20 +7,16 @@
     <meta name="author" content="">
     <link rel="preconnect" href="https://fonts.gstatic.com">
     <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@300;400;600;700;800&display=swap" rel="stylesheet">
-
-    <title>TAR UMT - ITP System</title>
-
+    <title>Student Profile - SEO Dream</title>
     <!-- Bootstrap core CSS -->
     <link href="{{ url_for('static', filename='vendor/bootstrap/css/bootstrap.min.css') }}" rel="stylesheet">
-
     <!-- Additional CSS Files -->
     <link href="{{ url_for('static', filename='assets/css/fontawesome.css') }}" rel="stylesheet">
     <link href="{{ url_for('static', filename='assets/css/templatemo-seo-dream.css') }}" rel="stylesheet">
     <link href="{{ url_for('static', filename='assets/css/animated.css') }}" rel="stylesheet">
     <link href="{{ url_for('static', filename='assets/css/owl.css') }}" rel="stylesheet">
-    <!-- Your custom CSS styles here -->
     <style>
-        /* Add your custom styles here */
+        /* Add custom CSS styles for your student profile page */
         /* Example styles for the sidebar */
         .sidebar {
             width: 250px;
@@ -31,7 +26,6 @@
             height: 100%;
             overflow: auto;
         }
-
         .sidebar a {
             padding: 15px;
             text-decoration: none;
@@ -39,17 +33,14 @@
             color: #fff;
             display: block;
         }
-
         .sidebar a:hover {
             background-color: #555;
         }
-
         /* Example styles for the main content */
         .content {
             margin-left: 250px;
             padding: 20px;
         }
-
         /* Header styles */
         .header {
             background-color: #33ccc5; /* Change this color to match your design */
@@ -57,11 +48,9 @@
             padding: 10px 0;
             text-align: center;
         }
-
         .header h1 {
             margin: 0;
         }
-
         .sign-out-link {
             position: absolute;
             top: 20px;
@@ -70,7 +59,6 @@
             text-decoration: none;
             font-weight: bold;
         }
-
         /* Student Profile styles */
         .student-profile {
             background-color: #f2f2f2;
@@ -78,13 +66,11 @@
             border-radius: 10px;
             text-align: center;
         }
-
         .student-profile img {
             max-width: 200px;
             border-radius: 50%;
             margin-bottom: 20px;
         }
-
         .student-info {
             display: grid;
             grid-template-columns: repeat(2, 1fr);
@@ -92,19 +78,16 @@
             text-align: left;
             padding: 20px;
         }
-
         .student-info-box {
             background-color: #fff;
             padding: 15px;
             border-radius: 10px;
             box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
         }
-
         .student-info-box span {
             font-weight: bold;
             color: #555;
         }
-
         /* Edit Button styles */
         .edit-button {
             background-color: #33ccc5;
@@ -116,11 +99,9 @@
             cursor: pointer;
             margin-top: 20px;
         }
-
         .edit-button:hover {
             background-color: #1e8c8b;
         }
-
         .student-profile img {
             max-width: 180px;
             height: 250px;
@@ -128,10 +109,8 @@
             border-radius: 0; /* Set border-radius to 0 to remove any rounded corners */
             margin-bottom: 20px;
         }
-
     </style>
 </head>
-
 <body>
     <!-- ***** Preloader Start ***** -->
     <div id="js-preloader" class="js-preloader">
@@ -145,100 +124,56 @@
         </div>
     </div>
     <!-- ***** Preloader End ***** -->
-
     <!-- ***** Header Start ***** -->
-    <header class="header-area header-sticky wow slideInDown" data-wow-duration="0.75s" data-wow-delay="0s">
-        <div class="container">
-            <div class="row">
-                <div class="col-12">
-                    <nav class="main-nav">
-                        <!-- ***** Logo Start ***** -->
-                        <a href="index.html" class="logo">
-                            <h4>TAR UMT <img src="{{ url_for('static', filename='assets/images/logo-icon.png') }}"
-                                    alt=""></h4>
-                        </a>
-                    </nav>
-                </div>
-            </div>
-        </div>
+    <header class="header">
+        <a href="index.html" class="logo">
+            <h4>TAR UMT <img src="{{ url_for('static', filename='assets/images/logo-icon.png') }}" alt=""></h4>
+        </a>
+        <ul class="main-menu">
+            <li><a href="/student_dashboard">Student Profile</a></li>
+            <li><a href="/student_company_jobs_posting">Job Postings</a></li>
+            <li><a href="/student_upload_documents_page">Upload Documents</a></li>
+        </ul>
     </header>
     <!-- ***** Header End ***** -->
-
     <!-- ***** Student Profile Start ***** -->
-    <div class="content">
-        <!-- Student Profile -->
-        <div class="student-profile">
-            <img src="{{ student_image_url }}" alt="Student Profile Picture">
-            <div class="student-info">
-                <div class="student-info-box">
-                    <span>Name:</span> {{ Stud_name }}
-                </div>
-                <div class="student-info-box">
-                    <span>ID:</span> {{ Stud_ID }}
-                </div>
-                <div class="student-info-box">
-                    <span>NRIC Number:</span> {{ NRIC_Number }}
-                </div>
-                <div class="student-info-box">
-                    <span>Gender:</span> {{ Gender }}
-                </div>
-                <div class="student-info-box">
-                    <span>Programme of Study:</span> {{ Programme_of_Study }}
-                </div>
-                <div class="student-info-box">
-                    <span>CGPA:</span> {{ CGPA }}
-                </div>
-                <div class="student-info-box">
-                    <span>TARUMT Email:</span> {{ TARUMT_emailAddress }}
-                </div>
-                <div class="student-info-box">
-                    <span>Mobile Number:</span> {{ Mobile_number }}
-                </div>
-                <div class="student-info-box">
-                    <span>Intern Batch:</span> {{ Intern_batch }}
-                </div>
-                <div class="student-info-box">
-                    <span>Home Address:</span> {{ Home_Address }}
-                </div>
-                <div class="student-info-box">
-                    <span>Personal Email:</span> {{ Personal_emailAddress }}
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-12">
+                <!-- Student Profile -->
+                <div class="student-profile">
+                    <img src="{{ student_image_url }}" alt="Student Profile Picture">
+                    <div class="student-info">
+                        <div class="student-info-box">
+                            <span>Name:</span> {{ Stud_name }}
+                        </div>
+                        <div class="student-info-box">
+                            <span>ID:</span> {{ Stud_ID }}
+                        </div>
+                        <!-- ... (add more student information) ... -->
+                    </div>
+                    <a href="{{ url_for('student_profile_edit') }}" class="edit-button">Edit Profile</a>
+                    <!-- Add the Upload Resume button below the Edit Profile button -->
+                    <form action="/upload_resume" method="POST" enctype="multipart/form-data">
+                        <input type="file" name="resume_file" accept=".pdf, .doc, .docx">
+                        <input type="submit" class="edit-button" value="Upload Resume">
+                    </form>
+                    <!-- Add the View Resume button if a resume is uploaded -->
+                    {% if student_resume_url %}
+                        <br>
+                        <p><a href="{{ student_resume_url }}" target="_blank" class="edit-button"
+                                style="background-color: #FA9D4D;">View Resume</a></p>
+                    {% else %}
+                        <!-- Display a message if no resume is uploaded -->
+                        <p>No resume uploaded.</p>
+                    {% endif %}
                 </div>
             </div>
-            <a href="{{ url_for('student_profile_edit') }}" class="edit-button">Edit Profile</a>
-
-            <!-- Add the Upload Resume button below the Edit Profile button -->
-            <form action="/upload_resume" method="POST" enctype="multipart/form-data">
-                <input type="file" name="resume_file" accept=".pdf, .doc, .docx">
-                <input type="submit" class="edit-button" value="Upload Resume">
-            </form>
-
-            <!-- Add the Upload Resume button below the Edit Profile button -->
-            {% if student_resume_url %}
-                <br>
-                <p><a href="{{ student_resume_url }}" target="_blank" class="edit-button"
-                        style="background-color: #FA9D4D;">View Resume</a></p>
-            {% else %}
-                <!-- Display a message if no resume is uploaded -->
-                <p>No resume uploaded.</p>
-            {% endif %}
         </div>
     </div>
     <!-- ***** Student Profile End ***** -->
-
     <!-- ... (remaining HTML code) ... -->
-
-    <footer>
-        <div class="container">
-            <div class="row">
-                <div class="col-lg-12">
-                    <!-- Add your footer content here -->
-                    <!-- ... -->
-                </div>
-            </div>
-        </div>
-    </footer>
-
-    <!-- Scripts -->
+    <!-- ***** Scripts ***** -->
     <script src="{{ url_for('static', filename='vendor/jquery/jquery.min.js') }}"></script>
     <script src="{{ url_for('static', filename='vendor/bootstrap/js/bootstrap.bundle.min.js') }}"></script>
     <script src="{{ url_for('static', filename='assets/js/owl-carousel.js') }}"></script>
@@ -246,5 +181,4 @@
     <script src="{{ url_for('static', filename='assets/js/imagesloaded.js') }}"></script>
     <script src="{{ url_for('static', filename='assets/js/custom.js') }}"></script>
 </body>
-
 </html>
