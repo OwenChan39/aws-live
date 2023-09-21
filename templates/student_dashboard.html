@@ -21,11 +21,10 @@
 
     <style>
         /* Add custom CSS styles for your student profile page */
-
-        /* Sidebar styles */
+        /* Example styles for the sidebar */
         .sidebar {
             width: 250px;
-            background-color: #1e8c8b; /* Change this color to your desired sidebar background color */
+            background-color: #333; /* Change this color to match your design */
             color: #fff;
             position: fixed;
             height: 100%;
@@ -41,10 +40,10 @@
         }
 
         .sidebar a:hover {
-            background-color: #1b7d7c; /* Change this color on hover */
+            background-color: #555;
         }
 
-        /* Main content styles */
+        /* Example styles for the main content */
         .content {
             margin-left: 250px;
             padding: 20px;
@@ -52,7 +51,7 @@
 
         /* Header styles */
         .header {
-            background-color: #1e8c8b; /* Match the sidebar background color */
+            background-color: #33ccc5; /* Change this color to match your design */
             color: #fff;
             padding: 10px 0;
             text-align: center;
@@ -81,7 +80,7 @@
 
         .student-profile img {
             max-width: 180px;
-            height: 250px;
+            height: auto; /* Adjust the height to maintain aspect ratio */
             border: 2px solid #555; /* Add a border with a color of your choice */
             border-radius: 0; /* Set border-radius to 0 to remove any rounded corners */
             margin-bottom: 20px;
@@ -120,26 +119,11 @@
         }
 
         .edit-button:hover {
-            background-color: #1e8c8b; /* Change this color on hover */
+            background-color: #1e8c8b;
         }
 
-        /* Upload Resume button styles */
-        .upload-button {
-            background-color: #33ccc5;
-            color: #fff;
-            border: none;
-            padding: 10px 20px;
-            border-radius: 5px;
-            text-decoration: none;
-            cursor: pointer;
-        }
-
-        .upload-button:hover {
-            background-color: #1e8c8b; /* Change this color on hover */
-        }
-
-        /* View Resume button styles */
-        .view-button {
+        /* Resume Button styles */
+        .resume-button {
             background-color: #FA9D4D;
             color: #fff;
             border: none;
@@ -147,11 +131,13 @@
             border-radius: 5px;
             text-decoration: none;
             cursor: pointer;
+            margin-top: 20px;
         }
 
-        .view-button:hover {
-            background-color: #f67626; /* Change this color on hover */
+        .resume-button:hover {
+            background-color: #FF7F00;
         }
+
     </style>
 </head>
 <body>
@@ -167,22 +153,24 @@
         </div>
     </div>
     <!-- ***** Preloader End ***** -->
+
     <!-- ***** Header Start ***** -->
     <div class="header">
         <h1>Student Profile</h1>
         <a href="/login" class="sign-out-link">Sign Out</a>
     </div>
     <!-- ***** Header End ***** -->
+
     <!-- ***** Student Profile Start ***** -->
+    <div class="sidebar">
+        <a href="/student_dashboard">Student Profile</a>
+        <a href="/student_company_jobs_posting">Job Postings</a>
+        <a href="/student_upload_documents_page">Upload Documents</a>
+        <!-- Add more navigation links as needed -->
+        <!-- <a href="#">Link 4</a> -->
+    </div>
+
     <div class="content">
-        <!-- Move the sidebar content here -->
-        <div class="sidebar">
-            <a href="/student_dashboard">Student Profile</a>
-            <a href="/student_company_jobs_posting">Job Postings</a>
-            <a href="/student_upload_documents_page">Upload Documents</a>
-            <!-- Add more navigation links as needed -->
-            <!-- <a href="#">Link 4</a> -->
-        </div>
         <!-- Student Profile -->
         <div class="student-profile">
             <img src="{{ student_image_url }}" alt="Student Profile Picture">
@@ -222,15 +210,17 @@
                 </div>
             </div>
             <a href="{{ url_for('student_profile_edit') }}" class="edit-button">Edit Profile</a>
+            
             <!-- Add the Upload Resume button below the Edit Profile button -->
             <form action="/upload_resume" method="POST" enctype="multipart/form-data">
                 <input type="file" name="resume_file" accept=".pdf, .doc, .docx">
-                <input type="submit" class="edit-button" value="Upload Resume">
+                <input type="submit" class="resume-button" value="Upload Resume">
             </form>
-            <!-- Add the Upload Resume button below the Edit Profile button -->
+
+            <!-- Add the View Resume button if a resume is uploaded -->
             {% if student_resume_url %}
                 <br>
-                <p><a href="{{ student_resume_url }}" target="_blank" class="edit-button" style="background-color: #FA9D4D;">View Resume</a></p>
+                <p><a href="{{ student_resume_url }}" target="_blank" class="resume-button">View Resume</a></p>
             {% else %}
                 <!-- Display a message if no resume is uploaded -->
                 <p>No resume uploaded.</p>
@@ -238,7 +228,9 @@
         </div>
     </div>
     <!-- ***** Student Profile End ***** -->
+
     <!-- ... (remaining HTML code) ... -->
+
     <footer>
         <div class="container">
             <div class="row">
@@ -249,6 +241,7 @@
             </div>
         </div>
     </footer>
+
     <!-- Scripts -->
     <script src="{{ url_for('static', filename='vendor/jquery/jquery.min.js') }}"></script>
     <script src="{{ url_for('static', filename='vendor/bootstrap/js/bootstrap.bundle.min.js') }}"></script>
