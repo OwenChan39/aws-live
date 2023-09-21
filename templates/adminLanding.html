@@ -10,7 +10,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@300;400;600;700;800&display=swap"
         rel="stylesheet">
 
-    <title>Admin Landing Page</title>
+    <title>Admin Main Menu</title>
 
     <!-- Bootstrap core CSS -->
     <link href="{{ url_for('static', filename='vendor/bootstrap/css/bootstrap.min.css') }}" rel="stylesheet">
@@ -42,27 +42,15 @@
             <div class="row">
                 <div class="col-12">
                     <nav class="main-nav">
-                        <!-- ***** Logo Start ***** -->
-                        <a href="/adminLanding" class="logo">
-                            <h4>SEO Dream <img src="{{ url_for('static', filename='assets/images/logo-icon.png') }}" alt=""></h4>
+                        <a href="/" class="logo">
+                            <h4>TAR UMT<img src="{{ url_for('static', filename='assets/images/logo-icon.png') }}" alt=""></h4>
                         </a>
-                        <!-- ***** Logo End ***** -->
-                        <!-- ***** Menu Start ***** -->
                         <ul class="nav">
-                            <li class="scroll-to-section"><a href="index.html">Home</a></li>
-                            <li class="scroll-to-section"><a href="#features">Features</a></li>
-                            <li class="scroll-to-section"><a href="#about">About Us</a></li>
-                            <li class="scroll-to-section"><a href="#services">Services</a></li>
-                            <li class="scroll-to-section"><a href="#portfolio">Portfolio</a></li>
-                            <li class="scroll-to-section"><a href="#contact">Contact Us</a></li>
+                            <li class="scroll-to-section"><a href="/adminLanding">Home</a></li>
                             <li class="scroll-to-section">
                                 <div class="main-blue-button"><a href="/adminProfile">Profile</a></div>
                             </li>
                         </ul>
-                        <a class='menu-trigger'>
-                            <span>Menu</span>
-                        </a>
-                        <!-- ***** Menu End ***** -->
                     </nav>
                 </div>
             </div>
