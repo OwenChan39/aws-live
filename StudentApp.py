@@ -195,7 +195,7 @@ def admin_signup():
         admin_username = request.form["admin_username"]
         admin_password = encrypt(request.form["admin_password"], encrypt_key)
 
-        check_admin = cursor.execute("SELECT * FROM Admin WHERE admin_user = %s", (admin_username))
+        check_admin = cursor.execute("SELECT * FROM Admin WHERE admin_username = %s", (admin_username))
         if len(check_admin) == 0:
 
             insert_sql = "INSERT INTO Admin (admin_name, admin_username, admin_password) VALUES (%s, %s, %s)"
