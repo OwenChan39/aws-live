@@ -9,7 +9,7 @@
     <link rel="preconnect" href="https://fonts.gstatic.com">
     <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@300;400;600;700;800&display=swap" rel="stylesheet">
 
-    <title>TAR UMT - ITP System</title>
+    <title>Student Profile - SEO Dream</title>
 
     <!-- Bootstrap core CSS -->
     <link href="{{ url_for('static', filename='vendor/bootstrap/css/bootstrap.min.css') }}" rel="stylesheet">
@@ -19,9 +19,9 @@
     <link href="{{ url_for('static', filename='assets/css/templatemo-seo-dream.css') }}" rel="stylesheet">
     <link href="{{ url_for('static', filename='assets/css/animated.css') }}" rel="stylesheet">
     <link href="{{ url_for('static', filename='assets/css/owl.css') }}" rel="stylesheet">
-    <!-- Your custom CSS styles here -->
+
     <style>
-        /* Add your custom styles here */
+        /* Add custom CSS styles for your student profile page */
         /* Example styles for the sidebar */
         .sidebar {
             width: 250px;
@@ -129,6 +129,7 @@
             margin-bottom: 20px;
         }
 
+
     </style>
 </head>
 
@@ -147,24 +148,21 @@
     <!-- ***** Preloader End ***** -->
 
     <!-- ***** Header Start ***** -->
-    <header class="header-area header-sticky wow slideInDown" data-wow-duration="0.75s" data-wow-delay="0s">
-        <div class="container">
-            <div class="row">
-                <div class="col-12">
-                    <nav class="main-nav">
-                        <!-- ***** Logo Start ***** -->
-                        <a href="index.html" class="logo">
-                            <h4>TAR UMT <img src="{{ url_for('static', filename='assets/images/logo-icon.png') }}"
-                                    alt=""></h4>
-                        </a>
-                    </nav>
-                </div>
-            </div>
-        </div>
-    </header>
+    <div class="header">
+        <h1>Student Profile</h1>
+        <a href="/login" class="sign-out-link">Sign Out</a>
+    </div>
     <!-- ***** Header End ***** -->
 
     <!-- ***** Student Profile Start ***** -->
+    <div class="sidebar">
+        <a href="/student_dashboard">Student Profile</a>
+        <a href="/student_company_jobs_posting">Job Postings</a>
+        <a href="/student_upload_documents_page">Upload Documents</a>
+        <!-- Add more navigation links as needed -->
+        <!-- <a href="#">Link 4</a> -->
+    </div>
+
     <div class="content">
         <!-- Student Profile -->
         <div class="student-profile">
@@ -205,7 +203,7 @@
                 </div>
             </div>
             <a href="{{ url_for('student_profile_edit') }}" class="edit-button">Edit Profile</a>
-
+            
             <!-- Add the Upload Resume button below the Edit Profile button -->
             <form action="/upload_resume" method="POST" enctype="multipart/form-data">
                 <input type="file" name="resume_file" accept=".pdf, .doc, .docx">
@@ -215,13 +213,13 @@
             <!-- Add the Upload Resume button below the Edit Profile button -->
             {% if student_resume_url %}
                 <br>
-                <p><a href="{{ student_resume_url }}" target="_blank" class="edit-button"
-                        style="background-color: #FA9D4D;">View Resume</a></p>
+                <p><a href="{{ student_resume_url }}" target="_blank" class="edit-button" style="background-color: #FA9D4D;">View Resume</a></p>
             {% else %}
-                <!-- Display a message if no resume is uploaded -->
+        <!-- Display a message if no resume is uploaded -->
                 <p>No resume uploaded.</p>
             {% endif %}
-        </div>
+        
+
     </div>
     <!-- ***** Student Profile End ***** -->
 
