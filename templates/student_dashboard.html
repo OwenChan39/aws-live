@@ -22,43 +22,87 @@
 
     <style>
         /* Add custom CSS styles for your student profile page */
-        /* Main banner with student information */
-        .main-banner {
-            background-image: url('your-image-url.jpg'); /* Replace 'your-image-url.jpg' with the path to your background image */
-            background-size: cover;
-            background-position: center;
-            background-repeat: no-repeat;
-            padding: 100px 0;
-            text-align: center;
+        /* Example styles for the sidebar */
+        .sidebar {
+            width: 250px;
+            background-color: #333; /* Change this color to match your design */
             color: #fff;
+            position: fixed;
+            height: 100%;
+            overflow: auto;
         }
 
-        .header-text h2 {
-            border-bottom: none;
+        .sidebar a {
+            padding: 15px;
+            text-decoration: none;
+            font-size: 18px;
+            color: #fff;
+            display: block;
         }
 
-        /* Change the color of navigation links */
-        .nav-link {
-            color: red;
+        .sidebar a:hover {
+            background-color: #555;
         }
 
-        /* Truncate long text in cells */
-        .truncate-cell {
-            max-width: 150px; /* Adjust the maximum width to your preference */
-            white-space: nowrap;
-            overflow: hidden;
-            text-overflow: ellipsis;
+        /* Example styles for the main content */
+        .content {
+            margin-left: 250px;
+            padding: 20px;
         }
 
-        /* Center student information within the main banner */
-        .student-info {
+        /* Header styles */
+        .header {
+            background-color: #33ccc5; /* Change this color to match your design */
+            color: #fff;
+            padding: 10px 0;
             text-align: center;
         }
 
-        .student-info img {
+        .header h1 {
+            margin: 0;
+        }
+
+        .sign-out-link {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            color: #fff;
+            text-decoration: none;
+            font-weight: bold;
+        }
+
+        /* Student Profile styles */
+        .student-profile {
+            background-color: #f2f2f2;
+            padding: 20px;
+            border-radius: 10px;
+            text-align: center;
+        }
+
+        .student-profile img {
             max-width: 200px;
             border-radius: 50%;
             margin-bottom: 20px;
+        }
+
+        .student-info {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            grid-gap: 20px;
+            text-align: left;
+            padding: 20px;
+        }
+
+        .student-info-box {
+            background-color: #fff;
+            padding: 15px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .student-info-box span {
+            font-weight: bold;
+            color: #555;
         }
 
         /* Edit Button styles */
@@ -76,6 +120,15 @@
         .edit-button:hover {
             background-color: #1e8c8b;
         }
+
+        .student-profile img {
+            max-width: 180px;
+            height: 250px;
+            border: 2px solid #555; /* Add a border with a color of your choice */
+            border-radius: 0; /* Set border-radius to 0 to remove any rounded corners */
+            margin-bottom: 20px;
+        }
+
     </style>
 </head>
 
@@ -94,27 +147,79 @@
     <!-- ***** Preloader End ***** -->
 
     <!-- ***** Header Start ***** -->
-    <div class="header main-banner">
-        <!-- Student Profile -->
-        <div class="student-info">
-            <img src="{{ student_image_url }}" alt="Student Profile Picture">
-            <h1>{{ Stud_name }}</h1>
-            <p>ID: {{ Stud_ID }}</p>
-            <p>NRIC Number: {{ NRIC_Number }}</p>
-            <p>Gender: {{ Gender }}</p>
-            <p>Programme of Study: {{ Programme_of_Study }}</p>
-            <p>CGPA: {{ CGPA }}</p>
-            <p>TARUMT Email: {{ TARUMT_emailAddress }}</p>
-            <p>Mobile Number: {{ Mobile_number }}</p>
-            <p>Intern Batch: {{ Intern_batch }}</p>
-            <p>Home Address: {{ Home_Address }}</p>
-            <p>Personal Email: {{ Personal_emailAddress }}</p>
-            <a href="{{ url_for('student_profile_edit') }}" class="edit-button">Edit Profile</a>
-        </div>
-        <!-- Sign Out Link -->
+    <div class="header">
+        <h1>Student Profile</h1>
         <a href="/login" class="sign-out-link">Sign Out</a>
     </div>
     <!-- ***** Header End ***** -->
+
+    <!-- ***** Student Profile Start ***** -->
+    <div class="sidebar">
+        <a href="/student_dashboard">Student Profile</a>
+        <a href="/student_company_jobs_posting">Job Postings</a>
+        <a href="/student_upload_documents_page">Upload Documents</a>
+        <!-- Add more navigation links as needed -->
+        <!-- <a href="#">Link 4</a> -->
+    </div>
+
+    <div class="content">
+        <!-- Student Profile -->
+        <div class="student-profile">
+            <img src="{{ student_image_url }}" alt="Student Profile Picture">
+            <div class="student-info">
+                <div class="student-info-box">
+                    <span>Name:</span> {{ Stud_name }}
+                </div>
+                <div class="student-info-box">
+                    <span>ID:</span> {{ Stud_ID }}
+                </div>
+                <div class="student-info-box">
+                    <span>NRIC Number:</span> {{ NRIC_Number }}
+                </div>
+                <div class="student-info-box">
+                    <span>Gender:</span> {{ Gender }}
+                </div>
+                <div class="student-info-box">
+                    <span>Programme of Study:</span> {{ Programme_of_Study }}
+                </div>
+                <div class="student-info-box">
+                    <span>CGPA:</span> {{ CGPA }}
+                </div>
+                <div class="student-info-box">
+                    <span>TARUMT Email:</span> {{ TARUMT_emailAddress }}
+                </div>
+                <div class="student-info-box">
+                    <span>Mobile Number:</span> {{ Mobile_number }}
+                </div>
+                <div class="student-info-box">
+                    <span>Intern Batch:</span> {{ Intern_batch }}
+                </div>
+                <div class="student-info-box">
+                    <span>Home Address:</span> {{ Home_Address }}
+                </div>
+                <div class="student-info-box">
+                    <span>Personal Email:</span> {{ Personal_emailAddress }}
+                </div>
+            </div>
+            <a href="{{ url_for('student_profile_edit') }}" class="edit-button">Edit Profile</a>
+            
+            <!-- Add the Upload Resume button below the Edit Profile button -->
+            <form action="/upload_resume" method="POST" enctype="multipart/form-data">
+                <input type="file" name="resume_file" accept=".pdf, .doc, .docx">
+                <input type="submit" class="edit-button" value="Upload Resume">
+            </form>
+
+            <!-- Add the Upload Resume button below the Edit Profile button -->
+            {% if student_resume_url %}
+                <br>
+                <p><a href="{{ student_resume_url }}" target="_blank" class="edit-button" style="background-color: #FA9D4D;">View Resume</a></p>
+            {% else %}
+        <!-- Display a message if no resume is uploaded -->
+                <p>No resume uploaded.</p>
+            {% endif %}
+        </div>
+    </div>
+    <!-- ***** Student Profile End ***** -->
 
     <!-- ... (remaining HTML code) ... -->
 
