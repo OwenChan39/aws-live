@@ -2,7 +2,6 @@
 <html lang="en">
 
 <head>
-
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <meta name="description" content="">
@@ -11,22 +10,19 @@
     <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@300;400;600;700;800&display=swap"
         rel="stylesheet">
 
-    <title>Admin Signup</title>
+    <title>Student Sign Up</title>
 
     <!-- Bootstrap core CSS -->
     <link href="{{ url_for('static', filename='vendor/bootstrap/css/bootstrap.min.css') }}" rel="stylesheet">
 
-
     <!-- Additional CSS Files -->
-    <link rel="stylesheet" href="{{ url_for('static', filename='assets/css/fontawesome.css') }}">
-    <link rel="stylesheet" href="{{ url_for('static', filename='assets/css/templatemo-seo-dream.css') }}">
-    <link rel="stylesheet" href="{{ url_for('static', filename='assets/css/animated.css') }}">
-    <link rel="stylesheet" href="{{ url_for('static', filename='assets/css/owl.css') }}">
-
+    <link href="{{ url_for('static', filename='assets/css/fontawesome.css') }}" rel="stylesheet">
+    <link href="{{ url_for('static', filename='assets/css/templatemo-seo-dream.css') }}" rel="stylesheet">
+    <link href="{{ url_for('static', filename='assets/css/animated.css') }}" rel="stylesheet">
+    <link href="{{ url_for('static', filename='assets/css/owl.css') }}" rel="stylesheet">
 </head>
 
 <body>
-
     <!-- ***** Preloader Start ***** -->
     <div id="js-preloader" class="js-preloader">
         <div class="preloader-inner">
@@ -46,15 +42,12 @@
             <div class="row">
                 <div class="col-12">
                     <nav class="main-nav">
-                        <!-- ***** Logo Start ***** -->
-                        <a href="/" class="logo">
+                        <a href="index.html" class="logo">
                             <h4>TAR UMT<img src="{{ url_for('static', filename='assets/images/logo-icon.png') }}"
                                     alt=""></h4>
                         </a>
-                        <!-- ***** Logo End ***** -->
-                        <!-- ***** Menu Start ***** -->
                         <ul class="nav">
-                            <!-- <li class="scroll-to-section"><a href="#top" class="active">Home</a></li>
+                            <!-- <li class="scroll-to-section"><a href="index.html">Home</a></li>
                             <li class="scroll-to-section"><a href="#features">Features</a></li>
                             <li class="scroll-to-section"><a href="#about">About Us</a></li>
                             <li class="scroll-to-section"><a href="#services">Services</a></li>
@@ -67,7 +60,6 @@
                         <!-- <a class='menu-trigger'>
                             <span>Menu</span>
                         </a> -->
-                        <!-- ***** Menu End ***** -->
                     </nav>
                 </div>
             </div>
@@ -75,6 +67,7 @@
     </header>
     <!-- ***** Header Area End ***** -->
 
+    <!-- ***** Student Information Upload Area Start ***** -->
     <div class="main-banner wow fadeIn" id="top" data-wow-duration="1s" data-wow-delay="0.5s">
         <div class="container">
             <div class="row">
@@ -84,38 +77,102 @@
                             <div class="left-content header-text wow fadeInLeft" data-wow-duration="1s"
                                 data-wow-delay="1s">
                                 <div class="row">
-                                    <div class="col-lg-12">
-                                        <h2>Admin Signup</h2>
-                                    </div>
-                                    <form id="admin-signup-form" method="post" action="/admin_signup">
-                                        <div class="form-group">
-                                            <label for="admin_name">Admin Name:</label>
-                                            <input type="text" id="admin_name" name="admin_name" class="form-control"
-                                                required>
+                                    <form action="/student_sign_up" method="POST" enctype="multipart/form-data">
+                                        <div class="col-lg-12">
+                                            <h2>Student Sign Up</h2>
                                         </div>
-                                        <div class="form-group">
-                                            <label for="admin_username">Username:</label>
-                                            <input type="text" id="admin_username" name="admin_username"
-                                                class="form-control" required>
+                                        <div class="col-lg-6">
+                                            <!-- Student Information Upload Form -->
+                                            <form action="/student_sign_up" method="POST" enctype="multipart/form-data">
+                                                <!-- Student Name -->
+                                                <div class="form-group">
+                                                    <label for="studentName">Student Name:</label>
+                                                    <input type="text" class="form-control" name="Stud_name"
+                                                        id="studentName" required>
+                                                </div>
+                                                <!-- Student ID -->
+                                                <div class="form-group">
+                                                    <label for="studentID">Student ID:</label>
+                                                    <input type="text" class="form-control" name="Stud_ID"
+                                                        id="studentID" required>
+                                                </div>
+                                                <!-- NRIC Number -->
+                                                <div class="form-group">
+                                                    <label for="nricNumber">NRIC Number:</label>
+                                                    <input type="text" class="form-control" name="NRIC_Number"
+                                                        id="nricNumber" required>
+                                                </div>
+                                                <!-- Gender -->
+                                                <div class="form-group">
+                                                    <label for="gender">Gender:</label>
+                                                    <select class="form-control" name="Gender" id="Gender" required>
+                                                        <option value="male">Male</option>
+                                                        <option value="female">Female</option>
+                                                    </select>
+                                                </div>
+                                                <!-- Programme of Study -->
+                                                <div class="form-group">
+                                                    <label for="ProgrammeOfStudy">Programme of Study:</label>
+                                                    <input type="text" class="form-control" name="Programme_of_Study"
+                                                        id="ProgrammeOfStudy" required>
+                                                </div>
+                                                <!-- CGPA -->
+                                                <div class="form-group">
+                                                    <label for="CGPA">CGPA:</label>
+                                                    <input type="text" class="form-control" name="CGPA" id="CGPA"
+                                                        required>
+                                                </div>
                                         </div>
-                                        <div class="form-group">
-                                            <label for="admin_password">Password:</label>
-                                            <input type="password" id="admin_password" name="admin_password"
-                                                class="form-control" required>
-                                        </div>
-                                        <div class="submitbutton">
+                                        <div class="col-lg-6">
+                                            <!-- Student Email -->
                                             <div class="form-group">
-                                                <button type="submit" class="btn btn-primary" style="margin-top: 10px;">Sign Up</button>
+                                                <label for="studentEmail">TARUMT Email:</label>
+                                                <input type="email" class="form-control" name="TARUMT_emailAddress"
+                                                    id="studentEmail" required>
                                             </div>
+                                            <!-- Mobile Number -->
+                                            <div class="form-group">
+                                                <label for="mobileNumber">Mobile Number:</label>
+                                                <input type="tel" class="form-control" name="Mobile_number"
+                                                    id="mobileNumber" required>
+                                            </div>
+                                            <!-- Intern Batch -->
+                                            <div class="form-group">
+                                                <label for="internBatch">Intern Batch:</label>
+                                                <select class="form-control" name="Intern_batch" id="internBatch"
+                                                    required>
+                                                    <option value="MAY2021">MAY 2021</option>
+                                                    <option value="JULY2021">JULY 2021</option>
+                                                </select>
+                                            </div>
+                                            <!-- Home Address -->
+                                            <div class="form-group">
+                                                <label for="homeAddress">Home Address:</label>
+                                                <input type="text" class="form-control" name="Home_Address"
+                                                    id="homeAddress" required>
+                                            </div>
+                                            <!-- Personal Email -->
+                                            <div class="form-group">
+                                                <label for="personalEmail">Personal Email:</label>
+                                                <input type="email" class="form-control" name="Personal_emailAddress"
+                                                    id="personalEmail" required>
+                                            </div>
+                                            <!-- Select Image File to Upload -->
+                                            <div class="form-group">
+                                                <label for="studentImage">Upload Student Image:</label>
+                                                <input type="file" class="form-control-file" name="studentImage"
+                                                    id="studentImage" required>
+                                            </div>
+                                            <!-- End Additional Fields -->
+
+                                            <div class="form-group">
+                                                <button type="submit" class="main-green-button btn btn-primary"
+                                                    style="margin: top 10px;">SUBMIT</button>
+                                            </div>
+                                            <!-- End Student Information Upload Form -->
                                         </div>
                                     </form>
                                 </div>
-                            </div>
-                        </div>
-                        <div class="col-lg-6">
-                            <div class="right-image wow fadeInRight" data-wow-duration="1s" data-wow-delay="0.5s">
-                                <img src="{{ url_for('static', filename='assets/images/banner-right-image.png') }}"
-                                    alt="">
                             </div>
                         </div>
                     </div>
@@ -123,13 +180,15 @@
             </div>
         </div>
     </div>
+    <!-- ***** Student Information Upload Area End ***** -->
 
     <footer>
         <div class="container">
             <div class="row">
                 <div class="col-lg-12">
                     <p>Copyright © 2021 SEO Dream Co., Ltd. All Rights Reserved.
-                        <br>Web Designed by <a rel="nofollow" href="www.tarc.edu.my"
+
+                        <br>Web Designed by <a rel="nofollow" href="https://templatemo.com"
                             title="free CSS templates">TemplateMo</a>
                     </p>
                 </div>
@@ -144,7 +203,6 @@
     <script src="{{ url_for('static', filename='assets/js/animation.js') }}"></script>
     <script src="{{ url_for('static', filename='assets/js/imagesloaded.js') }}"></script>
     <script src="{{ url_for('static', filename='assets/js/custom.js') }}"></script>
-
 </body>
 
 </html>
