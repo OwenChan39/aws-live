@@ -138,29 +138,31 @@
             padding: 150px 0; /* Adjust the top and bottom padding as needed */
         }
 
+        /* Banner links container */
         .banner-links {
             text-align: center;
             margin-top: 20px;
         }
 
+        /* Banner link styles */
         .banner-links a {
             color: #fff;
             text-decoration: none;
-            margin: 0 20px;
+            margin: 0 20px; /* Adjust the horizontal spacing between links */
             font-size: 18px;
+            display: inline-block; /* Add this to make links appear in a line */
+        }
+
+        /* Center the banner links horizontally */
+        .center-banner-links {
+            text-align: center;
         }
 
         /* Make the banner text responsive */
         @media (max-width: 768px) {
-            .main-banner {
-                padding: 100px 0; /* Adjust for smaller screens */
-            }
+            /* ... (your existing media query styles) ... */
 
-            .banner-links {
-                flex-direction: column;
-                margin-top: 10px;
-            }
-
+            /* Adjust margin for smaller screens */
             .banner-links a {
                 margin: 10px 0;
             }
@@ -194,10 +196,12 @@
                                     alt=""></h4>
                         </a>
                         <!-- ***** Banner Links Start ***** -->
-                        <div class="banner-links">
-                            <a href="/student_dashboard">Student Profile</a>
-                            <a href="/student_company_jobs_posting">Job Postings</a>
-                            <a href="/student_upload_documents_page">Upload Documents</a>
+                        <div class="center-banner-links">
+                            <div class="banner-links">
+                                <a href="/student_dashboard">Student Profile</a>
+                                <a href="/student_company_jobs_posting">Job Postings</a>
+                                <a href="/student_upload_documents_page">Upload Documents</a>
+                            </div>
                         </div>
                         <!-- ***** Banner Links End ***** -->
                     </nav>
