@@ -9,7 +9,7 @@
     <link rel="preconnect" href="https://fonts.gstatic.com">
     <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@300;400;600;700;800&display=swap" rel="stylesheet">
 
-    <title>Lecturer Dashboard - SEO Dream</title>
+    <title>TAR UMT - ITP System</title>
 
     <!-- Bootstrap core CSS -->
     <link href="{{ url_for('static', filename='vendor/bootstrap/css/bootstrap.min.css') }}" rel="stylesheet">
@@ -19,12 +19,14 @@
     <link href="{{ url_for('static', filename='assets/css/templatemo-seo-dream.css') }}" rel="stylesheet">
     <link href="{{ url_for('static', filename='assets/css/animated.css') }}" rel="stylesheet">
     <link href="{{ url_for('static', filename='assets/css/owl.css') }}" rel="stylesheet">
+
+    <!-- Your custom CSS styles here -->
     <style>
-        /* Add custom CSS styles for your dashboard page */
+        /* Add your custom styles here */
         /* Example styles for the sidebar */
         .sidebar {
             width: 250px;
-            background-color: #333; /* Change this color to match your index.html */
+            background-color: #333; /* Change this color to match your design */
             color: #fff;
             position: fixed;
             height: 100%;
@@ -45,8 +47,29 @@
 
         /* Example styles for the main content */
         .content {
-            margin-left: 250px;
-            padding: 20px;
+            margin-left: 50px;
+            padding: 150px;
+        }
+
+        /* Header styles */
+        .header {
+            background-color: #33ccc5; /* Change this color to match your design */
+            color: #fff;
+            padding: 10px 0;
+            text-align: center;
+        }
+
+        .header h1 {
+            margin: 0;
+        }
+
+        .sign-out-link {
+            position: absolute;
+            top: 38px;
+            right: 30px;
+            color: #fff;
+            text-decoration: none;
+            font-weight: bold;
         }
 
         /* Custom styles for the Quote of the day and program boxes */
@@ -98,27 +121,6 @@
             margin-bottom: 20px;
         }
 
-        /* Header styles */
-        .header {
-            background-color: #33ccc5; /* Change this color to match your index.html */
-            color: #fff;
-            padding: 10px 0;
-            text-align: center;
-        }
-
-        .header h1 {
-            margin: 0;
-        }
-
-        .sign-out-link {
-            position: absolute;
-            top: 20px;
-            right: 20px;
-            color: #fff;
-            text-decoration: none;
-            font-weight: bold;
-        }
-
         /* Additional CSS for the new dashboard sections */
         .sub-section {
             background-color: #f2f2f2;
@@ -135,8 +137,45 @@
             font-weight: bold;
             color: #555;
         }
+                /* Center the logo and links horizontally within the banner */
+        .logo-banner-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+    
+        .banner-links {
+            display: flex;
+            align-items: center;
+        }
+    
+        .banner-links a {
+            margin-left: 40px; /* Add spacing between banner links */
+            text-decoration: none;
+            color: #fff;
+            font-size: 18px;
+            font-weight: bold;
+        }
 
+        .banner-links a:hover {
+            color: #1e8c8b; /* Change the color on hover to your desired color */
+        }
         
+        /* Make the banner text responsive */
+        @media (max-width: 768px) {
+            .main-banner {
+                padding: 50px 0; /* Adjust for smaller screens */
+            }
+
+            .banner-links {
+                flex-direction: column;
+                margin-top: 20px;
+            }
+
+            .banner-links a {
+                margin: 10px 0;
+            }
+        }
     </style>
 </head>
 
@@ -154,11 +193,30 @@
     </div>
     <!-- ***** Preloader End ***** -->
 
-    <!-- ***** Header Start ***** -->
-    <div class="header">
-        <h1>Lecturer Dashboard</h1>
-        <a href="/login" class="sign-out-link">Sign Out</a>
-    </div>
+    <!-- ***** Header Area Start ***** -->
+    <header class="header-area header-sticky wow slideInDown" data-wow-duration="0.75s" data-wow-delay="0s">
+        <div class="container">
+            <div class="row">
+                <div class="col-12">
+                    <nav class="main-nav">
+                        <!-- ***** Logo and Banner Links Start ***** -->
+                        <div class="logo-banner-container">
+                            <a href="/login" class="logo">
+                                <h4>TAR UMT <img src="{{ url_for('static', filename='assets/images/logo-icon.png') }}" alt=""></h4>
+                            </a>
+                            <!-- Banner Links -->
+                            <div class="banner-links">
+                                <a href="/lecturer_dashboard">Lecturer Dashboard</a>
+                                <a href="/studentdatabase">Student Database</a>
+                                <a href="/studentdatabase">Student Reports</a>
+                            </div>
+                            <a href="/login" class="sign-out-link">Sign Out</a>
+                        </div>
+                    </nav>
+                </div>
+            </div>
+        </div>
+    </header>
     <!-- ***** Header End ***** -->
 
     <!-- ***** Lecturer Dashboard Start ***** -->
