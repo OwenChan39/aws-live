@@ -203,20 +203,67 @@
             font-weight: bold;
             color: #555;
         }
+
+                /* Center the logo and links horizontally within the banner */
+        .logo-banner-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+    
+        .banner-links {
+            display: flex;
+            align-items: center;
+        }
+    
+        .banner-links a {
+            margin-left: 40px; /* Add spacing between banner links */
+            text-decoration: none;
+            color: #fff;
+            font-size: 18px;
+            font-weight: bold;
+        }
+
+        .banner-links a:hover {
+            color: #1e8c8b; /* Change the color on hover to your desired color */
+        }
+        
+        /* Make the banner text responsive */
+        @media (max-width: 768px) {
+            .main-banner {
+                padding: 50px 0; /* Adjust for smaller screens */
+            }
+
+            .banner-links {
+                flex-direction: column;
+                margin-top: 20px;
+            }
+
+            .banner-links a {
+                margin: 10px 0;
+            }
+        }
     </style>
 </head>
 
 <body>
     <!-- ***** Header Area Start ***** -->
-    <header class="header">
+    <header class="header-area header-sticky wow slideInDown" data-wow-duration="0.75s" data-wow-delay="0s">
         <div class="container">
-            <nav class="main-nav">
-                <!-- ***** Logo and Banner Links Start ***** -->
-                <div class="logo">
-                    <h4>TAR UMT <img src="{{ url_for('static', filename='assets/images/logo-icon.png') }}" alt=""></h4>
+            <div class="row">
+                <div class="col-12">
+                    <nav class="main-nav">
+                        <!-- ***** Logo and Banner Links Start ***** -->
+                        <div class="logo-banner-container">
+                            <a href="/login" class="logo">
+                                <h4>TAR UMT <img src="{{ url_for('static', filename='assets/images/logo-icon.png') }}" alt=""></h4>
+                            </a>
+                            <!-- Banner Links -->
+                            <a href="/login" class="sign-out-link">Sign Out</a>
+                        </div>
+                    </nav>
                 </div>
-                <a href="/login" class="sign-out-link">Sign Out</a>
-            </nav>
+            </div>
         </div>
     </header>
     <!-- ***** Header Area End ***** -->
