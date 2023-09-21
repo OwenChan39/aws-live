@@ -22,8 +22,8 @@
 
     <style>
         /* Add custom CSS styles for your student profile edit page */
-        /* Example styles for the sidebar */
-        .sidebar {
+        /* Example styles for the header */
+                .sidebar {
             width: 250px;
             background-color: #333; /* Change this color to match your design */
             color: #fff;
@@ -114,6 +114,86 @@
         .edit-button:hover {
             background-color: #1e8c8b;
         }
+        
+        .header-area {
+            background-color: #33ccc5; /* Change this color to match your design */
+            padding: 10px 0;
+            text-align: center;
+        }
+
+        .header-area h4 {
+            margin: 0;
+            font-size: 24px;
+            font-weight: bold;
+            color: #fff;
+        }
+
+        .header-area img {
+            width: 40px; /* Set a fixed width */
+            height: 40px; /* Set a fixed height */
+            margin-right: 10px;
+        }
+
+        .header-area a {
+            text-decoration: none;
+            color: #fff;
+            font-size: 18px;
+            font-weight: bold;
+        }
+
+        .header-area a:hover {
+            color: #1e8c8b; /* Change the color on hover to your desired color */
+        }
+                /* Banner styles */
+        .main-banner {
+            background-image: url('{{ url_for('static', filename='assets/images/banner-right-image.png') }}');
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            padding: 150px 0; /* Adjust the top and bottom padding as needed */
+        }
+
+        /* Center the logo and links horizontally within the banner */
+        .logo-banner-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+    
+        .banner-links {
+            display: flex;
+            align-items: center;
+        }
+    
+        .banner-links a {
+            margin-left: 40px; /* Add spacing between banner links */
+            text-decoration: none;
+            color: #fff;
+            font-size: 18px;
+            font-weight: bold;
+        }
+
+        .banner-links a:hover {
+            color: #1e8c8b; /* Change the color on hover to your desired color */
+        }
+        
+        /* Make the banner text responsive */
+        @media (max-width: 768px) {
+            .main-banner {
+                padding: 50px 0; /* Adjust for smaller screens */
+            }
+
+            .banner-links {
+                flex-direction: column;
+                margin-top: 20px;
+            }
+
+            .banner-links a {
+                margin: 10px 0;
+            }
+        }
+
+        /* ... (other styles) ... */
     </style>
 </head>
 
@@ -131,20 +211,33 @@
     </div>
     <!-- ***** Preloader End ***** -->
 
-    <!-- ***** Header Start ***** -->
-    <div class="header">
-        <h1>Edit Student Profile</h1>
-        <a href="/login" class="sign-out-link">Sign Out</a>
-    </div>
+    <!-- ***** Header Area Start ***** -->
+    <header class="header-area header-sticky wow slideInDown" data-wow-duration="0.75s" data-wow-delay="0s">
+        <div class="container">
+            <div class="row">
+                <div class="col-12">
+                    <nav class="main-nav">
+                        <!-- ***** Logo and Banner Links Start ***** -->
+                        <div class="logo-banner-container">
+                            <a href="index.html" class="logo">
+                                <h4>TAR UMT <img src="{{ url_for('static', filename='assets/images/logo-icon.png') }}" alt=""></h4>
+                            </a>
+                            <!-- Banner Links -->
+                            <div class="banner-links">
+                                <a href="/student_dashboard">Student Profile</a>
+                                <a href="/student_company_jobs_posting">Job Postings</a>
+                                <a href="/student_upload_documents_page">Upload Documents</a>
+                            </div>
+                            <a href="/login" class="sign-out-link">Sign Out</a>
+                        </div>
+                    </nav>
+                </div>
+            </div>
+        </div>
+    </header>
     <!-- ***** Header End ***** -->
 
     <!-- ***** Student Profile Edit Start ***** -->
-    <div class="sidebar">
-        <a href="/student_dashboard">Student Profile</a>
-        <a href="/student_company_jobs_posting">Job Postings</a>
-        <a href="/student_upload_documents_page">Upload Documents</a>
-    </div>
-
     <div class="content">
         <!-- Student Profile Edit Form -->
         <div class="student-profile-edit">
@@ -171,7 +264,7 @@
         </div>
     </div>
     <!-- ***** Student Profile Edit End ***** -->
-    
+
     <!-- ***** Footer Start ***** -->
     <footer>
         <div class="container">
