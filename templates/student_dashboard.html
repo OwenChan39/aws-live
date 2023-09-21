@@ -200,22 +200,53 @@
                         <a href="index.html" class="logo">
                             <h4><img src="{{ url_for('static', filename='assets/images/logo-icon.png') }}" alt=""> TAR UMT</h4>
                         </a>
-                        </div>
-                        <!-- ***** Banner Links Start ***** -->
-                        <div class="center-banner-links">
-                            <div class="banner-links">
-                                <a href="/student_dashboard">Student Profile</a>
-                                <a href="/student_company_jobs_posting">Job Postings</a>
-                                <a href="/student_upload_documents_page">Upload Documents</a>
-                            </div>
-                        </div>
-                        <!-- ***** Banner Links End ***** -->
                     </nav>
                 </div>
             </div>
         </div>
     </header>
-    <!-- ***** Header End ***** -->
+    <!-- ***** Header Area End ***** -->
+    
+    <!-- ***** Banner Area Start ***** -->
+    <div class="main-banner wow fadeIn" id="top" data-wow-duration="1s" data-wow-delay="0.5s">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="row">
+                        <div class="col-lg-6 align-self-center">
+                            <div class="left-content header-text wow fadeInLeft" data-wow-duration="1s" data-wow-delay="1s">
+                                <div class="row">
+                                    <div class="col-lg-12">
+                                        <h2>Industrial Training</h2>
+                                    </div>
+                                    <div class="col-lg-12">
+                                        <div class="main-green-button scroll-to-section">
+                                            <a href="{{ url_for('login') }}">Login</a>
+                                        </div>
+                                    </div>
+                                    <!-- Navigation Links in Banner -->
+                                    <div class="col-lg-12">
+                                        <div class="banner-links">
+                                            <a href="/student_dashboard">Student Profile</a>
+                                            <a href="/student_company_jobs_posting">Job Postings</a>
+                                            <a href="/student_upload_documents_page">Upload Documents</a>
+                                        </div>
+                                    </div>
+                                    <!-- End Navigation Links in Banner -->
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-lg-6">
+                            <div class="right-image wow fadeInRight" data-wow-duration="1s" data-wow-delay="0.5s">
+                                <img src="{{ url_for('static', filename='assets/images/banner-right-image.png') }}" alt="">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- ***** Banner Area End ***** -->
 
     <!-- ***** Student Profile Start ***** -->
     <div class="content">
