@@ -46,27 +46,15 @@
             <div class="row">
                 <div class="col-12">
                     <nav class="main-nav">
-                        <!-- ***** Logo Start ***** -->
                         <a href="/adminLanding" class="logo">
-                            <h4>SEO Dream <img src="{{ url_for('static', filename='assets/images/logo-icon.png') }}" alt=""></h4>
+                            <h4>TAR UMT<img src="{{ url_for('static', filename='assets/images/logo-icon.png') }}" alt=""></h4>
                         </a>
-                        <!-- ***** Logo End ***** -->
-                        <!-- ***** Menu Start ***** -->
                         <ul class="nav">
-                            <li class="scroll-to-section"><a href="#top" class="active">Home</a></li>
-                            <li class="scroll-to-section"><a href="#features">Features</a></li>
-                            <li class="scroll-to-section"><a href="#about">About Us</a></li>
-                            <li class="scroll-to-section"><a href="#services">Services</a></li>
-                            <li class="scroll-to-section"><a href="#portfolio">Portfolio</a></li>
-                            <li class="scroll-to-section"><a href="#contact">Contact Us</a></li>
+                            <li class="scroll-to-section"><a href="/adminLanding" class="active">Home</a></li>
                             <li class="scroll-to-section">
                                 <div class="main-blue-button"><a href="/login">Sign Out</a></div>
                             </li>
                         </ul>
-                        <a class='menu-trigger'>
-                            <span>Menu</span>
-                        </a>
-                        <!-- ***** Menu End ***** -->
                     </nav>
                 </div>
             </div>
@@ -85,7 +73,6 @@
                                     <p>Name: {{ admin[0] }} </p>
                                     <p>Username: {{ admin[1] }}</p>
                                     <p>Encrypted Password: {{ admin[2] }} </p>
-                                    </script>
                                 </div>
                             </div>
                         </div>
