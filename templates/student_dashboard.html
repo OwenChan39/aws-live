@@ -80,12 +80,12 @@
         }
 
         .student-profile img {
-            max-width: 200px; /* Adjust the maximum width as needed */
-            max-height: 200px; /* Add a maximum height to maintain aspect ratio */
-            border-radius: 50%;
+            width: 200px; /* Set a fixed width */
+            height: 200px; /* Set a fixed height */
+            object-fit: cover; /* Maintain aspect ratio and cover the container */
+            border-radius: 50%; /* Make it a circle by setting border-radius to 50% */
             margin-bottom: 20px;
         }
-
         .student-info {
             display: grid;
             grid-template-columns: repeat(2, 1fr);
