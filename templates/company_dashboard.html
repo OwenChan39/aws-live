@@ -251,9 +251,6 @@
 
     <div class="left-container">
         <!-- Left content goes here -->
-        <div class="logo">
-            <img src="{{ company_image_url }}" alt="Company Logo">
-        </div>
     </div>
 
     <!-- Container for right content -->
@@ -262,6 +259,11 @@
         <div class="content">
             <h2>Hello, {{ company_name }}!</h2>
             <br>
+
+            <div class="logo">
+            <img src="{{ company_image_url }}" alt="Company Logo">
+            </div>
+            
             <div class="status">
                 <p>Approval Status: <span id="approvalStatus">{{ status }}</span></p>
             </div>
