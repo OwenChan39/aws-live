@@ -196,16 +196,16 @@ def admin_signup():
         admin_password = encrypt(request.form["admin_password"], encrypt_key)
 
         check_admin = cursor.execute("SELECT * FROM Admin WHERE admin_username = %s", (admin_username))
-        if len(check_admin) == 0:
+        if check_admin is None:
 
             insert_sql = "INSERT INTO Admin (admin_name, admin_username, admin_password) VALUES (%s, %s, %s)"
 
             try:
                 cursor.execute(insert_sql, (admin_name, admin_username, admin_password))
                 db_conn.commit()
-    
+
                 return render_template("signup_success.html", name=admin_name)
-    
+
             finally:
                 cursor.close()
     
