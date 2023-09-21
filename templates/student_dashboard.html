@@ -9,7 +9,7 @@
     <link rel="preconnect" href="https://fonts.gstatic.com">
     <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@300;400;600;700;800&display=swap" rel="stylesheet">
 
-    <title>Student Profile - SEO Dream</title>
+    <title>TAR UMT - ITP System</title>
 
     <!-- Bootstrap core CSS -->
     <link href="{{ url_for('static', filename='vendor/bootstrap/css/bootstrap.min.css') }}" rel="stylesheet">
@@ -19,9 +19,37 @@
     <link href="{{ url_for('static', filename='assets/css/templatemo-seo-dream.css') }}" rel="stylesheet">
     <link href="{{ url_for('static', filename='assets/css/animated.css') }}" rel="stylesheet">
     <link href="{{ url_for('static', filename='assets/css/owl.css') }}" rel="stylesheet">
-
+    <!-- Your custom CSS styles here -->
     <style>
-        /* Add custom CSS styles for your student profile page */
+        /* Add your custom styles here */
+        /* Example styles for the sidebar */
+        .sidebar {
+            width: 250px;
+            background-color: #333; /* Change this color to match your design */
+            color: #fff;
+            position: fixed;
+            height: 100%;
+            overflow: auto;
+        }
+
+        .sidebar a {
+            padding: 15px;
+            text-decoration: none;
+            font-size: 18px;
+            color: #fff;
+            display: block;
+        }
+
+        .sidebar a:hover {
+            background-color: #555;
+        }
+
+        /* Example styles for the main content */
+        .content {
+            margin-left: 50px;
+            padding: 150px;
+        }
+
         /* Header styles */
         .header {
             background-color: #33ccc5; /* Change this color to match your design */
@@ -45,24 +73,28 @@
 
         /* Student Profile styles */
         .student-profile {
-            background-image: url("{{ url_for('static', filename='assets/images/banner-right-image.png') }}");
-            background-size: cover;
-            background-position: center;
-            padding: 100px 0;
+            background-color: #f2f2f2;
+            padding: 20px;
+            border-radius: 10px;
             text-align: center;
-            color: #fff;
         }
 
         .student-profile img {
-            max-width: 180px;
-            height: 250px;
-            border: 2px solid #555; /* Add a border with a color of your choice */
-            border-radius: 0; /* Set border-radius to 0 to remove any rounded corners */
+            max-width: 200px;
+            border-radius: 50%;
             margin-bottom: 20px;
         }
 
+        .student-info {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            grid-gap: 20px;
+            text-align: left;
+            padding: 20px;
+        }
+
         .student-info-box {
-            background-color: rgba(255, 255, 255, 0.2);
+            background-color: #fff;
             padding: 15px;
             border-radius: 10px;
             box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
@@ -70,7 +102,7 @@
 
         .student-info-box span {
             font-weight: bold;
-            color: #fff;
+            color: #555;
         }
 
         /* Edit Button styles */
@@ -89,10 +121,54 @@
             background-color: #1e8c8b;
         }
 
-        .upload-resume-button {
-            background-color: #FA9D4D;
+        .student-profile img {
+            max-width: 180px;
+            height: 250px;
+            border: 2px solid #555; /* Add a border with a color of your choice */
+            border-radius: 0; /* Set border-radius to 0 to remove any rounded corners */
+            margin-bottom: 20px;
         }
 
+        /* Banner styles */
+        .main-banner {
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            padding: 150px 0; /* Adjust the top and bottom padding as needed */
+        }
+
+        /* Center the logo and links horizontally within the banner */
+        .banner-links {
+            text-align: center;
+            margin-top: 20px;
+        }
+        
+        /* Display the logo and links in a horizontal line */
+        .banner-links a {
+            display: inline-block;
+            margin: 0 20px;
+        }
+
+        /* Center the banner links horizontally */
+        .center-banner-links {
+            text-align: center;
+        }
+
+        /* Make the banner text responsive */
+        @media (max-width: 768px) {
+            .main-banner {
+                padding: 50px 0; /* Adjust for smaller screens */
+            }
+
+            .banner-links {
+                flex-direction: column;
+                margin-top: 20px;
+            }
+
+            .banner-links a {
+                margin: 10px 0;
+            }
+        }
     </style>
 </head>
 
@@ -110,68 +186,94 @@
     </div>
     <!-- ***** Preloader End ***** -->
 
-    <!-- ***** Header Start ***** -->
-    <div class="header">
-        <h1>Student Profile</h1>
-        <a href="/login" class="sign-out-link">Sign Out</a>
-    </div>
+    <!-- ***** Header Area Start ***** -->
+    <header class="header-area header-sticky wow slideInDown" data-wow-duration="0.75s" data-wow-delay="0s">
+        <div class="container">
+            <div class="row">
+                <div class="col-12">
+                    <nav class="main-nav">
+                        <!-- ***** Logo and Banner Links Container Start ***** -->
+                        <div class="logo-banner-container">
+                            <!-- ***** Logo Start ***** -->
+                            <a href="index.html" class="logo">
+                                <h4>TAR UMT <img src="{{ url_for('static', filename='assets/images/logo-icon.png') }}" alt=""></h4>
+                            </a>
+                            <!-- ***** Logo End ***** -->
+    
+                            <!-- ***** Banner Links Start ***** -->
+                            <div class="banner-links">
+                                <a href="/student_dashboard">Student Profile</a>
+                                <a href="/student_company_jobs_posting">Job Postings</a>
+                                <a href="/student_upload_documents_page">Upload Documents</a>
+                                <!-- Add more banner links as needed -->
+                            </div>
+                            <!-- ***** Banner Links End ***** -->
+                        </div>
+                        <!-- ***** Logo and Banner Links Container End ***** -->
+                    </nav>
+                </div>
+            </div>
+        </div>
+    </header>
     <!-- ***** Header End ***** -->
 
     <!-- ***** Student Profile Start ***** -->
-    <div class="student-profile">
-        <img src="{{ student_image_url }}" alt="Student Profile Picture">
-        <div class="container">
-            <div class="row">
-                <div class="col-md-6 offset-md-3">
-                    <div class="student-info-box">
-                        <span>Name:</span> {{ Stud_name }}
-                    </div>
-                    <div class="student-info-box">
-                        <span>ID:</span> {{ Stud_ID }}
-                    </div>
-                    <div class="student-info-box">
-                        <span>NRIC Number:</span> {{ NRIC_Number }}
-                    </div>
-                    <div class="student-info-box">
-                        <span>Gender:</span> {{ Gender }}
-                    </div>
-                    <div class="student-info-box">
-                        <span>Programme of Study:</span> {{ Programme_of_Study }}
-                    </div>
-                    <div class="student-info-box">
-                        <span>CGPA:</span> {{ CGPA }}
-                    </div>
-                    <div class="student-info-box">
-                        <span>TARUMT Email:</span> {{ TARUMT_emailAddress }}
-                    </div>
-                    <div class="student-info-box">
-                        <span>Mobile Number:</span> {{ Mobile_number }}
-                    </div>
-                    <div class="student-info-box">
-                        <span>Intern Batch:</span> {{ Intern_batch }}
-                    </div>
-                    <div class="student-info-box">
-                        <span>Home Address:</span> {{ Home_Address }}
-                    </div>
-                    <div class="student-info-box">
-                        <span>Personal Email:</span> {{ Personal_emailAddress }}
-                    </div>
-                    <a href="{{ url_for('student_profile_edit') }}" class="edit-button">Edit Profile</a>
-                    <!-- Add the Upload Resume button below the Edit Profile button -->
-                    <form action="/upload_resume" method="POST" enctype="multipart/form-data">
-                        <input type="file" name="resume_file" accept=".pdf, .doc, .docx">
-                        <input type="submit" class="edit-button upload-resume-button" value="Upload Resume">
-                    </form>
-                    <!-- Add the View Resume button if a resume is uploaded -->
-                    {% if student_resume_url %}
-                        <br>
-                        <p><a href="{{ student_resume_url }}" target="_blank" class="edit-button" style="background-color: #FA9D4D;">View Resume</a></p>
-                    {% else %}
-                        <!-- Display a message if no resume is uploaded -->
-                        <p>No resume uploaded.</p>
-                    {% endif %}
+    <div class="content">
+        <!-- Student Profile -->
+        <div class="student-profile">
+            <img src="{{ student_image_url }}" alt="Student Profile Picture">
+            <div class="student-info">
+                <div class="student-info-box">
+                    <span>Name:</span> {{ Stud_name }}
+                </div>
+                <div class="student-info-box">
+                    <span>ID:</span> {{ Stud_ID }}
+                </div>
+                <div class="student-info-box">
+                    <span>NRIC Number:</span> {{ NRIC_Number }}
+                </div>
+                <div class="student-info-box">
+                    <span>Gender:</span> {{ Gender }}
+                </div>
+                <div class="student-info-box">
+                    <span>Programme of Study:</span> {{ Programme_of_Study }}
+                </div>
+                <div class="student-info-box">
+                    <span>CGPA:</span> {{ CGPA }}
+                </div>
+                <div class="student-info-box">
+                    <span>TARUMT Email:</span> {{ TARUMT_emailAddress }}
+                </div>
+                <div class="student-info-box">
+                    <span>Mobile Number:</span> {{ Mobile_number }}
+                </div>
+                <div class="student-info-box">
+                    <span>Intern Batch:</span> {{ Intern_batch }}
+                </div>
+                <div class="student-info-box">
+                    <span>Home Address:</span> {{ Home_Address }}
+                </div>
+                <div class="student-info-box">
+                    <span>Personal Email:</span> {{ Personal_emailAddress }}
                 </div>
             </div>
+            <a href="{{ url_for('student_profile_edit') }}" class="edit-button">Edit Profile</a>
+
+            <!-- Add the Upload Resume button below the Edit Profile button -->
+            <form action="/upload_resume" method="POST" enctype="multipart/form-data">
+                <input type="file" name="resume_file" accept=".pdf, .doc, .docx">
+                <input type="submit" class="edit-button" value="Upload Resume">
+            </form>
+
+            <!-- Add the Upload Resume button below the Edit Profile button -->
+            {% if student_resume_url %}
+                <br>
+                <p><a href="{{ student_resume_url }}" target="_blank" class="edit-button"
+                        style="background-color: #FA9D4D;">View Resume</a></p>
+            {% else %}
+                <!-- Display a message if no resume is uploaded -->
+                <p>No resume uploaded.</p>
+            {% endif %}
         </div>
     </div>
     <!-- ***** Student Profile End ***** -->
