@@ -189,22 +189,25 @@ def decrypt(encrypted_text, key):
 @app.route("/admin_signup", methods=["GET", "POST"])
 def admin_signup():
     if request.method == "POST":
+        cursor = db_conn.cursor()
         encrypt_key = 42
         admin_name = request.form["admin_name"]
         admin_username = request.form["admin_username"]
         admin_password = encrypt(request.form["admin_password"], encrypt_key)
 
-        insert_sql = "INSERT INTO Admin (admin_name, admin_username, admin_password) VALUES (%s, %s, %s)"
-        cursor = db_conn.cursor()
+        check_admin = cursor.execute("SELECT * FROM Admin WHERE admin_user = %s", (admin_username))
+        if len(check_admin) == 0:
 
-        try:
-            cursor.execute(insert_sql, (admin_name, admin_username, admin_password))
-            db_conn.commit()
+            insert_sql = "INSERT INTO Admin (admin_name, admin_username, admin_password) VALUES (%s, %s, %s)"
 
-            return render_template("signup_success.html", name=admin_name)
-
-        finally:
-            cursor.close()
+            try:
+                cursor.execute(insert_sql, (admin_name, admin_username, admin_password))
+                db_conn.commit()
+    
+                return render_template("signup_success.html", name=admin_name)
+    
+            finally:
+                cursor.close()
     
     return render_template("adminSignup.html")
 
