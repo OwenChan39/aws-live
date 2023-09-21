@@ -7,7 +7,8 @@
     <meta name="description" content="">
     <meta name="author" content="">
     <link rel="preconnect" href="https://fonts.gstatic.com">
-    <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@300;400;600;700;800&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@300;400;600;700;800&display=swap"
+        rel="stylesheet">
 
     <title>Student Profile - SEO Dream</title>
 
@@ -22,32 +23,26 @@
 
     <style>
         /* Add custom CSS styles for your student profile page */
-        /* Example styles for the sidebar */
-        .sidebar {
-            width: 250px;
-            background-color: #333; /* Change this color to match your design */
-            color: #fff;
-            position: fixed;
-            height: 100%;
-            overflow: auto;
+        /* Example styles for the banner */
+        .banner {
+            background-color: #33ccc5; /* Change this color to match your design */
+            padding: 20px 0;
+            text-align: center;
         }
 
-        .sidebar a {
-            padding: 15px;
+        .banner a {
             text-decoration: none;
             font-size: 18px;
             color: #fff;
-            display: block;
+            display: inline-block;
+            margin: 0 20px;
+            padding: 10px 20px;
+            border-radius: 5px;
+            transition: background-color 0.3s;
         }
 
-        .sidebar a:hover {
-            background-color: #555;
-        }
-
-        /* Example styles for the main content */
-        .content {
-            margin-left: 250px;
-            padding: 20px;
+        .banner a:hover {
+            background-color: #1e8c8b;
         }
 
         /* Header styles */
@@ -128,7 +123,6 @@
             border-radius: 0; /* Set border-radius to 0 to remove any rounded corners */
             margin-bottom: 20px;
         }
-
     </style>
 </head>
 
@@ -153,14 +147,14 @@
     </div>
     <!-- ***** Header End ***** -->
 
-    <!-- ***** Student Profile Start ***** -->
-    <div class="sidebar">
+    <!-- ***** Banner Start ***** -->
+    <div class="banner">
         <a href="/student_dashboard">Student Profile</a>
         <a href="/student_company_jobs_posting">Job Postings</a>
         <a href="/student_upload_documents_page">Upload Documents</a>
-        <!-- Add more navigation links as needed -->
-        <!-- <a href="#">Link 4</a> -->
+        <!-- Add more buttons as needed -->
     </div>
+    <!-- ***** Banner End ***** -->
 
     <div class="content">
         <!-- Student Profile -->
@@ -217,11 +211,9 @@
         <!-- Display a message if no resume is uploaded -->
                 <p>No resume uploaded.</p>
             {% endif %}
-        </div>
-    </div>
-    <!-- ***** Student Profile End ***** -->
+        
 
-    <!-- ... (remaining HTML code) ... -->
+    </div>
 
     <footer>
         <div class="container">
