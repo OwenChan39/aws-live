@@ -20,33 +20,9 @@
     <link href="{{ url_for('static', filename='assets/css/animated.css') }}" rel="stylesheet">
     <link href="{{ url_for('static', filename='assets/css/owl.css') }}" rel="stylesheet">
     <style>
-        /* Add custom CSS styles for your report page */
-        /* Example styles for the sidebar */
-        .sidebar {
-            width: 250px;
-            background-color: #333; /* Change this color to match your dashboard.html */
-            color: #fff;
-            position: fixed;
-            height: 100%;
-            overflow: auto;
-        }
-
-        .sidebar a {
-            padding: 15px;
-            text-decoration: none;
-            font-size: 18px;
-            color: #fff;
-            display: block;
-        }
-
-        .sidebar a:hover {
-            background-color: #555;
-        }
-
-        /* Example styles for the main content */
         .content {
-            margin-left: 250px;
-            padding: 20px;
+            margin-left: 50px;
+            padding: 150px;
         }
 
         /* Header styles */
@@ -115,6 +91,46 @@
         .pending {
             color: red;
         }
+
+        /* Center the logo and links horizontally within the banner */
+        .logo-banner-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+    
+        .banner-links {
+            display: flex;
+            align-items: center;
+        }
+    
+        .banner-links a {
+            margin-left: 40px; /* Add spacing between banner links */
+            text-decoration: none;
+            color: #fff;
+            font-size: 18px;
+            font-weight: bold;
+        }
+
+        .banner-links a:hover {
+            color: #1e8c8b; /* Change the color on hover to your desired color */
+        }
+        
+        /* Make the banner text responsive */
+        @media (max-width: 768px) {
+            .main-banner {
+                padding: 50px 0; /* Adjust for smaller screens */
+            }
+
+            .banner-links {
+                flex-direction: column;
+                margin-top: 20px;
+            }
+
+            .banner-links a {
+                margin: 10px 0;
+            }
+        }
     </style>
 </head>
 
@@ -132,21 +148,31 @@
     </div>
     <!-- ***** Preloader End ***** -->
 
-    <!-- ***** Header Start ***** -->
-    <div class="header">
-        <h1>View Student Progress</h1>
-        <a href="/login" class="sign-out-link">Sign Out</a>
-    </div>
+    <!-- ***** Header Area Start ***** -->
+    <header class="header-area header-sticky wow slideInDown" data-wow-duration="0.75s" data-wow-delay="0s">
+        <div class="container">
+            <div class="row">
+                <div class="col-12">
+                    <nav class="main-nav">
+                        <!-- ***** Logo and Banner Links Start ***** -->
+                        <div class="logo-banner-container">
+                            <a href="/login" class="logo">
+                                <h4>TAR UMT <img src="{{ url_for('static', filename='assets/images/logo-icon.png') }}" alt=""></h4>
+                            </a>
+                            <!-- Banner Links -->
+                            <div class="banner-links">
+                                <a href="/lecturer_dashboard">Lecturer Dashboard</a>
+                                <a href="/studentdatabase">Student Database</a>
+                                <a href="/view_student_progress">Student Reports</a>
+                            </div>
+                            <a href="/login" class="sign-out-link">Sign Out</a>
+                        </div>
+                    </nav>
+                </div>
+            </div>
+        </div>
+    </header>
     <!-- ***** Header End ***** -->
-
-    <!-- ***** Report Page Start ***** -->
-    <div class="sidebar">
-        <a href="/lecturer_dashboard">View Lecturer Dashboard</a>
-        <a href="/studentdatabase">View Student Database</a>
-        <a href="/view_student_progress">View Student Reports</a>
-        <!-- Add more navigation links as needed -->
-        <!-- <a href="#">Link 3</a> -->
-    </div>
 
     <div class="content">
         <h2>Student Progress</h2>
