@@ -328,11 +328,11 @@
             </div>
             <div class="offer">
                 {% if companyjobs %}
-                    {% for job in companyjobs %}
+                    {% for index, job in enumerate(companyjobs) %}
                         <div class="job-container job-item">
                             <!-- Job Header -->
                             <div class="job-header">
-                                <h4>{{ job[1] }}</h4>
+                                <h4>Job #{{ index + 1 }} - {{ job[1] }}</h4>
                                 <p class="job-type">{{ job[6] }}</p>
                             </div>
                             <!-- Job Description and Details -->
