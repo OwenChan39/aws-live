@@ -407,6 +407,10 @@ def companyinfopage():
                                     company_image_url=company_image_url,
                                     )
 
+@app.route("/addjobpage")
+def addjobpage():
+    return render_template('company_add_jobs.html')
+
 @app.route('/company_profile_edit', methods=['GET', 'POST'])
 def company_profile_edit():
     if 'company_id' in session:
@@ -486,7 +490,7 @@ def company_profile_edit():
                                    companyjobs=companyjobs,
                                    )
         
-        return redirect(url_for('addjobpage'))
+        return redirect(url_for('companyinfopage'))
 
 
 @app.route('/save_job_details', methods=['POST'])
@@ -520,13 +524,13 @@ def save_job_details():
             cursor.close()
 
             # Redirect to a success page or any other appropriate action
-            return redirect(url_for('company_dashboard'))
+            return render_template('company_add_jobs.html')
 
         except Exception as e:
             return str(e)  # Handle database insertion errors here
 
     # Handle GET requests or other cases
-    return render_template('company_info_edit.html')  # Render the form page again if not a POST request
+    return redirect(url_for('company_dashboard'))  # Render the form page again if not a POST request
 
 
 
