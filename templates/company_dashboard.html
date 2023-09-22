@@ -111,6 +111,56 @@
             font-weight: bold;
             color: #555;
         }
+
+                /* Center the logo and links horizontally within the banner */
+        .logo-banner-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+    
+        .banner-links {
+            display: flex;
+            align-items: center;
+        }
+    
+        .banner-links a {
+            margin-left: 40px; /* Add spacing between banner links */
+            text-decoration: none;
+            color: #fff;
+            font-size: 18px;
+            font-weight: bold;
+        }
+
+        .banner-links a:hover {
+            color: #1e8c8b; /* Change the color on hover to your desired color */
+        }
+        
+        /* Make the banner text responsive */
+        @media (max-width: 768px) {
+            .main-banner {
+                padding: 50px 0; /* Adjust for smaller screens */
+            }
+
+            .banner-links {
+                flex-direction: column;
+                margin-top: 20px;
+            }
+
+            .banner-links a {
+                margin: 10px 0;
+            }
+        }
+
+        .sign-out-link {
+            position: absolute;
+            top: 38px;
+            right: 30px;
+            color: #fff;
+            text-decoration: none;
+            font-weight: bold;
+        }
+
     </style>
 </head>
 <body>
@@ -169,15 +219,16 @@
                 </div>
 
                 <!-- Edit Company Information Button -->
+                <br>
                 <div class="infoHead">
-                    <a href="/companyinfopage" class="edit-button">Edit Company Information</a>
+                    <a href="/companyinfopage" class="edit-button">Edit</a>
                 </div>
                 
                 <!-- Company Information -->
                 <div class="info">
                     <div class="info-container">
-                        <p><strong>{{ company_name }}</strong></p>
-                        <p><strong>{{ company_industry }}</strong></p>
+                        <h3><strong>{{ company_name }}</strong></h3>
+                        <><strong>{{ company_industry }}</strong></p>
                         <p><strong>Product or Service :</strong> {{ product_service }}</p>
                         <p><strong>Company Website :</strong> <a href="{{ company_website }}" target="_blank">{{ company_website }}</a></p>
                         <p><strong>OT Claim :</strong> {{ ot_claim }}</p>
