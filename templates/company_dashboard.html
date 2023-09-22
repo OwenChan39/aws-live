@@ -154,6 +154,26 @@
             text-decoration: none;
             font-weight: bold;
         }
+
+                /* Edit Button styles */
+        .edit-button {
+            font-size: 14px; /* Adjust the font size as needed */
+            background-color: transparent;
+            color: #1500ffb7;
+            border: none;
+            padding: 5px 10px; /* Adjust the padding as needed */
+            cursor: pointer;
+            transition: background-color 0.3s, color 0.3s;
+            position: absolute;
+            top: 10px;
+            right: 10px;
+        }
+        
+        .edit-button:hover {
+            background-color: #1500ffb7; /* Change the background color on hover */
+            color: #fff; /* Change the text color on hover */
+        }
+
     </style>
 </head>
 <body>
@@ -213,10 +233,11 @@
                 </div>
 
                 <!-- Edit Company Information Button -->
+                <!-- Edit Company Information Button -->
                 <div class="infoHead">
-                    <a href="/companyinfopage" class="edit-button">Edit Company Information</a>
+                    <a href="/companyinfopage" class="edit-button">Edit</a>
                 </div>
-
+                
                 <!-- Company Information -->
                 <div class="info">
                     <div class="info-container">
