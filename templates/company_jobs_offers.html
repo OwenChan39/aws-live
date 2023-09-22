@@ -317,11 +317,9 @@
         <!-- Right content goes here -->
         <div class="content">
             <div class="offerHead">
-                <h3>Job Offers
-                    {% if status == 'Approved' %}
-                        <a href="/addjobpage" class="edit-button">Edit Job Positions</a>
-                    {% endif %}
-                </h3>
+                <!-- Place the "Edit" button in the top right corner -->
+                <a href="/editjobinfo" class="edit-button">Edit</a>
+                <h3>Job Offers</h3>
             </div>
             <div class="offer">
                 {% if companyjobs %}
@@ -332,10 +330,6 @@
                                 <h4>{{ job[1] }}</h4>
                                 <p class="job-type">{{ job[6] }}</p>
                             </div>
-                            <!-- Add an "Edit" button to the top right corner of each job posting -->
-                            {% if status == 'Approved' %}
-                                <a href="/editjobpage/{{ job[0] }}" class="edit-button">Edit</a>
-                            {% endif %}
                             <!-- Job Description and Details -->
                             <div class="job-description">{{ job[2] }}</div>
                             <p><strong>Job Requirements:</strong></p>
