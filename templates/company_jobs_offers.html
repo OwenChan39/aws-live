@@ -304,30 +304,27 @@
             </div>
             <div class="offer">
                 {% if companyjobs %}
-                    {% for job in companyjobs %}
-                        <div class="job-container job-item">
-                            <div class="job-header">
-                                <h4>{{ job[1] }}</h4>
-                                <p class="job-type">{{ job[6] }}</p>
+                    <div class="job-container">
+                        {% for job in companyjobs %}
+                            <div class="job-item">
+                                <div class="job-header">
+                                    <h4>{{ job[1] }}</h4>
+                                    <p class="job-type">{{ job[6] }}</p>
+                                </div>
+                                <p class="job-description">{{ job[2] }}</p>
+                                <div class="job-details">
+                                    <p><strong>Career Level:</strong> {{ job[4] }}</p>
+                                    <p><strong>Qualification:</strong> {{ job[5] }}</p>
+                                    <p><strong>Years of Experience:</strong> {{ job[7] }}</p>
+                                    <p><strong>Salary:</strong> {{ job[8] }}</p>
+                                </div>
                             </div>
-                            <p class="job-description">{{ job[2] }}</p>
-                            <p><strong>Job Requirements:</strong></p>
-                            <ul class="job-requirements">
-                                <li>{{ job[3] }}</li>
-                            </ul>
-                            <div class="job-details">
-                                <p><strong>Career Level:</strong> {{ job[4] }}</p>
-                                <p><strong>Qualification:</strong> {{ job[5] }}</p>
-                                <p><strong>Years of Experience:</strong> {{ job[7] }}</p>
-                                <p><strong>Salary:</strong> {{ job[8] }}</p>
-                            </div>
-                        </div>
-                    {% endfor %}
+                        {% endfor %}
+                    </div>
                 {% else %}
                     <p>No job offers available.</p>
                 {% endif %}
             </div>
-            
         </div>
     </div>
 
