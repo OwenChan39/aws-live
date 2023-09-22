@@ -25,7 +25,8 @@
     <style>
         /* Example styles for the main content */
         .content {
-            margin: 50px 30px; /* Adjust margin for spacing */
+            margin-left: 50px;
+            padding: 150px;
         }
 
         .status {
@@ -43,54 +44,164 @@
 
         /* Custom styles for the Quote of the day and program boxes */
         /* Styling for Edit Button */
-        .info h2 {
-            color: #333;
-            font-size: 24px;
-            margin-bottom: 20px;
-        }
-
-        .info .logo img {
-            width: 180px; /* Adjust logo size as needed */
-            height: auto;
-        }
-
-        .status p {
-            margin: 10px 0;
-        }
-
-        .infoHead {
+        .info h3 {
             display: flex;
-            justify-content: space-between;
             align-items: center;
-            margin-top: 20px;
+            /* Vertically center the text and button */
+            color: #333;
+            margin-bottom: 10px;
         }
 
-        .edit-button {
-            font-size: 18px;
+        .infoHead h3 #editButton {
+            font-size: 22px;
+
+            margin-left: 10px;
+            /* Add some space between the heading text and the button */
             background-color: #ffffff;
+            /* Button background color */
             color: #1500ffb7;
+            /* Button text color */
             border: none;
+            /* Remove button border */
             border-radius: 5px;
-            padding: 5px 15px;
+            /* Rounded corners */
+            padding: 2px 10px;
+            /* Padding inside the button */
             cursor: pointer;
+            /* Show a hand cursor on hover */
             transition: color 0.3s;
+            /* Smooth color transition on hover */
         }
 
-        .edit-button:hover {
+        .infoHead h3 #editButton:hover {
             color: #fa3232;
+            /* Change the text color on hover */
         }
 
         .info .info-container {
             background-color: #f2f2f2;
+            /* Grey background color */
             padding: 20px;
             border-radius: 10px;
-            margin-top: 20px;
+            margin-top: 10px;
         }
 
-        .info .info-container p {
+        /* Header styles */
+        .header {
+            background-color: #33ccc5;
+            /* Change this color to match your index.html */
+            color: #fff;
+            padding: 10px 0;
+            text-align: center;
+        }
+
+        .header h1 {
+            margin: 0;
+        }
+
+        .left-container {
+            float: left;
+            width: 15%;
+        }
+
+        /* Style for right container */
+        .right-container {
+            float: left;
+            width: 85%;
+            /* Adjust the width as needed */
+            background-color: #ffffff;
+            padding: 20px;
+        }
+
+        /* Clear floating elements to prevent layout issues */
+        .clearfix::after {
+            content: "";
+            clear: both;
+            display: table;
+        }
+
+        .left-container .logo {
+            width: 180px;
+            /* Adjust the width as needed */
+            height: 200px;
+            /* This keeps the image's aspect ratio */
+            padding-top: 20px;
+            margin-left: 30px;
+        }
+
+        .offer {
+            background-color: #f2f2f2;
+            /* Grey background color */
+            border-radius: 10px;
+            padding: 20px;
+        }
+
+        .job-container {
+            border: 2px solid #4d4949;
+            /* Add a border to separate job boxes */
+            border-radius: 10px;
+            margin-top: 20px; /* Add spacing between job boxes */
+            padding: 10px;
+        }
+
+        /* Style for the first job container */
+        .job-container:first-child {
+            margin-top: 0;
+        }
+
+        .offerHead h3 #editButton {
+            font-size: 22px;
+            margin-left: 10px;
+            /* Add some space between the heading text and the button */
+            background-color: #ffffff;
+            /* Button background color */
+            color: #1500ffb7;
+            /* Button text color */
+            border: none;
+            /* Remove button border */
+            border-radius: 5px;
+            /* Rounded corners */
+            padding: 2px 10px;
+            /* Padding inside the button */
+            cursor: pointer;
+            /* Show a hand cursor on hover */
+            transition: color 0.3s;
+            /* Smooth color transition on hover */
+        }
+
+        .offerHead h3 {
+            display: flex;
+            align-items: center;
+            /* Vertically center the text and button */
+            color: #333;
+            margin-bottom: 10px;
+        }
+
+        .sign-out-link {
+            position: absolute;
+            top: 38px;
+            right: 30px;
+            color: #fff;
+            text-decoration: none;
+            font-weight: bold;
+        }
+
+        /* Additional CSS for the new dashboard sections */
+        .sub-section {
+            background-color: #f2f2f2;
+            padding: 10px;
+            border-radius: 10px;
+            margin-top: 10px;
+        }
+
+        .sub-section p {
             margin: 5px 0;
         }
 
+        .sub-section span {
+            font-weight: bold;
+            color: #555;
+        }
         /* Banner styles */
         .main-banner {
             background-image: url('{{ url_for('static', filename='assets/images/banner-right-image.png') }}');
@@ -106,12 +217,12 @@
             justify-content: space-between;
             align-items: center;
         }
-
+    
         .banner-links {
             display: flex;
             align-items: center;
         }
-
+    
         .banner-links a {
             margin-left: 40px; /* Add spacing between banner links */
             text-decoration: none;
@@ -123,7 +234,7 @@
         .banner-links a:hover {
             color: #1e8c8b; /* Change the color on hover to your desired color */
         }
-
+        
         /* Make the banner text responsive */
         @media (max-width: 768px) {
             .main-banner {
@@ -141,6 +252,7 @@
         }
     </style>
 </head>
+
 
 <body>
     <!-- ***** Preloader Start ***** -->
@@ -186,7 +298,7 @@
         <div class="content">
             <h2>Hello, {{ company_name }}!</h2>
             <div class="logo">
-                <img src="{{ company_image_url }}" alt="Company Logo">
+            <img src="{{ company_image_url }}" alt="Company Logo">
             </div>
             <br>
             <div class="status">
@@ -255,7 +367,7 @@
         }
     
         // Attach the click event to the button
-        document.querySelector(".edit-button").addEventListener("click", infoEdit);
+        document.getElementById("editButton").addEventListener("click", infoEdit);
     </script>
 
 </body>
