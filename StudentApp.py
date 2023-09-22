@@ -308,15 +308,6 @@ def company_dashboard():
             ot_claim = company[12]
             remarks = company[13]
             status = company[14]
-
-            if status == "Pending":
-                approval_status_class = "pending"
-            elif status == "Approved":
-                approval_status_class = "approved"
-            elif status == "Rejected":
-                approval_status_class = "rejected"
-            else:
-                approval_status_class = ""  # Default class or no class
             
             company_logo = "company-" + str(company_id) + "-logo"
             company_image_url = s3.meta.client.generate_presigned_url(
