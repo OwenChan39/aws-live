@@ -524,7 +524,7 @@ def save_job_details():
             cursor.close()
 
             # Redirect to a success page or any other appropriate action
-            return render_template('company_add_jobs.html')
+            return render_template('company_jobs_offers.html')
 
         except Exception as e:
             return str(e)  # Handle database insertion errors here
