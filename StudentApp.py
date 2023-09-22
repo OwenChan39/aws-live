@@ -524,7 +524,7 @@ def save_job_details():
             cursor.close()
 
             # Redirect to a success page or any other appropriate action
-            return redirect(url_for('addjobpage'))
+            return redirect(url_for('company_jobs_offers'))
 
         except Exception as e:
             return str(e)  # Handle database insertion errors here
