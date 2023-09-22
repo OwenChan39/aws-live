@@ -7,70 +7,78 @@
     <meta name="description" content="">
     <meta name="author" content="">
     <link rel="preconnect" href="https://fonts.gstatic.com">
-    <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@300;400;600;700;800&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@300;400;600;700;800&display=swap"
+        rel="stylesheet">
+
     <title>Company Dashboard - SEO Dream</title>
+
+    <!-- Bootstrap core CSS -->
     <link href="{{ url_for('static', filename='vendor/bootstrap/css/bootstrap.min.css') }}" rel="stylesheet">
+
+    <!-- Additional CSS Files -->
     <link href="{{ url_for('static', filename='assets/css/fontawesome.css') }}" rel="stylesheet">
     <link href="{{ url_for('static', filename='assets/css/templatemo-seo-dream.css') }}" rel="stylesheet">
     <link href="{{ url_for('static', filename='assets/css/animated.css') }}" rel="stylesheet">
     <link href="{{ url_for('static', filename='assets/css/owl.css') }}" rel="stylesheet">
-    <link rel="stylesheet" href="{{ url_for('static', filename='assets/css/custom.css') }}">
+
     <style>
         /* Example styles for the main content */
-        body {
-            background-color: #f0f0f0;
-            font-family: 'Open Sans', sans-serif;
-        }
-
-        .container {
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 20px;
-            background-color: #fff;
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-            border-radius: 10px;
+        .content {
+            margin-left: 50px;
+            padding: 20px; /* Adjust padding as needed */
         }
 
         .status {
             background-color: #f0f0f0;
             padding: 10px;
             text-align: center;
-            margin-top: 20px;
-            border-radius: 10px;
         }
 
         #approvalStatus {
             font-size: 25px;
             font-weight: bold;
             color: #e74c3c;
+            /* Set color for pending status (e.g., red) */
         }
 
+        /* Custom styles for the Quote of the day and program boxes */
         /* Styling for Edit Button */
         .info h3 {
             display: flex;
             align-items: center;
+            /* Vertically center the text and button */
             color: #333;
             margin-bottom: 10px;
         }
 
-        .info h3 button {
+        .info h3 button#editButton {
             font-size: 22px;
             margin-left: 10px;
+            /* Add some space between the heading text and the button */
             background-color: #ffffff;
+            /* Button background color */
             color: #1500ffb7;
+            /* Button text color */
             border: none;
+            /* Remove button border */
             border-radius: 5px;
+            /* Rounded corners */
             padding: 2px 10px;
+            /* Padding inside the button */
             cursor: pointer;
+            /* Show a hand cursor on hover */
             transition: color 0.3s;
+            /* Smooth color transition on hover */
         }
 
-        .info h3 button:hover {
+        .info h3 button#editButton:hover {
             color: #fa3232;
+            /* Change the text color on hover */
         }
 
         .info .info-container {
             background-color: #f2f2f2;
+            /* Grey background color */
             padding: 20px;
             border-radius: 10px;
             margin-top: 10px;
@@ -79,6 +87,7 @@
         /* Header styles */
         .header {
             background-color: #33ccc5;
+            /* Change this color to match your index.html */
             color: #fff;
             padding: 10px 0;
             text-align: center;
@@ -88,24 +97,82 @@
             margin: 0;
         }
 
+        .left-container {
+            float: left;
+            width: 15%;
+        }
+
         /* Style for right container */
         .right-container {
+            float: left;
+            width: 85%;
+            /* Adjust the width as needed */
             background-color: #ffffff;
             padding: 20px;
-            margin-top: 20px;
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-            border-radius: 10px;
+        }
+
+        /* Clear floating elements to prevent layout issues */
+        .clearfix::after {
+            content: "";
+            clear: both;
+            display: table;
         }
 
         .right-container .logo {
             width: 180px;
+            /* Adjust the width as needed */
             height: 200px;
+            /* This keeps the image's aspect ratio */
             padding-top: 20px;
             margin-left: 30px;
         }
 
-        .info-container p {
-            margin: 5px 0;
+        .offer {
+            background-color: #f2f2f2;
+            /* Grey background color */
+            border-radius: 10px;
+            padding: 20px;
+        }
+
+        .job-container {
+            border: 2px solid #4d4949;
+            /* Add a border to separate job boxes */
+            border-radius: 10px;
+            margin-top: 20px; /* Add spacing between job boxes */
+            padding: 10px;
+        }
+
+        /* Style for the first job container */
+        .job-container:first-child {
+            margin-top: 0;
+        }
+
+        .offer h3 button#editButton {
+            font-size: 22px;
+            margin-left: 10px;
+            /* Add some space between the heading text and the button */
+            background-color: #ffffff;
+            /* Button background color */
+            color: #1500ffb7;
+            /* Button text color */
+            border: none;
+            /* Remove button border */
+            border-radius: 5px;
+            /* Rounded corners */
+            padding: 2px 10px;
+            /* Padding inside the button */
+            cursor: pointer;
+            /* Show a hand cursor on hover */
+            transition: color 0.3s;
+            /* Smooth color transition on hover */
+        }
+
+        .offer h3 {
+            display: flex;
+            align-items: center;
+            /* Vertically center the text and button */
+            color: #333;
+            margin-bottom: 10px;
         }
 
         .sign-out-link {
@@ -122,15 +189,26 @@
             background-color: #f2f2f2;
             padding: 10px;
             border-radius: 10px;
-            margin-top: 20px;
+            margin-top: 10px;
+        }
+
+        .sub-section p {
+            margin: 5px 0;
+        }
+
+        .sub-section span {
+            font-weight: bold;
+            color: #555;
         }
 
         /* Banner styles */
         .main-banner {
+            background-image: url('{{ url_for('static', filename='assets/images/banner-right-image.png') }}');
             background-size: cover;
             background-position: center;
             background-repeat: no-repeat;
-            padding: 150px 0;
+            padding: 150px 0; /* Adjust the top and bottom padding as needed */
+            position: relative;
         }
 
         /* Center the logo and links horizontally within the banner */
@@ -146,7 +224,7 @@
         }
 
         .banner-links a {
-            margin-left: 40px;
+            margin-left: 40px; /* Add spacing between banner links */
             text-decoration: none;
             color: #fff;
             font-size: 18px;
@@ -154,13 +232,13 @@
         }
 
         .banner-links a:hover {
-            color: #1e8c8b;
+            color: #1e8c8b; /* Change the color on hover to your desired color */
         }
 
         /* Make the banner text responsive */
         @media (max-width: 768px) {
             .main-banner {
-                padding: 50px 0;
+                padding: 50px 0; /* Adjust for smaller screens */
             }
 
             .banner-links {
@@ -198,7 +276,8 @@
                         <!-- Logo and Banner Links -->
                         <div class="logo-banner-container">
                             <a href="/login" class="logo">
-                                <h4>TAR UMT <img src="{{ url_for('static', filename='assets/images/logo-icon.png') }}" alt=""></h4>
+                                <h4>TAR UMT <img src="{{ url_for('static', filename='assets/images/logo-icon.png') }}"
+                                        alt=""></h4>
                             </a>
                             <!-- Banner Links -->
                             <div class="banner-links">
@@ -221,50 +300,18 @@
             <div class="row">
                 <div class="col-md-12 text-center">
                     <!-- Add your banner content here -->
+                    <h1>Your Banner Content</h1>
+                    <p>Some banner description goes here.</p>
                 </div>
             </div>
         </div>
     </section>
-
+    
     <!-- Right Container -->
     <div class="container">
         <!-- Content -->
         <div class="right-container">
-            <h2>Hello, {{ company_name }}!</h2>
-            <div class="logo">
-                <img src="{{ company_image_url }}" alt="Company Logo">
-            </div>
-            <div class="status">
-                <p>Approval Status: <span id="approvalStatus">{{ status }}</span></p>
-            </div>
-
-            <!-- Company Info -->
-            <div class="info">
-                <div class="info-container">
-                    <h3>Company Information <button id="editButton">Edit</button></h3>
-                    <p><strong>Company Name:</strong> {{ company_name }}</p>
-                    <p><strong>Industry:</strong> {{ company_industry }}</p>
-                    <p><strong>Product or Service:</strong> {{ product_service }}</p>
-                    <p><strong>Company Website:</strong> <a href="{{ company_website }}" target="_blank">{{ company_website }}</a></p>
-                    <p><strong>OT Claim:</strong> {{ ot_claim }}</p>
-                </div>
-                <div class="info-container">
-                    <h3>Address</h3>
-                    <p>{{ company_address }}</p>
-                    <p>{{ company_state }}</p>
-                    <p>{{ company_city }}</p>
-                </div>
-                <div class="info-container">
-                    <h3>Person In Charge</h3>
-                    <p>{{ person_in_charge }}</p>
-                    <p>{{ contact_number }}</p>
-                    <p>{{ email }}</p>
-                </div>
-                <div class="info-container">
-                    <h3>Remark</h3>
-                    <p>{{ remark }}</p>
-                </div>
-            </div>
+            <!-- ... (your content remains unchanged) ... -->
         </div>
     </div>
 
@@ -274,6 +321,7 @@
             <div class="row">
                 <div class="col-lg-12">
                     <!-- Add your footer content here -->
+                    <!-- ... -->
                 </div>
             </div>
         </div>
@@ -286,16 +334,6 @@
     <script src="{{ url_for('static', filename='assets/js/animation.js') }}"></script>
     <script src="{{ url_for('static', filename='assets/js/imagesloaded.js') }}"></script>
     <script src="{{ url_for('static', filename='assets/js/custom.js') }}"></script>
-
-    <script>
-        // Function to handle the click event
-        function infoEdit() {
-            window.location.href = "company_info_edit.html"; // Redirect to the desired page
-        }
-
-        // Attach the click event to the button
-        document.getElementById("editButton").addEventListener("click", infoEdit);
-    </script>
 </body>
 
 </html>
