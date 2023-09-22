@@ -2,12 +2,14 @@
 <html lang="en">
 
 <head>
+
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <meta name="description" content="">
     <meta name="author" content="">
     <link rel="preconnect" href="https://fonts.gstatic.com">
-    <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@300;400;600;700;800&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@300;400;600;700;800&display=swap"
+        rel="stylesheet">
 
     <title>Company Dashboard - SEO Dream</title>
 
@@ -104,10 +106,9 @@
 
         /* Style for right container */
         .right-container {
-            float: none; /* Remove the float */
-            width: 100%; /* Take up the entire width */
-            margin: 0 auto; /* Center horizontally */
-            text-align: center; /* Center the text within the container */
+            float: left;
+            width: 85%;
+            /* Adjust the width as needed */
             background-color: #ffffff;
             padding: 20px;
         }
@@ -201,7 +202,6 @@
             font-weight: bold;
             color: #555;
         }
-
         /* Banner styles */
         .main-banner {
             background-image: url('{{ url_for('static', filename='assets/images/banner-right-image.png') }}');
@@ -217,12 +217,12 @@
             justify-content: space-between;
             align-items: center;
         }
-
+    
         .banner-links {
             display: flex;
             align-items: center;
         }
-
+    
         .banner-links a {
             margin-left: 40px; /* Add spacing between banner links */
             text-decoration: none;
@@ -234,7 +234,7 @@
         .banner-links a:hover {
             color: #1e8c8b; /* Change the color on hover to your desired color */
         }
-
+        
         /* Make the banner text responsive */
         @media (max-width: 768px) {
             .main-banner {
@@ -298,22 +298,39 @@
             <div class="offerHead">
                 <h3>Job Offers
                     {% if status == 'Approved' %}
-                    <a href="/addjobpage" class="edit-button">Edit Job Positions</a>
+                        <a href="/addjobpage" class="edit-button">Edit Job Positions</a>
                     {% endif %}
                 </h3>
             </div>
             <div class="offer">
                 {% if companyjobs %}
-                {% for job in companyjobs %}
-                <div class="job-container job-item">
-                    <!-- ... (rest of your job item content) ... -->
-                </div>
-                {% endfor %}
+                    {% for job in companyjobs %}
+                        <div class="job-container job-item">
+                            <div class="job-header">
+                                <h4>{{ job[1] }}</h4>
+                                <p class="job-type">{{ job[6] }}</p>
+                            </div>
+                            <p class="job-description">{{ job[2] }}</p>
+                            <p><strong>Job Requirements:</strong></p>
+                            <ul class="job-requirements">
+                                <li>{{ job[3] }}</li>
+                            </ul>
+                            <div class="job-details">
+                                <p><strong>Career Level:</strong> {{ job[4] }}</p>
+                                <p><strong>Qualification:</strong> {{ job[5] }}</p>
+                                <p><strong>Years of Experience:</strong> {{ job[7] }}</p>
+                                <p><strong>Salary:</strong> {{ job[8] }}</p>
+                            </div>
+                        </div>
+                    {% endfor %}
                 {% else %}
-                <p>No job offers available.</p>
+                    <p>No job offers available.</p>
                 {% endif %}
             </div>
+            
         </div>
+    </div>
+
     </div>
 
     <!-- ***** Thank You Content Start ***** -->
@@ -344,10 +361,11 @@
         function infoEdit() {
             window.location.href = "company_info_edit.html"; // Redirect to the desired page
         }
-
+    
         // Attach the click event to the button
         document.getElementById("editButton").addEventListener("click", infoEdit);
     </script>
+
 </body>
 
 </html>
