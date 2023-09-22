@@ -69,24 +69,23 @@
         /* Edit Button styles */
         .infoHead {
             display: flex;
-            justify-content: flex-end; /* Align to the right */
+            justify-content: space-between;
             align-items: center;
             /* Add some space to the top-right corner */
             position: relative;
-            margin-bottom: 10px; /* Add margin to separate from the content */
         }
-        
         .edit-button {
             font-size: 14px; /* Adjust the font size as needed */
             background-color: transparent;
-            border: 2px solid #1500ffb7; /* Add a border */
             color: #1500ffb7;
-            border-radius: 5px; /* Rounded corners */
+            border: none;
             padding: 5px 10px; /* Adjust the padding as needed */
             cursor: pointer;
             transition: background-color 0.3s, color 0.3s;
+            position: absolute;
+            top: 0;
+            right: 0;
         }
-        
         .edit-button:hover {
             background-color: #1500ffb7; /* Change the background color on hover */
             color: #fff; /* Change the text color on hover */
@@ -160,38 +159,6 @@
             text-decoration: none;
             font-weight: bold;
         }
-
-        /* CSS for Company Information */
-        .info {
-            display: flex;
-            flex-wrap: wrap;
-        }
-        
-        .info-container {
-            flex: 1;
-            padding: 20px;
-            margin: 10px;
-            background-color: #f2f2f2;
-            border-radius: 10px;
-        }
-        
-        .info h3, .info h4 {
-            margin-top: 0;
-        }
-        
-        .info a {
-            text-decoration: none;
-            color: #007bff;
-        }
-        
-        .info a:hover {
-            text-decoration: underline;
-        }
-        
-        #approvalStatus {
-            font-weight: bold;
-            color: #e74c3c;
-        }
     </style>
 </head>
 <body>
@@ -248,38 +215,36 @@
                 <div class="status">
                     <p>Approval Status: <span id="approvalStatus">{{ status }}</span></p>
                 </div>
+
+                <!-- Edit Company Information Button -->
+                <div class="infoHead">
+                    <a href="/companyinfopage" class="edit-button">Edit Company Information</a>
+                </div>
                 
                 <!-- Company Information -->
                 <div class="info">
                     <div class="info-container">
-                        <h3><strong>{{ company_name }}</strong></h3>
-                        <p><strong>Company ID:</strong> {{ company_id }}</p>
-                        <p><strong>Industry:</strong> {{ industry }}</p>
-                        <p><strong>Product or Service:</strong> {{ product_service }}</p>
-                        <p><strong>Company Website:</strong> <a href="{{ company_website }}" target="_blank">{{ company_website }}</a></p>
-                        <p><strong>Approval Status:</strong> <span id="approvalStatus">{{ status }}</span></p>
+                        <p><strong>{{ company_name }}</strong></p>
+                        <p><strong>{{ company_industry }}</strong></p>
+                        <p><strong>Product or Service :</strong> {{ product_service }}</p>
+                        <p><strong>Company Website :</strong> <a href="{{ company_website }}" target="_blank">{{ company_website }}</a></p>
+                        <p><strong>OT Claim :</strong> {{ ot_claim }}</p>
                     </div>
                     <div class="info-container">
-                        <h4><strong>Contact Information</strong></h4>
-                        <p><strong>Person In Charge:</strong> {{ person_in_charge }}</p>
-                        <p><strong>Contact Number:</strong> {{ contact_number }}</p>
-                        <p><strong>Email:</strong> {{ email }}</p>
+                        <p><strong>Address</strong></p>
+                        <p>{{ company_address }}</p>
+                        <p>{{ company_state }}</p>
+                        <p>{{ company_city }}</p>
                     </div>
                     <div class="info-container">
-                        <h4><strong>Location</strong></h4>
-                        <p><strong>Address:</strong> {{ company_address }}</p>
-                        <p><strong>State:</strong> {{ state }}</p>
+                        <p><strong>Person In Charge</strong></p>
+                        <p>{{ person_in_charge }}</p>
+                        <p>{{ contact_number }}</p>
+                        <p>{{ email }}</p>
                     </div>
                     <div class="info-container">
-                        <h4><strong>Company Details</strong></h4>
-                        <p><strong>Total Staff:</strong> {{ total_staff }}</p>
-                        <p><strong>Nature of Job:</strong> {{ nature_of_job }}</p>
-                        <p><strong>OT Claim:</strong> {{ ot_claim }}</p>
-                        <p><strong>Remarks:</strong> {{ remarks }}</p>
-                    </div>
-                    <!-- Edit Company Information Button -->
-                    <div class="info-container">
-                        <a href="/companyinfopage" class="edit-button">Edit</a>
+                        <p><strong>Remark :</strong></p>
+                        <p>{{ remarks }}</p>
                     </div>
                 </div>
             </div>
