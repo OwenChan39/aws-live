@@ -336,19 +336,17 @@
                                 <p class="job-type">{{ job[6] }}</p>
                             </div>
                             <!-- Job Description and Details -->
-                            <div class="job-description">{{ job[2] }}</div>
-                            <p><strong>Job Requirements:</strong></p>
-                            <ul class="job-requirements">
-                                <li>{{ job[3] }}</li>
-                            </ul>
+                            <div class="job-description">
+                                <p>{{ job[2] }}</p>
+                            </div>
                             <div class="job-details">
                                 <p><strong>Career Level:</strong> {{ job[4] }}</p>
                                 <p><strong>Qualification:</strong> {{ job[5] }}</p>
                                 <p><strong>Years of Experience:</strong> {{ job[7] }}</p>
                                 <p><strong>Salary:</strong> {{ job[8] }}</p>
                             </div>
-                            <br>
                         </div>
+                        <hr> <!-- Add a horizontal line to separate job offers -->
                     {% endfor %}
                 {% else %}
                     <p>No job offers available.</p>
