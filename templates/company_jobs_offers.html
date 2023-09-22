@@ -259,16 +259,19 @@
             margin-right: 10px;
             background-color: #ffffff;
             color: #1500ffb7;
-            border: none;
+            border: 1px solid #1500ffb7; /* Added a border */
             border-radius: 5px;
             padding: 2px 10px;
             cursor: pointer;
-            transition: color 0.3s;
+            transition: color 0.3s, background-color 0.3s; /* Smooth color transition on hover */
         }
-
+        
         .edit-button:hover {
             color: #fa3232;
+            background-color: #fff; /* Change background color on hover */
+            border-color: #fa3232; /* Change border color on hover */
         }
+
     </style>
 </head>
 
