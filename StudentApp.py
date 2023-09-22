@@ -317,11 +317,6 @@ def company_dashboard():
                 ExpiresIn=3600
             )
 
-            cursor = db_conn.cursor()
-            cursor.execute("SELECT * FROM Job_Details WHERE Company_ID = %s", (company_id,))
-            companyjobs = cursor.fetchall()  # Fetch all job listings
-            cursor.close()
-
             return render_template('company_dashboard.html',
                                    company_name=company_name,
                                    industry=industry,
@@ -337,8 +332,34 @@ def company_dashboard():
                                    contact_number=contact_number,
                                    email=email,
                                    company_image_url=company_image_url,
+                                   status=status
+                                   )
+        else:
+            return "Company not found"
+        
+    else:
+        return "Unauthorized"
+
+@app.route('/company_jobs_offers', methods=['GET', 'POST'])
+def company_jobs_offers():
+    if 'company_id' in session:
+        company_id = session['company_id']
+        cursor = db_conn.cursor()
+        cursor.execute("SELECT * FROM Company WHERE Company_ID = %s", (company_id,))
+        company = cursor.fetchone()
+        cursor.close()
+        
+        if company:
+            status = company[14]
+
+            cursor = db_conn.cursor()
+            cursor.execute("SELECT * FROM Job_Details WHERE Company_ID = %s", (company_id,))
+            companyjobs = cursor.fetchall()
+            cursor.close()
+
+            return render_template('company_dashboard.html',
                                    status=status,
-                                   companyjobs=companyjobs,
+                                   companyjobs=companyjobs
                                    )
         else:
             return "Company not found"
@@ -1041,6 +1062,3 @@ def update_company_status():
 
 if __name__ == '__main__':
     app.run(host='0.0.0.0', port=80, debug=True)
-
-
-
