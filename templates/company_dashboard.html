@@ -37,29 +37,7 @@
         .header h1 {
             margin: 0;
         }
-        /* Logo and Banner Links */
-        .logo-banner-container {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-        .logo-banner-container .logo {
-            padding-top: 20px;
-        }
-        .logo-banner-container .banner-links {
-            display: flex;
-            align-items: center;
-        }
-        .logo-banner-container .banner-links a {
-            margin-left: 40px;
-            text-decoration: none;
-            color: #fff;
-            font-size: 18px;
-            font-weight: bold;
-        }
-        .logo-banner-container .banner-links a:hover {
-            color: #1e8c8b;
-        }
+        
         /* Right container styles */
         .right-container {
             background-color: #ffffff;
@@ -127,28 +105,8 @@
             font-weight: bold;
             color: #555;
         }
-        /* Make the banner text responsive */
-        @media (max-width: 768px) {
-            .header {
-                padding: 10px 0;
-            }
-            .logo-banner-container {
-                flex-direction: column;
-                align-items: center;
-            }
-            .logo-banner-container .banner-links {
-                flex-direction: column;
-                margin-top: 20px;
-            }
-            .logo-banner-container .banner-links a {
-                margin: 10px 0;
-            }
-            .right-container {
-                margin-top: 20px;
-            }
-        }
 
-                        /* Center the logo and links horizontally within the banner */
+        /* Center the logo and links horizontally within the banner */
         .logo-banner-container {
             display: flex;
             justify-content: space-between;
@@ -226,9 +184,8 @@
                             </a>
                             <!-- Banner Links -->
                             <div class="banner-links">
-                                <a href="/lecturer_dashboard">Lecturer Dashboard</a>
-                                <a href="/studentdatabase">Student Database</a>
-                                <a href="/view_student_progress">Student Reports</a>
+                                <a href="/company_dashboard">Company Dashboard</a>
+                                <a href="/company_jobs_offers">Job Offers</a>
                             </div>
                             <a href="/login" class="sign-out-link">Sign Out</a>
                         </div>
