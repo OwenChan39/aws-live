@@ -367,8 +367,8 @@ def company_jobs_offers():
     else:
         return "Unauthorized"
 
-@app.route("/addjobpage")
-def addjobpage():
+@app.route("/companyinfopage")
+def companyinfopage():
     if 'company_id' in session:
         company_id = session['company_id']
         cursor = db_conn.cursor()
