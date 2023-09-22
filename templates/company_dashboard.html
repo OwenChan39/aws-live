@@ -69,23 +69,24 @@
         /* Edit Button styles */
         .infoHead {
             display: flex;
-            justify-content: space-between;
+            justify-content: flex-end; /* Align to the right */
             align-items: center;
             /* Add some space to the top-right corner */
             position: relative;
+            margin-bottom: 10px; /* Add margin to separate from the content */
         }
+        
         .edit-button {
             font-size: 14px; /* Adjust the font size as needed */
             background-color: transparent;
+            border: 2px solid #1500ffb7; /* Add a border */
             color: #1500ffb7;
-            border: none;
+            border-radius: 5px; /* Rounded corners */
             padding: 5px 10px; /* Adjust the padding as needed */
             cursor: pointer;
             transition: background-color 0.3s, color 0.3s;
-            position: absolute;
-            top: 0;
-            right: 0;
         }
+        
         .edit-button:hover {
             background-color: #1500ffb7; /* Change the background color on hover */
             color: #fff; /* Change the text color on hover */
