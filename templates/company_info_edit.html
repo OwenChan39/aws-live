@@ -20,13 +20,12 @@
     <link href="{{ url_for('static', filename='assets/css/templatemo-seo-dream.css') }}" rel="stylesheet">
     <link href="{{ url_for('static', filename='assets/css/animated.css') }}" rel="stylesheet">
     <link href="{{ url_for('static', filename='assets/css/owl.css') }}" rel="stylesheet">
-    <!-- Your head content -->
 
     <style>
         /* Header styles */
         .header {
             background-color: #33ccc5;
-            /* Change this color to match your index.html */
+            /* Change this color to match your design */
             color: #fff;
             padding: 10px 0;
             text-align: center;
@@ -34,11 +33,6 @@
 
         .header h1 {
             margin: 0;
-        }
-
-        .content {
-            margin-left: 250px;
-            padding: 20px;
         }
 
         .container {
@@ -49,15 +43,6 @@
             margin-top: 10px;
         }
 
-        .job-offer {
-            margin-top: 50px;
-        }
-
-        .job-offer ul li {
-            margin-right: 10px;
-            /* Add space between job name and delete button */
-        }
-
         /* Additional styles for job position input fields */
         .job-inputs {
             margin-top: 20px;
@@ -66,53 +51,53 @@
         .job-inputs .form-group {
             margin-bottom: 20px;
         }
-        
-        /* Center the logo and links horizontally within the banner */
+
+        /* Additional CSS for the new header section */
+        .header-area {
+            background-color: #33ccc5; /* Change this color to match your design */
+            color: #fff;
+            padding: 10px 0;
+            text-align: center;
+        }
+
+        .header-area h4 {
+            margin: 0;
+        }
+
         .logo-banner-container {
             display: flex;
             justify-content: space-between;
             align-items: center;
         }
-    
-        .banner-links {
-            display: flex;
-            align-items: center;
-        }
-    
+
         .banner-links a {
-            margin-left: 40px; /* Add spacing between banner links */
+            margin-left: 20px; /* Adjust the spacing between links */
             text-decoration: none;
             color: #fff;
-            font-size: 18px;
+            font-size: 16px;
             font-weight: bold;
         }
 
         .banner-links a:hover {
             color: #1e8c8b; /* Change the color on hover to your desired color */
         }
-        
-        /* Make the banner text responsive */
-        @media (max-width: 768px) {
-            .main-banner {
-                padding: 50px 0; /* Adjust for smaller screens */
-            }
 
-            .banner-links {
-                flex-direction: column;
-                margin-top: 20px;
-            }
-
-            .banner-links a {
-                margin: 10px 0;
-            }
+        .sign-out-link {
+            color: #fff;
+            text-decoration: none;
+            font-weight: bold;
         }
-
     </style>
 </head>
 
 <body>
-
     <!-- ***** Header Start ***** -->
+    <header class="header">
+        <h1>Company Information Update</h1>
+    </header>
+    <!-- ***** Header End ***** -->
+
+    <!-- ***** Header Area Start ***** -->
     <header class="header-area header-sticky wow slideInDown" data-wow-duration="0.75s" data-wow-delay="0s">
         <div class="container">
             <div class="row">
@@ -121,14 +106,13 @@
                         <!-- ***** Logo and Banner Links Start ***** -->
                         <div class="logo-banner-container">
                             <a href="/login" class="logo">
-                                <h4>TAR UMT <img
-                                        src="{{ url_for('static', filename='assets/images/logo-icon.png') }}"
-                                        alt=""></h4>
+                                <h4>TAR UMT <img src="{{ url_for('static', filename='assets/images/logo-icon.png') }}" alt=""></h4>
                             </a>
                             <!-- Banner Links -->
                             <div class="banner-links">
-                                <a href="/company_dashboard">Company Dashboard</a>
-                                <a href="/company_jobs_offers">Job Offers</a>
+                                <a href="/lecturer_dashboard">Lecturer Dashboard</a>
+                                <a href="/studentdatabase">Student Database</a>
+                                <a href="/view_student_progress">Student Reports</a>
                             </div>
                             <a href="/login" class="sign-out-link">Sign Out</a>
                         </div>
@@ -137,13 +121,12 @@
             </div>
         </div>
     </header>
-    <!-- ***** Company Information Form Start ***** -->
+    <!-- ***** Header Area End ***** -->
 
+    <!-- ***** Company Information Form Start ***** -->
     <div class="content">
         <div class="company-info" id="company-info">
-
             <h3>Update <strong>{{ company_name }}</strong> Information</h3>
-
             <div class="container">
                 <form action="/company_profile_edit" method="POST">
                     <br>
