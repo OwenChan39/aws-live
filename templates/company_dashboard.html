@@ -165,17 +165,6 @@
             text-decoration: none;
             font-weight: bold;
         }
-        .pending {
-            color: blue;
-        }
-
-        .approved {
-            color: green;
-        }
-        
-        .rejected {
-            color: red;
-        }
 
     </style>
 </head>
@@ -231,7 +220,7 @@
                 </div>
                 <br>
                 <div class="status">
-                    <p>Approval Status: <span id="approvalStatus" class="{{ approval_status_class }}">{{ status }}</span></p>
+                    <p>Approval Status: <span id="approvalStatus">{{ status }}</span></p>
                 </div>
 
                 <!-- Edit Company Information Button -->
