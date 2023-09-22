@@ -253,7 +253,6 @@
     </style>
 </head>
 
-
 <body>
     <!-- ***** Preloader Start ***** -->
     <div id="js-preloader" class="js-preloader">
@@ -296,48 +295,45 @@
     <div class="right-container">
         <!-- Right content goes here -->
         <div class="content">
-            <h2>Hello, {{ company_name }}!</h2>
-            <div class="logo">
-            <img src="{{ company_image_url }}" alt="Company Logo">
+            <div class="offerHead">
+                <h3>Job Offers
+                    {% if status == 'Approved' %}
+                        <a href="/addjobpage" class="edit-button">Edit Job Positions</a>
+                    {% endif %}
+                </h3>
             </div>
-            <br>
-            <div class="status">
-                <p>Approval Status: <span id="approvalStatus">{{ status }}</span></p>
+            <div class="offer">
+                {% if companyjobs %}
+                    {% for job in companyjobs %}
+                        <div class="job-container job-item">
+                            <div class="job-header">
+                                <h4>{{ job[1] }}</h4>
+                                <p class="job-type">{{ job[6] }}</p>
+                            </div>
+                            <p class="job-description">{{ job[2] }}</p>
+                            <p><strong>Job Requirements:</strong></p>
+                            <ul class="job-requirements">
+                                <li>{{ job[3] }}</li>
+                            </ul>
+                            <div class="job-details">
+                                <p><strong>Career Level:</strong> {{ job[4] }}</p>
+                                <p><strong>Qualification:</strong> {{ job[5] }}</p>
+                                <p><strong>Years of Experience:</strong> {{ job[7] }}</p>
+                                <p><strong>Salary:</strong> {{ job[8] }}</p>
+                            </div>
+                        </div>
+                    {% endfor %}
+                {% else %}
+                    <p>No job offers available.</p>
+                {% endif %}
             </div>
-            <br>
-
-            <!-- Info of the company -->
-            <div class="infoHead">
-                <a href="/addjobpage" class="edit-button">Edit Company Information</a>
-            </div>
-            <div class="info">
-                <div class="info-container">
-                    <p><strong>{{ company_name }}</strong> </p>
-                    <p><strong>{{ company_industry }}</strong> </p>
-                    <p><strong>Product or Service :</strong> {{ product_service }}</p>
-                    <p><strong>Company Website :</strong> <a href="{{ company_website }}" target="_blank">{{ company_website }}</a></p>
-                    <p><strong>OT Claim :</strong> {{ ot_claim }}</p>
-                </div>
-                <div class="info-container">
-                    <p><strong>Address</strong></p>
-                    <p>{{ company_address }}</p>
-                    <p>{{ company_state }}</p>
-                    <p>{{ company_city }}</p>
-                </div>
-                <div class="info-container">
-                    <p><strong>Person In Charge</strong></p>
-                    <p>{{ person_in_charge }}</p>
-                    <p>{{ contact_number }}</p>
-                    <p>{{ email }}</p>
-                </div>
-                <div class="info-container">
-                    <p><strong>Remark :</strong></p>
-                    <p>{{ remark }}</p>
-                </div>
-            </div>
-            <br>
+            
         </div>
     </div>
+
+    </div>
+
+    <!-- ***** Thank You Content Start ***** -->
 
     <footer>
         <div class="container">
