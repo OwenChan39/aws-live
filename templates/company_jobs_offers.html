@@ -253,22 +253,32 @@
             }
         }
 
-        /* Add an "Edit" button style */
+        .offerHead {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .offer-heading h3 {
+            margin: 0;
+        }
+        
         .edit-button {
-            font-size: 14px; /* Adjust the font size as needed */
+            font-size: 14px;
             background-color: transparent;
-            border: 2px solid #1500ffb7; /* Add a border */
+            border: 2px solid #1500ffb7;
             color: #1500ffb7;
-            border-radius: 5px; /* Rounded corners */
-            padding: 5px 50px; /* Adjust the padding as needed */
+            border-radius: 5px;
+            padding: 5px 10px;
             cursor: pointer;
             transition: background-color 0.3s, color 0.3s;
         }
         
         .edit-button:hover {
-            background-color: #1500ffb7; /* Change the background color on hover */
-            color: #fff; /* Change the text color on hover */
+            background-color: #1500ffb7;
+            color: #fff;
         }
+
         
         .bold-line {
             border-top: 2px solid #000; /* Adjust the border thickness and color as needed */
@@ -321,10 +331,10 @@
         <!-- Right content goes here -->
         <div class="content">
             <div class="offerHead">
-                <!-- Place the "Edit" button in the top right corner -->
-                <a href="/addjobpage" class="edit-button">ADD JOBS</a>
-                <h3>Job Offers</h3>
-                <br>
+                <div class="offer-heading">
+                    <h3>Job Offers</h3>
+                    <a href="/addjobpage" class="edit-button">ADD JOBS</a>
+                </div>
             </div>
             <div class="offer">
                 {% if companyjobs %}
