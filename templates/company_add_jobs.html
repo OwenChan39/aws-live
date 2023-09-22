@@ -37,40 +37,85 @@
         .header h1 {
             margin: 0;
         }
-
+        /* Right container styles */
+        .right-container {
+            background-color: #ffffff;
+            padding: 20px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            border-radius: 10px;
+        }
+        /* Content styles */
         .content {
             padding: 200px;
         }
         .content h2 {
             margin: 0;
         }
+        .logo {
+            text-align: center;
+        }
 
-        .container {
+        .logo img {
+            width: 180px;
+            height: auto;
+            margin: 0 auto; /* Center the logo horizontally */
+        }
+        .status {
+            background-color: #f0f0f0;
+            padding: 10px;
+            text-align: center;
+        }
+        .status #approvalStatus {
+            font-size: 25px;
+            font-weight: bold;
+            color: #e74c3c;
+        }
+        /* Edit Button styles */
+        .infoHead {
+            display: flex;
+            justify-content: flex-end; /* Align to the right */
+            align-items: center;
+            /* Add some space to the top-right corner */
+            position: relative;
+            margin-bottom: 10px; /* Add margin to separate from the content */
+        }
+        
+        .edit-button {
+            font-size: 14px; /* Adjust the font size as needed */
+            background-color: transparent;
+            border: 2px solid #1500ffb7; /* Add a border */
+            color: #1500ffb7;
+            border-radius: 5px; /* Rounded corners */
+            padding: 5px 10px; /* Adjust the padding as needed */
+            cursor: pointer;
+            transition: background-color 0.3s, color 0.3s;
+        }
+        
+        .edit-button:hover {
+            background-color: #1500ffb7; /* Change the background color on hover */
+            color: #fff; /* Change the text color on hover */
+        }
+        .info .info-container {
             background-color: #f2f2f2;
-            /* Grey background color */
             padding: 20px;
             border-radius: 10px;
             margin-top: 10px;
         }
-
-        .job-offer {
-            margin-top: 50px;
+        /* Additional CSS for the new dashboard sections */
+        .sub-section {
+            background-color: #f2f2f2;
+            padding: 10px;
+            border-radius: 10px;
+            margin-top: 10px;
         }
-
-        .job-offer ul li {
-            margin-right: 10px;
-            /* Add space between job name and delete button */
+        .sub-section p {
+            margin: 5px 0;
         }
-
-        /* Additional styles for job position input fields */
-        .job-inputs {
-            margin-top: 20px;
+        .sub-section span {
+            font-weight: bold;
+            color: #555;
         }
-
-        .job-inputs .form-group {
-            margin-bottom: 20px;
-        }
-                /* Center the logo and links horizontally within the banner */
+        /* Center the logo and links horizontally within the banner */
         .logo-banner-container {
             display: flex;
             justify-content: space-between;
@@ -118,6 +163,24 @@
             text-decoration: none;
             font-weight: bold;
         }
+
+        .job-offer {
+            margin-top: 50px;
+        }
+
+        .job-offer ul li {
+            margin-right: 10px;
+            /* Add space between job name and delete button */
+        }
+
+        /* Additional styles for job position input fields */
+        .job-inputs {
+            margin-top: 20px;
+        }
+
+        .job-inputs .form-group {
+            margin-bottom: 20px;
+        }
     </style>
 </head>
 <body>
@@ -153,6 +216,7 @@
         </div>
     </header>
     <!-- ***** Header End ***** -->
+
 
     <div class="content">
         <div class="company-info" id="company-info">
@@ -213,6 +277,10 @@
     
         <!-- ***** Company Information Form End ***** -->
     
+        <!-- ***** Footer Start ***** -->
+        <footer>
+            <!-- Add your footer content here, such as copyright information or links -->
+        </footer>
         <script src="{{ url_for('static', filename='vendor/jquery/jquery.min.js') }}"></script>
         <script src="{{ url_for('static', filename='vendor/bootstrap/js/bootstrap.bundle.min.js') }}"></script>
         <script src="{{ url_for('static', filename='assets/js/owl-carousel.js') }}"></script>
