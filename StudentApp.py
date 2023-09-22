@@ -357,7 +357,7 @@ def company_jobs_offers():
             companyjobs = cursor.fetchall()
             cursor.close()
 
-            return render_template('company_dashboard.html',
+            return render_template('company_jobs_offers.html',
                                    status=status,
                                    companyjobs=companyjobs
                                    )
