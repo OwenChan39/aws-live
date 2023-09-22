@@ -524,15 +524,13 @@ def save_job_details():
             cursor.close()
 
             # Redirect to a success page or any other appropriate action
-            return render_template('company_jobs_offers.html')
+            return redirect(url_for('addjobpage'))
 
         except Exception as e:
             return str(e)  # Handle database insertion errors here
 
     # Handle GET requests or other cases
-    return redirect(url_for('company_dashboard'))  # Render the form page again if not a POST request
-
-
+    return redirect(url_for('company_dashboard'))
 
 @app.route('/lecturer_dashboard', methods=['GET', 'POST'])
 def lecturer_dashboard():
