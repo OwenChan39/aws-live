@@ -7,7 +7,7 @@
     <meta name="author" content="">
     <link rel="preconnect" href="https://fonts.gstatic.com">
     <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@300;400;600;700;800&display=swap" rel="stylesheet">
-    <title>Company Dashboard - SEO Dream</title>
+    <title>ITP System</title>
     <!-- Bootstrap core CSS -->
     <link href="{{ url_for('static', filename='vendor/bootstrap/css/bootstrap.min.css') }}" rel="stylesheet">
     <!-- Additional CSS Files -->
@@ -203,9 +203,8 @@
     <div class="content">
         <div class="company-info" id="company-info">
 
-            <h3>Update <strong>{{ company_name }}</strong> Information</h3>
-
             <div class="container">
+                <h3>Update <strong>{{ company_name }}</strong> Information</h3>
                 <form action="/company_profile_edit" method="POST">
                     <br>
                     <!-- Total Staff -->
