@@ -112,7 +112,7 @@
             color: #555;
         }
 
-                /* Center the logo and links horizontally within the banner */
+        /* Center the logo and links horizontally within the banner */
         .logo-banner-container {
             display: flex;
             justify-content: space-between;
@@ -192,8 +192,6 @@
             font-weight: bold;
             color: #e74c3c;
         }
-
-
     </style>
 </head>
 <body>
@@ -250,12 +248,6 @@
                 <div class="status">
                     <p>Approval Status: <span id="approvalStatus">{{ status }}</span></p>
                 </div>
-
-                <!-- Edit Company Information Button -->
-                <br>
-                <div class="infoHead">
-                    <a href="/companyinfopage" class="edit-button">Edit</a>
-                </div>
                 
                 <!-- Company Information -->
                 <div class="info">
@@ -284,6 +276,10 @@
                         <p><strong>Nature of Job:</strong> {{ nature_of_job }}</p>
                         <p><strong>OT Claim:</strong> {{ ot_claim }}</p>
                         <p><strong>Remarks:</strong> {{ remarks }}</p>
+                    </div>
+                    <!-- Edit Company Information Button -->
+                    <div class="info-container">
+                        <a href="/companyinfopage" class="edit-button">Edit</a>
                     </div>
                 </div>
             </div>
