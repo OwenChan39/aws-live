@@ -18,10 +18,6 @@
     <link href="{{ url_for('static', filename='assets/css/owl.css') }}" rel="stylesheet">
     <style>
         /* Common styles */
-        .content {
-            margin-left: 50px;
-            padding: 10px;
-        }
         
         body {
             font-family: 'Open Sans', sans-serif;
@@ -214,11 +210,11 @@
 <body>
     <!-- ***** Header Area Start ***** -->
     <header class="header">
-        <div class="content">
+        <div class="container">
             <nav class="main-nav">
                 <!-- ***** Logo and Banner Links Start ***** -->
                 <div class="logo">
-                    <h1>TAR UMT <img src="{{ url_for('static', filename='assets/images/logo-icon.png') }}" alt=""></h1>
+                    <h4>TAR UMT <img src="{{ url_for('static', filename='assets/images/logo-icon.png') }}" alt=""></h4>
                 </div>
                 <a href="/login" class="sign-out-link">Sign Out</a>
             </nav>
