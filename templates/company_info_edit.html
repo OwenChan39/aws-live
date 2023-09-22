@@ -179,19 +179,6 @@
                     </div>
 
                     <br>
-                    <!-- Upload SSM/Company Registration Certificate -->
-                    <!-- <div class="form-group">
-                        <label for="certificate_upload">Upload SSM/Company Registration Certificate:</label>
-                        <input type="file" class="form-control-file" id="certificate_upload" name="certificate_upload"
-                            value="{{ certificate_upload }}" required>
-                    </div>
-
-                    <br> -->
-                    <!-- Upload Company Logo -->
-                    <!-- <div class="form-group">
-                        <label for="logo_upload">Upload Company Logo:</label>
-                        <input type="file" class="form-control-file" id="logo_upload" name="logo_upload" value="{{ logo_upload }}" required>
-                    </div> -->
 
                     <div class="update-button">
                         <div class="form-group">
@@ -201,60 +188,6 @@
                 </form>
             </div>
         </div>
-
-        <div class="job-offer" id='job-offer'>
-            <h3>Job Positions Offered</h3>
-
-            <!-- Additional input fields for job positions -->
-            <div class="job-inputs">
-                <h4>Add Job Position</h4>
-                <div class="container">
-                    <form action="/save_job_details" method="POST">
-                        <div class="form-group">
-                            <label for="job_position">Job Position:</label>
-                            <input type="text" class="form-control" id="job_position" name="job_position">
-                        </div>
-                        <div class="form-group">
-                            <label for="job_description">Job Description:</label>
-                            <textarea class="form-control" id="job_description" name="job_description"
-                                rows="4"></textarea>
-                        </div>
-                        <div class="form-group">
-                            <label for="job_requirements">Job Requirements:</label>
-                            <textarea class="form-control" id="job_requirements" name="job_requirements"
-                                rows="4"></textarea>
-                        </div>
-                        <div class="form-group">
-                            <label for="career_level">Career Level:</label>
-                            <input type="text" class="form-control" id="career_level" name="career_level">
-                        </div>
-                        <div class="form-group">
-                            <label for="qualification">Qualification:</label>
-                            <input type="text" class="form-control" id="qualification" name="qualification">
-                        </div>
-                        <div class="form-group">
-                            <label for="job_type">Job Type:</label>
-                            <input type="text" class="form-control" id="job_type" name="job_type">
-                        </div>
-                        <div class="form-group">
-                            <label for="years_experience">Years of Experience:</label>
-                            <input type="number" class="form-control" id="years_experience" name="years_experience">
-                        </div>
-                        <div class="form-group">
-                            <label for="salary">Salary:</label>
-                            <input type="text" class="form-control" id="salary" name="salary">
-                        </div>
-                        <div class="form-group">
-                            <button type="submit" class="main-green-button">Add</button>
-                        </div>
-                        <!-- ... (other form fields for additional job positions can be added here) ... -->
-                    </form>
-                </div>
-            </div>
-
-            <!-- Button to add another job position -->
-        </div>
-
     </div>
 
     <!-- ***** Company Information Form End ***** -->
