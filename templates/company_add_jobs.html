@@ -1,63 +1,72 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <meta name="description" content="">
     <meta name="author" content="">
     <link rel="preconnect" href="https://fonts.gstatic.com">
-    <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@300;400;600;700;800&display=swap"
-        rel="stylesheet">
-
-    <title>Company info update - SEO Dream</title>
-
+    <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@300;400;600;700;800&display=swap" rel="stylesheet">
+    <title>Company Dashboard - SEO Dream</title>
     <!-- Bootstrap core CSS -->
     <link href="{{ url_for('static', filename='vendor/bootstrap/css/bootstrap.min.css') }}" rel="stylesheet">
-
     <!-- Additional CSS Files -->
     <link href="{{ url_for('static', filename='assets/css/fontawesome.css') }}" rel="stylesheet">
     <link href="{{ url_for('static', filename='assets/css/templatemo-seo-dream.css') }}" rel="stylesheet">
     <link href="{{ url_for('static', filename='assets/css/animated.css') }}" rel="stylesheet">
     <link href="{{ url_for('static', filename='assets/css/owl.css') }}" rel="stylesheet">
-    <!-- Your head content -->
-
     <style>
-        /* Header styles */
+        /* Reset some default styles */
+        body, html {
+            margin: 0;
+            padding: 0;
+        }
+        /* Main container for content */
+        .main-container {
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+        }
+        /* Header Area */
         .header {
             background-color: #33ccc5;
-            /* Change this color to match your index.html */
             color: #fff;
             padding: 10px 0;
             text-align: center;
         }
-
         .header h1 {
             margin: 0;
         }
-
-        .sidebar {
-            width: 250px;
-            background-color: #333;
-            /* Change this color to match your index.html */
-            color: #fff;
-            position: fixed;
-            height: 100%;
-            overflow: visible;
+        /* Center the logo and links horizontally within the banner */
+        .logo-banner-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
         }
-
-        .sidebar a {
-            padding: 15px;
+        .banner-links {
+            display: flex;
+            align-items: center;
+        }
+        .banner-links a {
+            margin-left: 40px; /* Add spacing between banner links */
             text-decoration: none;
-            font-size: 18px;
             color: #fff;
-            display: block;
+            font-size: 18px;
+            font-weight: bold;
+        }
+        .banner-links a:hover {
+            color: #1e8c8b; /* Change the color on hover to your desired color */
+        }
+        .sign-out-link {
+            position: absolute;
+            top: 38px;
+            right: 30px;
+            color: #fff;
+            text-decoration: none;
+            font-weight: bold;
         }
 
-        .sidebar a:hover {
-            background-color: #555;
-        }
-
+        
         .content {
             margin-left: 250px;
             padding: 20px;
@@ -88,97 +97,10 @@
         .job-inputs .form-group {
             margin-bottom: 20px;
         }
-
-        /* Center the logo and links horizontally within the banner */
-        .logo-banner-container {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-    
-        .banner-links {
-            display: flex;
-            align-items: center;
-        }
-    
-        .banner-links a {
-            margin-left: 40px; /* Add spacing between banner links */
-            text-decoration: none;
-            color: #fff;
-            font-size: 18px;
-            font-weight: bold;
-        }
-
-        .banner-links a:hover {
-            color: #1e8c8b; /* Change the color on hover to your desired color */
-        }
-        
-        /* Make the banner text responsive */
-        @media (max-width: 768px) {
-            .main-banner {
-                padding: 50px 0; /* Adjust for smaller screens */
-            }
-
-            .banner-links {
-                flex-direction: column;
-                margin-top: 20px;
-            }
-
-            .banner-links a {
-                margin: 10px 0;
-            }
-        }
-
-        .sign-out-link {
-            position: absolute;
-            top: 38px;
-            right: 30px;
-            color: #fff;
-            text-decoration: none;
-            font-weight: bold;
-        }
-
-         /* Reset some default styles */
-        body, html {
-            margin: 0;
-            padding: 0;
-        }
-        /* Main container for content */
-        .main-container {
-            display: flex;
-            flex-direction: column;
-            min-height: 100vh;
-        }
-        /* Header Area */
-        .header {
-            background-color: #33ccc5;
-            color: #fff;
-            padding: 10px 0;
-            text-align: center;
-        }
-        .header h1 {
-            margin: 0;
-        }
-        
-        /* Right container styles */
-        .right-container {
-            background-color: #ffffff;
-            padding: 20px;
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-            border-radius: 10px;
-        }
-        /* Content styles */
-        .content {
-            padding: 100px;
-        }
-        .content h2 {
-            margin: 0;
-        }
+        /* ... (your other styles) ... */
     </style>
 </head>
-
 <body>
-
     <!-- ***** Preloader Start ***** -->
     <div id="js-preloader" class="js-preloader">
         <div class="preloader-inner">
@@ -203,6 +125,11 @@
                             <a href="/login" class="logo">
                                 <h4>TAR UMT <img src="{{ url_for('static', filename='assets/images/logo-icon.png') }}" alt=""></h4>
                             </a>
+                            <!-- Banner Links -->
+                            <div class="banner-links">
+                                <a href="/company_dashboard">Company Dashboard</a>
+                                <a href="/company_jobs_offers">Job Offers</a>
+                            </div>
                             <a href="/login" class="sign-out-link">Sign Out</a>
                         </div>
                     </nav>
