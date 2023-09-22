@@ -147,23 +147,88 @@
                 margin-top: 20px;
             }
         }
+
+                        /* Center the logo and links horizontally within the banner */
+        .logo-banner-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+    
+        .banner-links {
+            display: flex;
+            align-items: center;
+        }
+    
+        .banner-links a {
+            margin-left: 40px; /* Add spacing between banner links */
+            text-decoration: none;
+            color: #fff;
+            font-size: 18px;
+            font-weight: bold;
+        }
+
+        .banner-links a:hover {
+            color: #1e8c8b; /* Change the color on hover to your desired color */
+        }
+        
+        /* Make the banner text responsive */
+        @media (max-width: 768px) {
+            .main-banner {
+                padding: 50px 0; /* Adjust for smaller screens */
+            }
+
+            .banner-links {
+                flex-direction: column;
+                margin-top: 20px;
+            }
+
+            .banner-links a {
+                margin: 10px 0;
+            }
+        }
+
+        .sign-out-link {
+            position: absolute;
+            top: 38px;
+            right: 30px;
+            color: #fff;
+            text-decoration: none;
+            font-weight: bold;
+        }
     </style>
 </head>
 <body>
-    <!-- Header Area -->
-    <header class="header">
+    <body>
+    <!-- ***** Preloader Start ***** -->
+    <div id="js-preloader" class="js-preloader">
+        <div class="preloader-inner">
+            <span class="dot"></span>
+            <div class="dots">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+        </div>
+    </div>
+    <!-- ***** Preloader End ***** -->
+        
+    <!-- ***** Header Area Start ***** -->
+    <header class="header-area header-sticky wow slideInDown" data-wow-duration="0.75s" data-wow-delay="0s">
         <div class="container">
             <div class="row">
                 <div class="col-12">
                     <nav class="main-nav">
-                        <!-- Logo and Banner Links -->
+                        <!-- ***** Logo and Banner Links Start ***** -->
                         <div class="logo-banner-container">
                             <a href="/login" class="logo">
                                 <h4>TAR UMT <img src="{{ url_for('static', filename='assets/images/logo-icon.png') }}" alt=""></h4>
                             </a>
+                            <!-- Banner Links -->
                             <div class="banner-links">
-                                <a href="/company_dashboard">Company Dashboard</a>
-                                <a href="/company_jobs_offers">Job Offers</a>
+                                <a href="/lecturer_dashboard">Lecturer Dashboard</a>
+                                <a href="/studentdatabase">Student Database</a>
+                                <a href="/view_student_progress">Student Reports</a>
                             </div>
                             <a href="/login" class="sign-out-link">Sign Out</a>
                         </div>
@@ -172,6 +237,7 @@
             </div>
         </div>
     </header>
+    <!-- ***** Header End ***** -->
 
     <!-- Main Content -->
     <div class="main-container">
