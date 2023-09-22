@@ -21,8 +21,6 @@
         body {
             background-color: #f0f0f0;
             font-family: 'Open Sans', sans-serif;
-            margin: 0;
-            padding: 0;
         }
 
         .container {
@@ -81,7 +79,7 @@
 
         /* Header styles */
         .header {
-            background-color: #33ccc5;
+            background-color: #33ccc5; /* Add background color to header */
             color: #fff;
             padding: 10px 0;
             text-align: center;
@@ -94,6 +92,7 @@
         /* Style for right container */
         .right-container {
             background-color: #ffffff;
+            padding: 20px;
             margin-top: 20px;
             box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
             border-radius: 10px;
@@ -121,10 +120,19 @@
 
         /* Additional CSS for the new dashboard sections */
         .sub-section {
-            background-color: #f2f2f0;
+            background-color: #f2f2f2;
             padding: 10px;
             border-radius: 10px;
             margin-top: 20px;
+        }
+
+        /* Banner styles */
+        .main-banner {
+            background-image: url('{{ url_for('static', filename='assets/images/banner-right-image.png') }}');
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            padding: 150px 0;
         }
 
         /* Center the logo and links horizontally within the banner */
@@ -154,7 +162,7 @@
         /* Make the banner text responsive */
         @media (max-width: 768px) {
             .main-banner {
-                padding: 100px 0;
+                padding: 50px 0;
             }
 
             .banner-links {
@@ -170,12 +178,6 @@
 </head>
 
 <body>
-    <!-- Preloader Start -->
-    <div id="js-preloader" class="js-preloader">
-        <!-- Add your preloader content here -->
-    </div>
-    <!-- Preloader End -->
-
     <!-- Header Area Start -->
     <header class="header-area header-sticky wow slideInDown" data-wow-duration="0.75s" data-wow-delay="0s">
         <div class="container">
@@ -204,7 +206,7 @@
     <!-- Header Area End -->
 
     <!-- Right Container -->
-    <div class="container" style="padding-top: 100px;"> <!-- Add padding to create space -->
+    <div class="container">
         <!-- Content -->
         <div class="right-container">
             <h2>Hello, {{ company_name }}!</h2>
