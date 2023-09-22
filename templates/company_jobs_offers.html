@@ -24,7 +24,7 @@
     <style>
         /* Example styles for the main content */
         .content {
-            margin-left: 200px;
+            margin-left: 300px;
             margin-right: auto;
             max-width: 2000px; /* Adjust the maximum width as needed */
             padding: 20px; /* Reduced padding value */
@@ -328,11 +328,11 @@
             </div>
             <div class="offer">
                 {% if companyjobs %}
-                    {% for index, job in enumerate(companyjobs) %}
+                    {% for job in companyjobs %}
                         <div class="job-container job-item">
                             <!-- Job Header -->
                             <div class="job-header">
-                                <h4>Job #{{ index + 1 }} - {{ job[1] }}</h4>
+                                <h4>{{ job[1] }}</h4>
                                 <p class="job-type">{{ job[6] }}</p>
                             </div>
                             <!-- Job Description and Details -->
