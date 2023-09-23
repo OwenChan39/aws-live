@@ -550,14 +550,20 @@ def delete_job():
     if request.method == 'POST':
         job_id = request.form['job_id']
         
-        # Delete the job from the database using the job_id
-        delete_sql = "DELETE FROM Job_Details WHERE id = %s"
-        cursor = db_conn.cursor()
-        cursor.execute(delete_sql, (job_id,))
-        db_conn.commit()
-        cursor.close()
-        
-        return redirect(url_for('company_jobs_offers'))
+        try:
+            # Delete the job from the database using the job_id
+            delete_sql = "DELETE FROM Job_Details WHERE Job_id = %s"
+            cursor = db_conn.cursor()
+            cursor.execute(delete_sql, (job_id,))
+            db_conn.commit()
+            cursor.close()
+
+            return jsonify("success")
+
+        except Exception as e:
+            return jsonify("error")
+
+    return redirect(url_for('company_dashboard'))
 
 
 @app.route('/lecturer_dashboard', methods=['GET', 'POST'])
