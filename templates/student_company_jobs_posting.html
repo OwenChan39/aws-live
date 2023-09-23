@@ -261,13 +261,13 @@
             <!-- Loop through the job_company_data and generate job posting boxes -->
             {% for row in job_company_data %}
             <div class="job-posting-box">
-                <h3>{{ row[0] }}</h3>
-                <p>Company: {{ row[1] }}</p>
-                {% if row[2] %}<p>Description: {{ row[2] }}</p>{% endif %}
-                {% if row[3] %}<p>Career Level: {{ row[3] }}</p>{% endif %}
-                {% if row[3] %}<p>Job Requirements: {{ row[4] }}</p>{% endif %}
-                {% if row[3] %}<p>Qualification: {{ row[5] }}</p>{% endif %}
-                {% if row[3] %}<p>Salary: {{ row[6] }}</p>{% endif %}
+                <h2>{{ row[0] }}</h2>
+                <h3>Company: {{ row[1] }}</h3>
+                {% if row[2] %}<p><strong>Description:</strong> {{ row[2] }}</p>{% endif %}
+                {% if row[3] %}<p><strong>Career Level:</strong> {{ row[3] }}</p>{% endif %}
+                {% if row[3] %}<p><strong>Job Requirements:</strong> {{ row[4] }}</p>{% endif %}
+                {% if row[3] %}<p><strong>Qualification:</strong> {{ row[5] }}</p>{% endif %}
+                {% if row[3] %}<p><strong>Salary:</strong> {{ row[6] }}</p>{% endif %}
                 <a href="#" class="apply-button">Apply</a>
             </div>
             {% endfor %}
