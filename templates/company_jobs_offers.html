@@ -360,8 +360,11 @@
         <div class="content">
             <div class="offerHead">
                 <div class="offer-heading">
-                    <h3>Job Offers</h3>
-                    <a href="/addjobpage" class="edit-button">ADD JOBS</a>
+                    <h3>Job Offers
+                        {% if status == 'Approved' %}
+                            <a href="/addjobpage" class="edit-button">Edit Job Positions</a>
+                        {% endif %}
+                    </h3>
                     <br>
                 </div>
             </div>
