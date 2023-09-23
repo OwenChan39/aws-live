@@ -369,7 +369,7 @@
                 {% if companyjobs %}
                     {% for job in companyjobs %}
                         <div class="job-container job-item">
-                            <div class="delete-icon">
+                            <div class="delete-icon" onclick="deleteJob('{{ job[9] }}')">
                                 <i class="fas fa-trash-alt"></i>
                             </div>
                             <!-- Job Header -->
@@ -418,15 +418,34 @@
     <script src="{{ url_for('static', filename='assets/js/custom.js') }}"></script>
     <!-- ***** Footer End ***** -->
 
-    <!-- Add your JavaScript scripts or link to external JS files here -->
+    <!-- Add this script in your HTML, preferably at the bottom, after including jQuery -->
     <script>
-        // Function to handle the click event
-        function infoEdit() {
-            window.location.href = "company_info_edit.html"; // Redirect to the desired page
+        function deleteJob(jobId) {
+            // Confirm if the user really wants to delete the job
+            if (confirm("Are you sure you want to delete this job?")) {
+                // Send an AJAX request to delete the job from the database
+                $.ajax({
+                    url: "/delete_job",  // URL for the Flask route to delete the job
+                    method: "POST",
+                    data: { job_id: jobId },
+                    success: function (response) {
+                        if (response === "success") {
+                            // Remove the deleted job container from the page
+                            $(".job-container").each(function () {
+                                if ($(this).find(".delete-icon").attr("onclick").includes(jobId)) {
+                                    $(this).remove();
+                                }
+                            });
+                        } else {
+                            alert("Failed to delete the job.");
+                        }
+                    },
+                    error: function () {
+                        alert("An error occurred while deleting the job.");
+                    }
+                });
+            }
         }
-    
-        // Attach the click event to the button
-        document.getElementById("editButton").addEventListener("click", infoEdit);
     </script>
 
 </body>
