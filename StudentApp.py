@@ -1014,7 +1014,7 @@ def view_student_progress():
 def student_company_jobs_posting():
     cursor = db_conn.cursor()
     cursor.execute("""
-        SELECT JD.JobPosition, C.Comp_name, JD.JobDescription, JD.CareerLevel
+        SELECT JD.JobPosition, C.Comp_name, JD.JobDescription, JD.CareerLevel, JD.JobRequirements, JD.Qualification, JD.Salary
         FROM Job_Details JD
         JOIN Company C ON JD.Company_ID = C.Company_ID
     """)
