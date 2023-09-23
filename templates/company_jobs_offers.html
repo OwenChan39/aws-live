@@ -9,6 +9,7 @@
     <link rel="preconnect" href="https://fonts.gstatic.com">
     <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@300;400;600;700;800&display=swap"
         rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
 
     <title>Company Dashboard - SEO Dream</title>
 
@@ -276,8 +277,26 @@
             color: #fff;
         }
 
-
+        /* Style for the delete icon */
+        .delete-icon {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            font-size: 16px;
+            color: #e74c3c; /* You can change the color as needed */
+            cursor: pointer;
+        }
         
+        /* Adjust the styling of the trash icon */
+        .delete-icon i {
+            transition: color 0.3s;
+        }
+        
+        /* Change the icon color on hover */
+        .delete-icon:hover i {
+            color: #fa3232; /* Change the color on hover */
+        }
+  
         .bold-line {
             border-top: 2px solid #000; /* Adjust the border thickness and color as needed */
         }
@@ -344,6 +363,9 @@
                                 <h4><strong>{{ job[1] }}</strong></h4>
                                 <hr class="bold-line">
                                 <p class="job-type">{{ job[6] }}</p>
+                            </div>
+                            <div class="delete-icon">
+                                <i class="fas fa-trash-alt"></i>
                             </div>
                             <!-- Job Description and Details -->
                             <div class="job-description">
