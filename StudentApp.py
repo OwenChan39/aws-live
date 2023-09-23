@@ -1,4 +1,4 @@
-from flask import Flask, render_template, request, redirect, url_for,session, flash
+from flask import Flask, render_template, request, redirect, url_for,session, flash, jsonify
 from pymysql import connections
 import os
 import boto3
@@ -7,6 +7,7 @@ from config import *
 from werkzeug.utils import secure_filename
 import random
 import string
+
 
 app = Flask(__name__, static_folder='static')
 app.secret_key = '123456'
@@ -102,13 +103,24 @@ def lecturer_sign_up():
 def generate_company_id():
     # Generate a random alphanumeric string, e.g., 'C001'
     prefix = 'C'
-    unique_id = ''.join(random.choices(string.digits, k=3))
+    unique_id = ''.join(random.choices(string.digits, k=5))
     company_id = f'{prefix}{unique_id}'
     # Check if the generated ID is already in use
     while db_id_exists(company_id):
-        unique_id = ''.join(random.choices(string.digits, k=3))
+        unique_id = ''.join(random.choices(string.digits, k=5))
         company_id = f'{prefix}{unique_id}'
     return company_id
+
+def generate_job_id():
+    # Generate a random alphanumeric string, e.g., 'C001'
+    prefix = 'J'
+    unique_id = ''.join(random.choices(string.digits, k=5))
+    job_id = f'{prefix}{unique_id}'
+    # Check if the generated ID is already in use
+    while db_id_exists(job_id):
+        unique_id = ''.join(random.choices(string.digits, k=5))
+        job_id = f'{prefix}{unique_id}'
+    return job_id
 
 # Function to check if the generated company ID already exists in the database
 def db_id_exists(company_id):
@@ -506,18 +518,20 @@ def save_job_details():
         years_experience = request.form['years_experience']
         salary = request.form['salary']
 
+        job_id = generate_job_id()
+
         try:
             # Insert job details into the database
             insert_sql = """
                 INSERT INTO Job_Details (
                     company_id, JobPosition, JobDescription, JobRequirements,
-                    CareerLevel, Qualification, JobType, YearsExperience, Salary
-                ) VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s)
+                    CareerLevel, Qualification, JobType, YearsExperience, Salary, Job_id
+                ) VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s)
             """
             cursor = db_conn.cursor()
             cursor.execute(insert_sql, (
                 company_id, job_position, job_description, job_requirements,
-                career_level, qualification, job_type, years_experience, salary
+                career_level, qualification, job_type, years_experience, salary, job_id
             ))
             db_conn.commit()
             cursor.close()
@@ -529,6 +543,26 @@ def save_job_details():
             return str(e)  # Handle database insertion errors here
 
     # Handle GET requests or other cases
+    return redirect(url_for('company_dashboard'))
+
+@app.route('/delete_job', methods=['POST'])
+def delete_job():
+    if request.method == 'POST':
+        job_id = request.form['job_id']
+        
+        try:
+            # Delete the job from the database using the job_id
+            delete_sql = "DELETE FROM Job_Details WHERE Job_id = %s"
+            cursor = db_conn.cursor()
+            cursor.execute(delete_sql, (job_id,))
+            db_conn.commit()
+            cursor.close()
+
+            return jsonify("success")
+
+        except Exception as e:
+            return jsonify("error")
+
     return redirect(url_for('company_dashboard'))
 
 @app.route('/lecturer_dashboard', methods=['GET', 'POST'])
