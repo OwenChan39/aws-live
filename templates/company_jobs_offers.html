@@ -140,13 +140,14 @@
         }
 
         .job-container {
+            position: relative;
             border: 1px solid #4d4949;
-            /* Add a border to separate job boxes */
             border-radius: 10px;
-            margin-top: 20px; /* Add spacing between job boxes */
+            margin-top: 20px;
             padding: 10px;
+            padding-right: 30px; /* Add right padding for the delete icon */
         }
-
+        
         /* Style for the first job container */
         .job-container:first-child {
             margin-top: 0;
@@ -277,6 +278,16 @@
             color: #fff;
         }
 
+        /* Style for the job container */
+        .job-container {
+            position: relative;
+            border: 1px solid #4d4949;
+            border-radius: 10px;
+            margin-top: 20px;
+            padding: 10px;
+            padding-right: 30px; /* Add right padding for the delete icon */
+        }
+        
         /* Style for the delete icon */
         .delete-icon {
             position: absolute;
@@ -296,7 +307,7 @@
         .delete-icon:hover i {
             color: #fa3232; /* Change the color on hover */
         }
-  
+
         .bold-line {
             border-top: 2px solid #000; /* Adjust the border thickness and color as needed */
         }
@@ -358,14 +369,14 @@
                 {% if companyjobs %}
                     {% for job in companyjobs %}
                         <div class="job-container job-item">
+                            <div class="delete-icon">
+                                <i class="fas fa-trash-alt"></i>
+                            </div>
                             <!-- Job Header -->
                             <div class="job-header">
                                 <h4><strong>{{ job[1] }}</strong></h4>
                                 <hr class="bold-line">
                                 <p class="job-type">{{ job[6] }}</p>
-                            </div>
-                            <div class="delete-icon">
-                                <i class="fas fa-trash-alt"></i>
                             </div>
                             <!-- Job Description and Details -->
                             <div class="job-description">
