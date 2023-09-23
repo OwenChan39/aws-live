@@ -558,7 +558,7 @@ def delete_job():
             db_conn.commit()
             cursor.close()
 
-            return jsonify("success")
+            return redirect(url_for('company_jobs_offers'))
 
         except Exception as e:
             return jsonify("error")
