@@ -262,6 +262,8 @@
             {% for row in job_company_data %}
             <div class="job-posting-box">
                 <h2>{{ row[0] }}</h2>
+                <hr>
+                <br>
                 <h3>Company: {{ row[1] }}</h3>
                 {% if row[2] %}<p><strong>Description:</strong> {{ row[2] }}</p>{% endif %}
                 {% if row[3] %}<p><strong>Career Level:</strong> {{ row[3] }}</p>{% endif %}
