@@ -545,25 +545,24 @@ def save_job_details():
     # Handle GET requests or other cases
     return redirect(url_for('company_dashboard'))
 
-@app.route('/delete_job', methods=['POST'])
-def delete_job():
-    if request.method == 'POST':
-        job_id = request.form['job_id']
-        
-        try:
-            # Delete the job from the database using the job_id
-            delete_sql = "DELETE FROM Job_Details WHERE Job_id = %s"
-            cursor = db_conn.cursor()
-            cursor.execute(delete_sql, (job_id,))
-            db_conn.commit()
-            cursor.close()
+@app.route('/delete_job/<int:job_id>', methods=['POST'])
+def delete_job(job_id):
+    try:
+        # Delete the job with the given job_id from the database
+        delete_sql = "DELETE FROM Job_Details WHERE Job_id = %s"
+        cursor = db_conn.cursor()
+        cursor.execute(delete_sql, (job_id,))
+        db_conn.commit()
+        cursor.close()
 
-            return jsonify("success")
+        # Redirect to the company_jobs_offers route after successful deletion
+        return redirect(url_for('company_jobs_offers'))
 
-        except Exception as e:
-            return jsonify("error")
+    except Exception as e:
+        # Handle database deletion errors here
+        flash(f"An error occurred while deleting the job: {str(e)}", 'error')
+        return redirect(url_for('company_jobs_offers'))
 
-    return redirect(url_for('company_dashboard'))
 
 @app.route('/lecturer_dashboard', methods=['GET', 'POST'])
 def lecturer_dashboard():
