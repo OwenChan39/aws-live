@@ -559,8 +559,7 @@ def delete_job():
             cursor.close()
 
             return jsonify("success")
-            return redirect(url_for('company_jobs_offers'))
-
+            
         except Exception as e:
             return jsonify("error")
 
