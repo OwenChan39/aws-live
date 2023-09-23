@@ -62,7 +62,7 @@ def student_sign_up():
 
             # Upload student image to S3
             if student_image_file.filename != "":
-                student_image_file_name_in_s3 = "student-id-" + str(student_id) + "_image_file"
+                student_image_file_name_in_s3 = "student-" + str(student_id) + "-profile_pic"
                 s3.Bucket(bucket).put_object(Key=student_image_file_name_in_s3, Body=student_image_file)
 
             return render_template('signup_success.html', name=student_name)
@@ -608,7 +608,7 @@ def student_dashboard():
             Home_Address = student[9]
             Personal_emailAddress = student[10]
 
-            student_image_file_name_in_s3 = "student-id-" + str(student_id) + "_image_file"
+            student_image_file_name_in_s3 = "student-" + str(student_id) + "-profile_pic"
             student_image_url = s3.meta.client.generate_presigned_url(
                 'get_object',
                 Params={'Bucket': bucket, 'Key': student_image_file_name_in_s3},
