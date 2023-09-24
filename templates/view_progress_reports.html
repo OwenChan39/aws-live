@@ -25,9 +25,8 @@
             padding: 150px;
         }
 
-        /* Header styles */
         .header {
-            background-color: #33ccc5; /* Change this color to match your dashboard.html */
+            background-color: #33ccc5;
             color: #fff;
             padding: 10px 0;
             text-align: center;
@@ -46,7 +45,6 @@
             font-weight: bold;
         }
 
-        /* Styling for the report table */
         table {
             width: 100%;
             border-collapse: collapse;
@@ -65,7 +63,7 @@
         }
 
         .download-button {
-            background-color: #33ccc5; /* Change button color to match your design */
+            background-color: #33ccc5;
             color: #fff;
             border: none;
             padding: 5px 10px;
@@ -75,10 +73,9 @@
         }
 
         .download-button:hover {
-            background-color: #1e8c8b; /* Change button color on hover */
+            background-color: #1e8c8b;
         }
 
-        /* Add styles for the status column */
         .status {
             font-weight: bold;
             text-align: center;
@@ -92,7 +89,6 @@
             color: red;
         }
 
-        /* Center the logo and links horizontally within the banner */
         .logo-banner-container {
             display: flex;
             justify-content: space-between;
@@ -105,7 +101,7 @@
         }
     
         .banner-links a {
-            margin-left: 40px; /* Add spacing between banner links */
+            margin-left: 40px;
             text-decoration: none;
             color: #fff;
             font-size: 18px;
@@ -113,13 +109,12 @@
         }
 
         .banner-links a:hover {
-            color: #1e8c8b; /* Change the color on hover to your desired color */
+            color: #1e8c8b;
         }
         
-        /* Make the banner text responsive */
         @media (max-width: 768px) {
             .main-banner {
-                padding: 50px 0; /* Adjust for smaller screens */
+                padding: 50px 0; 
             }
 
             .banner-links {
@@ -154,12 +149,10 @@
             <div class="row">
                 <div class="col-12">
                     <nav class="main-nav">
-                        <!-- ***** Logo and Banner Links Start ***** -->
                         <div class="logo-banner-container">
                             <a href="/login" class="logo">
                                 <h4>TAR UMT <img src="{{ url_for('static', filename='assets/images/logo-icon.png') }}" alt=""></h4>
                             </a>
-                            <!-- Banner Links -->
                             <div class="banner-links">
                                 <a href="/lecturer_dashboard">Lecturer Dashboard</a>
                                 <a href="/studentdatabase">Student Database</a>
@@ -177,7 +170,6 @@
     <div class="content">
         <h2>Student Progress</h2>
 
-        <!-- Student Progress Table -->
         <table>
             <thead>
                 <tr>
@@ -238,20 +230,7 @@
         </table>
     </div>
     <!-- ***** Report Page End ***** -->
-
-    <!-- ... (remaining HTML code) ... -->
-
-    <footer>
-        <div class="container">
-            <div class="row">
-                <div class="col-lg-12">
-                    <!-- Add your footer content here -->
-                    <!-- ... -->
-                </div>
-            </div>
-        </div>
-    </footer>
-
+    
     <!-- Scripts -->
     <script src="{{ url_for('static', filename='vendor/jquery/jquery.min.js') }}"></script>
     <script src="{{ url_for('static', filename='vendor/bootstrap/js/bootstrap.bundle.min.js') }}"></script>
