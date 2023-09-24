@@ -8,26 +8,21 @@
     <link rel="preconnect" href="https://fonts.gstatic.com">
     <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@300;400;600;700;800&display=swap" rel="stylesheet">
     <title>Company Dashboard - SEO Dream</title>
-    <!-- Bootstrap core CSS -->
     <link href="{{ url_for('static', filename='vendor/bootstrap/css/bootstrap.min.css') }}" rel="stylesheet">
-    <!-- Additional CSS Files -->
     <link href="{{ url_for('static', filename='assets/css/fontawesome.css') }}" rel="stylesheet">
     <link href="{{ url_for('static', filename='assets/css/templatemo-seo-dream.css') }}" rel="stylesheet">
     <link href="{{ url_for('static', filename='assets/css/animated.css') }}" rel="stylesheet">
     <link href="{{ url_for('static', filename='assets/css/owl.css') }}" rel="stylesheet">
     <style>
-        /* Reset some default styles */
         body, html {
             margin: 0;
             padding: 0;
         }
-        /* Main container for content */
         .main-container {
             display: flex;
             flex-direction: column;
             min-height: 100vh;
         }
-        /* Header Area */
         .header {
             background-color: #33ccc5;
             color: #fff;
@@ -38,14 +33,12 @@
             margin: 0;
         }
         
-        /* Right container styles */
         .right-container {
             background-color: #ffffff;
             padding: 20px;
             box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
             border-radius: 10px;
         }
-        /* Content styles */
         .content {
             padding: 100px;
         }
@@ -59,7 +52,7 @@
         .logo img {
             width: 180px;
             height: auto;
-            margin: 0 auto; /* Center the logo horizontally */
+            margin: 0 auto;
         }
         .status {
             background-color: #f0f0f0;
@@ -71,30 +64,28 @@
             font-weight: bold;
             color: #e74c3c;
         }
-        /* Edit Button styles */
         .infoHead {
             display: flex;
-            justify-content: flex-end; /* Align to the right */
+            justify-content: flex-end; 
             align-items: center;
-            /* Add some space to the top-right corner */
             position: relative;
-            margin-bottom: 10px; /* Add margin to separate from the content */
+            margin-bottom: 10px;
         }
         
         .edit-button {
-            font-size: 14px; /* Adjust the font size as needed */
+            font-size: 14px; 
             background-color: transparent;
-            border: 2px solid #1500ffb7; /* Add a border */
+            border: 2px solid #1500ffb7; 
             color: #1500ffb7;
-            border-radius: 5px; /* Rounded corners */
-            padding: 5px 10px; /* Adjust the padding as needed */
+            border-radius: 5px;
+            padding: 5px 10px;
             cursor: pointer;
             transition: background-color 0.3s, color 0.3s;
         }
         
         .edit-button:hover {
-            background-color: #1500ffb7; /* Change the background color on hover */
-            color: #fff; /* Change the text color on hover */
+            background-color: #1500ffb7; 
+            color: #fff; 
         }
         .info .info-container {
             background-color: #f2f2f2;
@@ -102,7 +93,6 @@
             border-radius: 10px;
             margin-top: 10px;
         }
-        /* Additional CSS for the new dashboard sections */
         .sub-section {
             background-color: #f2f2f2;
             padding: 10px;
@@ -117,7 +107,6 @@
             color: #555;
         }
 
-                /* Center the logo and links horizontally within the banner */
         .logo-banner-container {
             display: flex;
             justify-content: space-between;
@@ -130,7 +119,7 @@
         }
     
         .banner-links a {
-            margin-left: 40px; /* Add spacing between banner links */
+            margin-left: 40px; 
             text-decoration: none;
             color: #fff;
             font-size: 18px;
@@ -138,13 +127,12 @@
         }
 
         .banner-links a:hover {
-            color: #1e8c8b; /* Change the color on hover to your desired color */
+            color: #1e8c8b; 
         }
         
-        /* Make the banner text responsive */
         @media (max-width: 768px) {
             .main-banner {
-                padding: 50px 0; /* Adjust for smaller screens */
+                padding: 50px 0; 
             }
 
             .banner-links {
@@ -188,12 +176,10 @@
             <div class="row">
                 <div class="col-12">
                     <nav class="main-nav">
-                        <!-- ***** Logo and Banner Links Start ***** -->
                         <div class="logo-banner-container">
                             <a href="/login" class="logo">
                                 <h4>TAR UMT <img src="{{ url_for('static', filename='assets/images/logo-icon.png') }}" alt=""></h4>
                             </a>
-                            <!-- Banner Links -->
                             <div class="banner-links">
                                 <a href="/company_dashboard">Company Dashboard</a>
                                 <a href="/company_jobs_offers">Job Offers</a>
@@ -209,9 +195,7 @@
 
     <!-- Main Content -->
     <div class="main-container">
-        <!-- Right container for content -->
         <div class="right-container">
-            <!-- Content -->
             <div class="content">
                 <h2>Hello, {{ company_name }}!</h2>
                 <br>
@@ -222,14 +206,11 @@
                 <div class="status">
                     <p>Approval Status: <span id="approvalStatus">{{ status }}</span></p>
                 </div>
-
-                <!-- Edit Company Information Button -->
                 <br>
                 <div class="infoHead">
                     <a href="/companyinfopage" class="edit-button">Edit</a>
                 </div>
                 
-                <!-- Company Information -->
                 <div class="info">
                     <div class="info-container">
                         <h3><strong>{{ company_name }}</strong></h3>
