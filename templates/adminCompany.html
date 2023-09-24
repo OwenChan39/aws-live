@@ -448,8 +448,8 @@
                     rejectButton.closest('tr').find('td:nth-child(6)').html(finalizedButton);
 
                     // Disable buttons
-                    approveButton.prop('disabled', true); // Disable "Approve" button
-                    approveButton.closest('tr').find('.reject-button').prop('disabled', true); // Disable "Reject" button
+                    rejectButton.prop('disabled', true); // Disable "Approve" button
+                    rejectButton.closest('tr').find('.reject-button').prop('disabled', true); // Disable "Reject" button
 
                     // Close the confirmation modal
                     $('#confirmationModal').modal('hide');
