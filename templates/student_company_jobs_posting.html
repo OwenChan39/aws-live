@@ -20,40 +20,14 @@
     <link href="{{ url_for('static', filename='assets/css/animated.css') }}" rel="stylesheet">
     <link href="{{ url_for('static', filename='assets/css/owl.css') }}" rel="stylesheet">
 
-    <!-- Your custom CSS styles here -->
     <style>
-        /* Add your custom styles here */
-        /* Example styles for the sidebar */
-        .sidebar {
-            width: 250px;
-            background-color: #333; /* Change this color to match your design */
-            color: #fff;
-            position: fixed;
-            height: 100%;
-            overflow: auto;
-        }
-
-        .sidebar a {
-            padding: 15px;
-            text-decoration: none;
-            font-size: 18px;
-            color: #fff;
-            display: block;
-        }
-
-        .sidebar a:hover {
-            background-color: #555;
-        }
-
-        /* Example styles for the main content */
         .content {
             margin-left: 50px;
             padding: 150px;
         }
 
-        /* Header styles */
         .header {
-            background-color: #33ccc5; /* Change this color to match your design */
+            background-color: #33ccc5; 
             color: #fff;
             padding: 10px 0;
             text-align: center;
@@ -72,7 +46,6 @@
             font-weight: bold;
         }
 
-        /* Student Profile styles */
         .student-profile {
             background-color: #f2f2f2;
             padding: 20px;
@@ -81,11 +54,11 @@
         }
 
         .student-profile img {
-            width: 180px; /* Set a fixed width */
-            height: 180px; /* Set a fixed height */
-            object-fit: cover; /* Maintain aspect ratio and cover the container */
-            border: 2px solid #555; /* Add a border with a color of your choice */
-            border-radius: 50%; /* Set border-radius to 50% to make it a circle */
+            width: 180px; 
+            height: 180px; 
+            object-fit: cover;
+            border: 2px solid #555;
+            border-radius: 50%; 
             margin-bottom: 20px;
         }
 
@@ -109,7 +82,6 @@
             color: #555;
         }
 
-        /* Edit Button styles */
         .edit-button {
             background-color: #33ccc5;
             color: #fff;
@@ -125,16 +97,14 @@
             background-color: #1e8c8b;
         }
 
-        /* Banner styles */
         .main-banner {
             background-image: url('{{ url_for('static', filename='assets/images/banner-right-image.png') }}');
             background-size: cover;
             background-position: center;
             background-repeat: no-repeat;
-            padding: 150px 0; /* Adjust the top and bottom padding as needed */
+            padding: 150px 0; 
         }
 
-        /* Center the logo and links horizontally within the banner */
         .logo-banner-container {
             display: flex;
             justify-content: space-between;
@@ -147,7 +117,7 @@
         }
     
         .banner-links a {
-            margin-left: 40px; /* Add spacing between banner links */
+            margin-left: 40px; 
             text-decoration: none;
             color: #fff;
             font-size: 18px;
@@ -155,13 +125,12 @@
         }
 
         .banner-links a:hover {
-            color: #1e8c8b; /* Change the color on hover to your desired color */
+            color: #1e8c8b; 
         }
         
-        /* Make the banner text responsive */
         @media (max-width: 768px) {
             .main-banner {
-                padding: 50px 0; /* Adjust for smaller screens */
+                padding: 50px 0; 
             }
 
             .banner-links {
@@ -174,14 +143,12 @@
             }
         }
 
-                /* Job Postings styles */
         .job-postings {
             background-color: #f2f2f2;
             padding: 20px;
             border-radius: 10px;
         }
 
-        /* Example styles for job posting boxes */
         .job-posting-box {
             background-color: #fff;
             padding: 15px;
@@ -198,7 +165,6 @@
             margin-bottom: 10px;
         }
 
-        /* Apply Button styles */
         .apply-button {
             background-color: #33ccc5;
             color: #fff;
@@ -236,12 +202,10 @@
             <div class="row">
                 <div class="col-12">
                     <nav class="main-nav">
-                        <!-- ***** Logo and Banner Links Start ***** -->
                         <div class="logo-banner-container">
                             <a href="/login" class="logo">
                                 <h4>TAR UMT <img src="{{ url_for('static', filename='assets/images/logo-icon.png') }}" alt=""></h4>
                             </a>
-                            <!-- Banner Links -->
                             <div class="banner-links">
                                 <a href="/student_dashboard">Student Profile</a>
                                 <a href="/student_company_jobs_posting">Job Postings</a>
@@ -256,9 +220,7 @@
     </header>
 
     <div class="content">
-        <!-- Job Postings -->
         <div class="job-postings">
-            <!-- Loop through the job_company_data and generate job posting boxes -->
             {% for row in job_company_data %}
             <div class="job-posting-box">
                 <h2>{{ row[0] }}</h2>
@@ -276,19 +238,6 @@
         </div>
     </div>
     <!-- ***** Job Postings End ***** -->
-
-    <!-- ... (remaining HTML code) ... -->
-
-    <footer>
-        <div class="container">
-            <div class="row">
-                <div class="col-lg-12">
-                    <!-- Add your footer content here -->
-                    <!-- ... -->
-                </div>
-            </div>
-        </div>
-    </footer>
 
     <!-- Scripts -->
     <script src="{{ url_for('static', filename='vendor/jquery/jquery.min.js') }}"></script>
