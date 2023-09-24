@@ -23,13 +23,12 @@
     <link href="{{ url_for('static', filename='assets/css/owl.css') }}" rel="stylesheet">
 
     <style>
-        /* Example styles for the main content */
         .content {
             margin-left: 300px;
             margin-right: auto;
-            max-width: 2000px; /* Adjust the maximum width as needed */
-            padding: 20px; /* Reduced padding value */
-            margin-top: 120px; /* Increase this value to lower the content */
+            max-width: 2000px; 
+            padding: 20px; 
+            margin-top: 120px;
         }
 
         .status {
@@ -42,15 +41,12 @@
             font-size: 25px;
             font-weight: bold;
             color: #e74c3c;
-            /* Set color for pending status (e.g., red) */
         }
 
-        /* Custom styles for the Quote of the day and program boxes */
-        /* Styling for Edit Button */
+
         .info h3 {
             display: flex;
             align-items: center;
-            /* Vertically center the text and button */
             color: #333;
             margin-bottom: 10px;
         }
@@ -59,40 +55,28 @@
             font-size: 22px;
 
             margin-left: 10px;
-            /* Add some space between the heading text and the button */
             background-color: #ffffff;
-            /* Button background color */
             color: #1500ffb7;
-            /* Button text color */
             border: none;
-            /* Remove button border */
             border-radius: 5px;
-            /* Rounded corners */
             padding: 2px 10px;
-            /* Padding inside the button */
             cursor: pointer;
-            /* Show a hand cursor on hover */
             transition: color 0.3s;
-            /* Smooth color transition on hover */
         }
 
         .infoHead h3 #editButton:hover {
             color: #fa3232;
-            /* Change the text color on hover */
         }
 
         .info .info-container {
             background-color: #f2f2f2;
-            /* Grey background color */
             padding: 20px;
             border-radius: 10px;
             margin-top: 10px;
         }
 
-        /* Header styles */
         .header {
             background-color: #33ccc5;
-            /* Change this color to match your index.html */
             color: #fff;
             padding: 10px 0;
             text-align: center;
@@ -107,16 +91,13 @@
             width: 15%;
         }
 
-        /* Style for right container */
         .right-container {
             float: left;
             width: 85%;
-            /* Adjust the width as needed */
             background-color: #ffffff;
             padding: 20px;
         }
 
-        /* Clear floating elements to prevent layout issues */
         .clearfix::after {
             content: "";
             clear: both;
@@ -125,16 +106,13 @@
 
         .left-container .logo {
             width: 180px;
-            /* Adjust the width as needed */
             height: 200px;
-            /* This keeps the image's aspect ratio */
             padding-top: 20px;
             margin-left: 30px;
         }
 
         .offer {
             background-color: #f2f2f2;
-            /* Grey background color */
             border-radius: 10px;
             padding: 20px;
         }
@@ -145,10 +123,9 @@
             border-radius: 10px;
             margin-top: 20px;
             padding: 10px;
-            padding-right: 30px; /* Add right padding for the delete icon */
+            padding-right: 30px; 
         }
         
-        /* Style for the first job container */
         .job-container:first-child {
             margin-top: 0;
         }
@@ -156,27 +133,18 @@
         .offerHead h3 #editButton {
             font-size: 22px;
             margin-left: 10px;
-            /* Add some space between the heading text and the button */
             background-color: #ffffff;
-            /* Button background color */
             color: #1500ffb7;
-            /* Button text color */
             border: none;
-            /* Remove button border */
             border-radius: 5px;
-            /* Rounded corners */
             padding: 2px 10px;
-            /* Padding inside the button */
             cursor: pointer;
-            /* Show a hand cursor on hover */
             transition: color 0.3s;
-            /* Smooth color transition on hover */
         }
 
         .offerHead h3 {
             display: flex;
             align-items: center;
-            /* Vertically center the text and button */
             color: #333;
             margin-bottom: 10px;
         }
@@ -190,7 +158,6 @@
             font-weight: bold;
         }
 
-        /* Additional CSS for the new dashboard sections */
         .sub-section {
             background-color: #f2f2f2;
             padding: 10px;
@@ -206,16 +173,14 @@
             font-weight: bold;
             color: #555;
         }
-        /* Banner styles */
         .main-banner {
             background-image: url('{{ url_for('static', filename='assets/images/banner-right-image.png') }}');
             background-size: cover;
             background-position: center;
             background-repeat: no-repeat;
-            padding: 150px 0; /* Adjust the top and bottom padding as needed */
+            padding: 150px 0; 
         }
 
-        /* Center the logo and links horizontally within the banner */
         .logo-banner-container {
             display: flex;
             justify-content: space-between;
@@ -228,7 +193,7 @@
         }
     
         .banner-links a {
-            margin-left: 40px; /* Add spacing between banner links */
+            margin-left: 40px; 
             text-decoration: none;
             color: #fff;
             font-size: 18px;
@@ -236,13 +201,12 @@
         }
 
         .banner-links a:hover {
-            color: #1e8c8b; /* Change the color on hover to your desired color */
+            color: #1e8c8b; 
         }
         
-        /* Make the banner text responsive */
         @media (max-width: 768px) {
             .main-banner {
-                padding: 50px 0; /* Adjust for smaller screens */
+                padding: 50px 0; 
             }
 
             .banner-links {
@@ -278,38 +242,34 @@
             color: #fff;
         }
 
-        /* Style for the job container */
         .job-container {
             position: relative;
             border: 1px solid #4d4949;
             border-radius: 10px;
             margin-top: 20px;
             padding: 10px;
-            padding-right: 30px; /* Add right padding for the delete icon */
+            padding-right: 30px; 
         }
         
-        /* Style for the delete icon */
         .delete-icon {
             position: absolute;
             top: 10px;
             right: 10px;
             font-size: 16px;
-            color: #e74c3c; /* You can change the color as needed */
+            color: #e74c3c; 
             cursor: pointer;
         }
         
-        /* Adjust the styling of the trash icon */
         .delete-icon i {
             transition: color 0.3s;
         }
         
-        /* Change the icon color on hover */
         .delete-icon:hover i {
-            color: #fa3232; /* Change the color on hover */
+            color: #fa3232;
         }
 
         .bold-line {
-            border-top: 2px solid #000; /* Adjust the border thickness and color as needed */
+            border-top: 2px solid #000; 
         }
     </style>
 </head>
@@ -334,7 +294,6 @@
             <div class="row">
                 <div class="col-12">
                     <nav class="main-nav">
-                        <!-- ***** Logo and Banner Links Start ***** -->
                         <div class="logo-banner-container">
                             <a href="/login" class="logo">
                                 <h4>TAR UMT <img
@@ -356,7 +315,6 @@
 
     <!-- Container for right content -->
     <div class="right-container">
-        <!-- Right content goes here -->
         <div class="content">
             <div class="offerHead">
                 <div class="offer-heading">
@@ -375,13 +333,11 @@
                             <div class="delete-icon" onclick="deleteJob('{{ job[9] }}')">
                                 <i class="fas fa-trash-alt"></i>
                             </div>
-                            <!-- Job Header -->
                             <div class="job-header">
                                 <h4><strong>{{ job[1] }}</strong></h4>
                                 <hr class="bold-line">
                                 <p class="job-type">{{ job[6] }}</p>
                             </div>
-                            <!-- Job Description and Details -->
                             <div class="job-description">
                                 <p>{{ job[2] }}</p>
                             </div>
@@ -392,7 +348,7 @@
                                 <p><strong>Salary:</strong> {{ job[8] }}</p>
                             </div>
                         </div>
-                        <hr> <!-- Add a horizontal line to separate job offers -->
+                        <hr> 
                     {% endfor %}
                 {% else %}
                     <p>No job offers available.</p>
@@ -405,35 +361,27 @@
         <div class="container">
             <div class="row">
                 <div class="col-lg-12">
-                    <!-- Add your footer content here -->
-                    <!-- ... -->
                 </div>
             </div>
         </div>
     </footer>
 
-    <!-- Scripts -->
     <script src="{{ url_for('static', filename='vendor/jquery/jquery.min.js') }}"></script>
     <script src="{{ url_for('static', filename='vendor/bootstrap/js/bootstrap.bundle.min.js') }}"></script>
     <script src="{{ url_for('static', filename='assets/js/owl-carousel.js') }}"></script>
     <script src="{{ url_for('static', filename='assets/js/animation.js') }}"></script>
     <script src="{{ url_for('static', filename='assets/js/imagesloaded.js') }}"></script>
     <script src="{{ url_for('static', filename='assets/js/custom.js') }}"></script>
-    <!-- ***** Footer End ***** -->
 
-    <!-- Add this script to your HTML -->
     <script>
         function deleteJob(jobId) {
-            // Confirm if the user really wants to delete the job
             if (confirm("Are you sure you want to delete this job?")) {
-                // Send an AJAX request to delete the job from the database
                 $.ajax({
-                    url: "/delete_job",  // URL for the Flask route to delete the job
+                    url: "/delete_job",  
                     method: "POST",
                     data: { job_id: jobId },
                     success: function (response) {
                         if (response === "success") {
-                            // Remove the deleted job container from the page
                             $(".job-container").each(function () {
                                 if ($(this).find(".delete-icon").attr("onclick").includes(jobId)) {
                                     $(this).remove();
