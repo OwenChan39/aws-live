@@ -11,49 +11,21 @@
 
     <title>TAR UMT - ITP System</title>
 
-    <!-- Bootstrap core CSS -->
     <link href="{{ url_for('static', filename='vendor/bootstrap/css/bootstrap.min.css') }}" rel="stylesheet">
 
-    <!-- Additional CSS Files -->
     <link href="{{ url_for('static', filename='assets/css/fontawesome.css') }}" rel="stylesheet">
     <link href="{{ url_for('static', filename='assets/css/templatemo-seo-dream.css') }}" rel="stylesheet">
     <link href="{{ url_for('static', filename='assets/css/animated.css') }}" rel="stylesheet">
     <link href="{{ url_for('static', filename='assets/css/owl.css') }}" rel="stylesheet">
 
-    <!-- Your custom CSS styles here -->
     <style>
-        /* Add your custom styles here */
-        /* Example styles for the sidebar */
-        .sidebar {
-            width: 250px;
-            background-color: #333; /* Change this color to match your design */
-            color: #fff;
-            position: fixed;
-            height: 100%;
-            overflow: auto;
-        }
-
-        .sidebar a {
-            padding: 15px;
-            text-decoration: none;
-            font-size: 18px;
-            color: #fff;
-            display: block;
-        }
-
-        .sidebar a:hover {
-            background-color: #555;
-        }
-
-        /* Example styles for the main content */
         .content {
             margin-left: 50px;
             padding: 150px;
         }
 
-        /* Header styles */
         .header {
-            background-color: #33ccc5; /* Change this color to match your design */
+            background-color: #33ccc5;
             color: #fff;
             padding: 10px 0;
             text-align: center;
@@ -72,7 +44,6 @@
             font-weight: bold;
         }
 
-        /* Student Profile styles */
         .student-profile {
             background-color: #f2f2f2;
             padding: 20px;
@@ -81,11 +52,11 @@
         }
 
         .student-profile img {
-            width: 180px; /* Set a fixed width */
-            height: 180px; /* Set a fixed height */
-            object-fit: cover; /* Maintain aspect ratio and cover the container */
-            border: 2px solid #555; /* Add a border with a color of your choice */
-            border-radius: 50%; /* Set border-radius to 50% to make it a circle */
+            width: 180px; 
+            height: 180px; 
+            object-fit: cover; 
+            border: 2px solid #555; 
+            border-radius: 50%; 
             margin-bottom: 20px;
         }
 
@@ -109,7 +80,6 @@
             color: #555;
         }
 
-        /* Edit Button styles */
         .edit-button {
             background-color: #33ccc5;
             color: #fff;
@@ -125,16 +95,14 @@
             background-color: #1e8c8b;
         }
 
-        /* Banner styles */
         .main-banner {
             background-image: url('{{ url_for('static', filename='assets/images/banner-right-image.png') }}');
             background-size: cover;
             background-position: center;
             background-repeat: no-repeat;
-            padding: 150px 0; /* Adjust the top and bottom padding as needed */
+            padding: 150px 0; 
         }
 
-        /* Center the logo and links horizontally within the banner */
         .logo-banner-container {
             display: flex;
             justify-content: space-between;
@@ -147,7 +115,7 @@
         }
     
         .banner-links a {
-            margin-left: 40px; /* Add spacing between banner links */
+            margin-left: 40px; 
             text-decoration: none;
             color: #fff;
             font-size: 18px;
@@ -155,13 +123,12 @@
         }
 
         .banner-links a:hover {
-            color: #1e8c8b; /* Change the color on hover to your desired color */
+            color: #1e8c8b; 
         }
         
-        /* Make the banner text responsive */
         @media (max-width: 768px) {
             .main-banner {
-                padding: 50px 0; /* Adjust for smaller screens */
+                padding: 50px 0; 
             }
 
             .banner-links {
@@ -174,14 +141,12 @@
             }
         }
 
-                /* Document Upload Form styles */
         .document-upload-form {
             background-color: #f2f2f2;
             padding: 20px;
             border-radius: 10px;
         }
 
-        /* File Input styles */
         .file-input {
             display: grid;
             grid-template-columns: 1fr 1fr;
@@ -197,21 +162,20 @@
             text-align: center;
         }
 
-        /* Submit Button styles */
         .submit-button {
-            background-color: #ff0000; /* Red color */
+            background-color: #ff0000;
             color: #fff;
             border: none;
             padding: 10px 20px;
             border-radius: 5px;
             text-decoration: none;
             cursor: pointer;
-            display: inline-block; /* Changed to inline-block */
-            margin-right: 10px; /* Added margin for spacing between buttons */
+            display: inline-block;
+            margin-right: 10px;
         }
 
         .submit-button:hover {
-            background-color: #cc0000; /* Darker red on hover */
+            background-color: #cc0000;
         }
     </style>
 </head>
@@ -236,12 +200,10 @@
             <div class="row">
                 <div class="col-12">
                     <nav class="main-nav">
-                        <!-- ***** Logo and Banner Links Start ***** -->
                         <div class="logo-banner-container">
                             <a href="/login" class="logo">
                                 <h4>TAR UMT <img src="{{ url_for('static', filename='assets/images/logo-icon.png') }}" alt=""></h4>
                             </a>
-                            <!-- Banner Links -->
                             <div class="banner-links">
                                 <a href="/student_dashboard">Student Profile</a>
                                 <a href="/student_company_jobs_posting">Job Postings</a>
@@ -258,9 +220,7 @@
 
     <!-- ***** Content Start ***** -->
     <div class="content">
-        <!-- Document Upload Form -->
         <div class="document-upload-form">
-            <!-- Combined Submission for Letter of Indemnity, Company Acceptance Letter, and Parent's Acknowledgment Form -->
             <form action="/student_upload_documents" method="post" enctype="multipart/form-data">
                 <h3>Primary Documents:</h3>
                 <p>Upload the following primary documents:</p>
@@ -291,7 +251,6 @@
                 <br>
             </form>
 
-            <!-- Separate Submission for Progress Report -->
             <form action="/student_upload_documents_progress" method="post" enctype="multipart/form-data">
                 <h3>Progress Updates:</h3>
                 <p>Submit your monthly progress report here:</p>
@@ -307,7 +266,6 @@
                 <br>
             </form>
 
-            <!-- Separate Submission for Final Report -->
             <form action="/student_upload_documents_final" method="post" enctype="multipart/form-data">
                 <h3>Final Report:</h3>
                 <p>Submit your final report at the end of your internship:</p>
