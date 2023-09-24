@@ -11,10 +11,8 @@
 
     <title>Lecturer Signup - SEO Dream</title>
 
-    <!-- Bootstrap core CSS -->
     <link href="{{ url_for('static', filename='vendor/bootstrap/css/bootstrap.min.css') }}" rel="stylesheet">
 
-    <!-- Additional CSS Files -->
     <link href="{{ url_for('static', filename='assets/css/fontawesome.css') }}" rel="stylesheet">
     <link href="{{ url_for('static', filename='assets/css/templatemo-seo-dream.css') }}" rel="stylesheet">
     <link href="{{ url_for('static', filename='assets/css/animated.css') }}" rel="stylesheet">
@@ -47,9 +45,7 @@
                         <ul class="nav">
                             <li class="scroll-to-section"><div class="main-blue-button"><a href="/login">Back to Login</a></div></li>
                         </ul>
-                        <!-- <a class='menu-trigger'>
-                            <span>Menu</span>
-                        </a> -->
+
                     </nav>
                 </div>
             </div>
@@ -70,48 +66,40 @@
                                         <h2>Lecturer Signup</h2>
                                     </div>
                                     <div class="col-lg-12">
-                                        <!-- Lecturer Signup Form -->
                                         <form action="/lecturer_sign_up" method="POST">
-                                            <!-- Full Name -->
                                             <div class="form-group">
                                                 <label for="full_name">Full Name:</label>
                                                 <input type="text" class="form-control" id="full_name" name="full_name" required>
                                                 <br>
                                             </div>
 
-                                            <!-- Staff ID -->
                                             <div class="form-group">
                                                 <label for="staff_id">Lecturer ID:</label>
                                                 <input type="text" class="form-control" id="staff_id" name="staff_id" required>
                                                 <br>
                                             </div>
 
-                                            <!-- Email Address -->
                                             <div class="form-group">
                                                 <label for="email">Email Address:</label>
                                                 <input type="email" class="form-control" id="email" name="email" required>
                                                 <br>
                                             </div>
 
-                                            <!-- IC (Identification Card) -->
                                             <div class="form-group">
                                                 <label for="ic">IC (Identification Card):</label>
                                                 <input type="text" class="form-control" id="ic" name="ic" required>
                                                 <br>
                                             </div>
 
-                                            <!-- Position -->
                                             <div class="form-group">
                                                 <label for="position">Position:</label>
                                                 <input type="text" class="form-control" id="position" name="position" required>
                                             </div>
 
-                                            <!-- Submit Button -->
                                             <div class="form-group">
                                                 <button type="submit" class="main-green-button btn btn-primary" style="margin-top: 10px;">Sign Up</button>
                                             </div>
                                         </form>
-                                        <!-- End Lecturer Signup Form -->
                                     </div>
                                 </div>
                             </div>
@@ -127,20 +115,6 @@
         </div>
     </div>
     <!-- ***** Lecturer Signup Area End ***** -->
-
-    <!-- ... (remaining HTML code) ... -->
-
-    <footer>
-        <div class="container">
-            <div class="row">
-                <div class="col-lg-12">
-                    <p>Copyright © 2021 SEO Dream Co., Ltd. All Rights Reserved.
-
-                        <br>Web Designed by <a rel="nofollow" href="https://templatemo.com" title="free CSS templates">TemplateMo</a></p>
-                </div>
-            </div>
-        </div>
-    </footer>
 
     <!-- Scripts -->
     <script src="{{ url_for('static', filename='vendor/jquery/jquery.min.js') }}"></script>
