@@ -38,7 +38,6 @@ def login():
 @app.route("/student_sign_up", methods=['GET', 'POST'])
 def student_sign_up():
     if request.method == 'POST':
-        # Get form data from the POST request
         student_name = request.form['Stud_name']
         student_id = request.form['Stud_ID']
         nric_no = request.form['NRIC_Number']
@@ -76,7 +75,6 @@ def student_sign_up():
 @app.route("/lecturer_sign_up", methods=['GET', 'POST'])
 def lecturer_sign_up():
     if request.method == 'POST':
-        # Get form data from the POST request
         full_name = request.form['full_name']
         staff_id = request.form['staff_id']
         email = request.form['email']
@@ -99,30 +97,24 @@ def lecturer_sign_up():
 
     return render_template('lecturer_sign_up.html')
 
-# Function to generate a random unique company ID
 def generate_company_id():
-    # Generate a random alphanumeric string, e.g., 'C001'
     prefix = 'C'
     unique_id = ''.join(random.choices(string.digits, k=5))
     company_id = f'{prefix}{unique_id}'
-    # Check if the generated ID is already in use
     while db_id_exists(company_id):
         unique_id = ''.join(random.choices(string.digits, k=5))
         company_id = f'{prefix}{unique_id}'
     return company_id
 
 def generate_job_id():
-    # Generate a random alphanumeric string, e.g., 'C001'
     prefix = 'J'
     unique_id = ''.join(random.choices(string.digits, k=5))
     job_id = f'{prefix}{unique_id}'
-    # Check if the generated ID is already in use
     while db_id_exists(job_id):
         unique_id = ''.join(random.choices(string.digits, k=5))
         job_id = f'{prefix}{unique_id}'
     return job_id
 
-# Function to check if the generated company ID already exists in the database
 def db_id_exists(company_id):
     cursor = db_conn.cursor()
     cursor.execute("SELECT COUNT(*) FROM Company WHERE Company_ID = %s", (company_id,))
@@ -133,7 +125,6 @@ def db_id_exists(company_id):
 @app.route("/company_signup", methods=['GET', 'POST'])
 def company_signup():
     if request.method == 'POST':
-        # Get form data from the POST request
         company_name = request.form['company_name']
         industry = request.form['industry']
         total_staff = request.form['total_staff']
@@ -152,7 +143,6 @@ def company_signup():
         logo_upload = request.files['logo_upload']
 
         try:
-            # Generate a unique company ID
             company_id = generate_company_id()
             
             # Insert company data into the database
@@ -182,7 +172,6 @@ def company_signup():
 
     return render_template('company_signup.html')
 
-# Function to encrypt a string
 def encrypt(text, key):
     encrypted_text = ""
     for char in text:
@@ -190,7 +179,6 @@ def encrypt(text, key):
         encrypted_text += encrypted_char
     return encrypted_text
 
-# Function to decrypt an encrypted string
 def decrypt(encrypted_text, key):
     decrypted_text = ""
     for char in encrypted_text:
@@ -228,12 +216,10 @@ def admin_signup():
 @app.route('/login', methods=['POST'], endpoint='login_role')
 def login():
     if request.method == 'POST':
-        # Get the entered role, username, and password from the form
         role = request.form['role']
         username = request.form['username']
         password = request.form['password']
 
-        # Query the database to check if the username and password match for the selected role
         cursor = db_conn.cursor()
 
         if role == 'student':
@@ -242,24 +228,20 @@ def login():
             student = cursor.fetchone()
 
             if student:
-                # Student credentials are valid, redirect to the student dashboard
                 session['student_id'] = username
                 session['role'] = 'student'
                 return redirect(url_for('student_dashboard'))
         
         elif role == 'lecturer':
-            # Check if it's a lecturer login
             cursor.execute("SELECT * FROM Lecturer WHERE Lect_ID = %s AND Lect_IC = %s", (username, password))
             lecturer = cursor.fetchone()
 
             if lecturer:
-                # Lecturer credentials are valid, redirect to the lecturer dashboard
                 session['lecturer_id'] = username
                 session['role'] = 'lecturer'
                 return redirect(url_for('lecturer_dashboard'))
             
         elif role == 'company':
-            # Check if it's a company login
             cursor.execute("SELECT * FROM Company WHERE Company_ID = %s AND Contact_number = %s", (username, password))
             company = cursor.fetchone()
 
@@ -279,18 +261,15 @@ def login():
             if result:
                 stored_encrypted_password = result[1]
 
-                # Decrypt the stored encrypted password
                 stored_password = decrypt(stored_encrypted_password, encryption_key)
 
                 if stored_password == password:
-                    # Username and password match, it's a successful login
                     session["admin_username"] = username
                     session["role"] = "admin"
                     return redirect(url_for("adminLanding"))
 
         cursor.close()
 
-        # Invalid credentials or role, display an error message
         flash('Invalid username, password, or role', 'error')
 
     return render_template('login.html')
@@ -437,7 +416,6 @@ def company_profile_edit():
             email = request.form['email']
             ot_claim=request.form['ot_claim']
 
-            # Perform the SQL UPDATE operation to update the company's data
             update_query = """
                 UPDATE Company
                 SET Total_Staff = %s, Product_or_Service = %s, Comp_Website = %s, Remarks = %s,
@@ -479,7 +457,7 @@ def company_profile_edit():
                 )
             
                 cursor.execute("SELECT * FROM Job_Details WHERE Company_ID = %s", (company_id,))
-                companyjobs = cursor.fetchall()  # Fetch all job listings
+                companyjobs = cursor.fetchall()
                 cursor.close()
 
             return render_template('company_dashboard.html',
@@ -507,8 +485,7 @@ def company_profile_edit():
 @app.route('/save_job_details', methods=['POST'])
 def save_job_details():
     if request.method == 'POST':
-        # Get job details from the form
-        company_id = session.get('company_id')  # Assuming you store company_id in session after login
+        company_id = session.get('company_id')  
         job_position = request.form['job_position']
         job_description = request.form['job_description']
         job_requirements = request.form['job_requirements']
@@ -521,7 +498,6 @@ def save_job_details():
         job_id = generate_job_id()
 
         try:
-            # Insert job details into the database
             insert_sql = """
                 INSERT INTO Job_Details (
                     company_id, JobPosition, JobDescription, JobRequirements,
@@ -536,13 +512,11 @@ def save_job_details():
             db_conn.commit()
             cursor.close()
 
-            # Redirect to a success page or any other appropriate action
             return redirect(url_for('company_jobs_offers'))
 
         except Exception as e:
-            return str(e)  # Handle database insertion errors here
+            return str(e) 
 
-    # Handle GET requests or other cases
     return redirect(url_for('company_dashboard'))
 
 @app.route('/delete_job', methods=['POST'])
@@ -551,7 +525,6 @@ def delete_job():
         job_id = request.form['job_id']
         
         try:
-            # Delete the job from the database using the job_id
             delete_sql = "DELETE FROM Job_Details WHERE Job_id = %s"
             cursor = db_conn.cursor()
             cursor.execute(delete_sql, (job_id,))
@@ -577,11 +550,10 @@ def lecturer_dashboard():
         if lecturer:
             lecturer_name = lecturer[0]
         else:
-            lecturer_name = "Unknown Lecturer"  # Default if lecturer not found
+            lecturer_name = "Unknown Lecturer" 
 
         cursor.close()
 
-        # Pass the lecturer_name to the template
         return render_template('lecturer_dashboard.html', lecturer_name=lecturer_name)
 
 
@@ -595,7 +567,6 @@ def student_dashboard():
         cursor.close()
 
         if student:
-            # Access the elements of the tuple by their indices
             Stud_name = student[0]
             Stud_ID = student[1]
             NRIC_Number = student[2]
@@ -615,8 +586,7 @@ def student_dashboard():
                 ExpiresIn=3600
             )
 
-            # Check if a resume file exists in S3
-            resume_filename = f"student-{student_id}-resume.pdf"  # Adjust the filename format as needed
+            resume_filename = f"student-{student_id}-resume.pdf" 
             student_resume_url = None
 
             try:
@@ -632,9 +602,8 @@ def student_dashboard():
             if request.method == 'POST' and 'resume_file' in request.files:
                 student_resume_file = request.files['resume_file']
 
-                # Ensure a file was selected for upload
                 if student_resume_file and student_resume_file.filename != '':
-                    resume_filename = f"student-{student_id}-resume.pdf"  # Adjust the filename format as needed
+                    resume_filename = f"student-{student_id}-resume.pdf"  
 
                     try:
                         s3.Bucket(bucket).put_object(Key=resume_filename, Body=student_resume_file)
@@ -665,7 +634,6 @@ def student_dashboard():
                                    Personal_emailAddress=Personal_emailAddress, student_image_url=student_image_url,
                                    student_resume_url=student_resume_url, resume_button_text=resume_button_text)
 
-    # If the student is not logged in, redirect to the login page
     return redirect(url_for('login'))
 
 @app.route("/adminLanding")
@@ -685,11 +653,10 @@ def adminProfile():
             admin_username = admin[1]
             admin_password = admin[2]
         else:
-            admin_name = "Unknown Admin"  # Default if lecturer not found
+            admin_name = "Unknown Admin" 
 
         cursor.close()
 
-        # Pass the lecturer_name to the template
         return render_template("adminProfile.html", admin=admin)
 
 def update_student_profile(student_id, updates):
@@ -702,7 +669,6 @@ def update_student_profile(student_id, updates):
             update_sql += f"{field} = %s, "
             update_values.append(value)
 
-    # Remove the trailing comma and space
     update_sql = update_sql.rstrip(', ')
 
     update_sql += " WHERE Stud_ID = %s"
@@ -711,10 +677,10 @@ def update_student_profile(student_id, updates):
     try:
         cursor.execute(update_sql, tuple(update_values))
         db_conn.commit()
-        return True  # Profile updated successfully
+        return True 
     except Exception as e:
         db_conn.rollback()
-        return str(e)  # Error updating profile
+        return str(e) 
     finally:
         cursor.close()
 
@@ -759,23 +725,18 @@ def student_profile_edit():
 
     return redirect(url_for('login'))
 
-# Define a route for uploading the resume
 @app.route('/upload_resume', methods=['POST'])
 def upload_resume():
     if 'student_id' in session:
         student_id = session['student_id']
         student_resume_file = request.files['resume_file']
 
-        # Ensure a file was selected for upload
         if student_resume_file and student_resume_file.filename != '':
-            # Generate a unique filename for the resume, e.g., using the student's ID
-            resume_filename = f"student-{student_id}-resume.pdf"  # Adjust the filename format as needed
+            resume_filename = f"student-{student_id}-resume.pdf" 
 
-            # Upload the resume file to your S3 bucket
             try:
                 s3.Bucket(bucket).put_object(Key=resume_filename, Body=student_resume_file)
 
-                # Update the database to store the resume information
                 update_sql = "UPDATE Student SET ResumeFileName = %s WHERE Stud_ID = %s"
                 cursor = db_conn.cursor()
                 cursor.execute(update_sql, (resume_filename, student_id))
@@ -801,16 +762,13 @@ def upload_documents():
         if 'student_id' in session:
             student_id = session['student_id']
 
-        # Handle combined submission (Letter of Indemnity, Company Acceptance Letter, Parent's Acknowledgment Form)
         for field_name in ['letter_of_indemnity', 'company_acceptance_letter', 'parents_acknowledgment_form']:
             if field_name in request.files:
                 file = request.files[field_name]
                 if file.filename != '':
-                    # Construct the S3 object key with the desired naming convention
                     s3_object_key = f"student-{student_id}-{field_name}.pdf"
                     s3.Bucket(bucket).put_object(Key=s3_object_key, Body=file)
 
-        # Redirect to a success page or render a success message
         return redirect(url_for('student_upload_documents_page'))
     
 
@@ -820,15 +778,12 @@ def upload_progress_report():
         if 'student_id' in session:
             student_id = session['student_id']
 
-        # Handle progress report submission
         if 'progress_report' in request.files:
             file = request.files['progress_report']
             if file.filename != '':
-                # Construct the S3 object key with the desired naming convention
                 s3_object_key = f"student-{student_id}-progress-report.pdf"
                 s3.Bucket(bucket).put_object(Key=s3_object_key, Body=file)
 
-        # Redirect to a success page or render a success message
         return redirect(url_for('student_upload_documents_page'))
 
 @app.route('/student_upload_documents_final', methods=['POST'])
@@ -837,30 +792,23 @@ def upload_final_report():
         if 'student_id' in session:
             student_id = session['student_id']
 
-        # Handle final report submission
         if 'final_report' in request.files:
             file = request.files['final_report']
             if file.filename != '':
-                # Construct the S3 object key with the desired naming convention
                 s3_object_key = f"student-{student_id}-final-report.pdf"
                 s3.Bucket(bucket).put_object(Key=s3_object_key, Body=file)
 
-        # Redirect to a success page or render a success message
         return redirect(url_for('student_upload_documents_page'))
 
 @app.route('/studentdatabase', methods=['GET'])
 def student_database():
     cursor = db_conn.cursor()
 
-    # Get the search query from the URL parameter
     query = request.args.get('query', '')
 
-    # Use the search query to filter the student data
     if query:
-        # Execute a SQL query to retrieve matching students
         cursor.execute("SELECT Stud_ID, Stud_name, Gender, Programme_of_Study, Intern_batch, Personal_emailAddress FROM Student WHERE Stud_name LIKE %s OR Stud_ID LIKE %s", ('%' + query + '%', '%' + query + '%'))
     else:
-        # If no query provided, retrieve all students
         cursor.execute("SELECT Stud_ID, Stud_name, Gender, Programme_of_Study, Intern_batch, Personal_emailAddress FROM Student")
 
     students = cursor.fetchall()
@@ -872,18 +820,14 @@ def student_database():
 def adminStudent():
     cursor = db_conn.cursor()
 
-    # Get the search query from the URL parameter
     query = request.args.get("query", "")
 
-    # Use the search query to filter the student data
     if query:
-        # Execute a SQL query to retrieve matching students
         cursor.execute(
             "SELECT Stud_ID, Stud_name, Gender, Programme_of_Study, Intern_batch, Personal_emailAddress FROM Student WHERE Stud_name LIKE %s OR Stud_ID LIKE %s",
             ("%" + query + "%", "%" + query + "%"),
         )
     else:
-        # If no query provided, retrieve all students
         cursor.execute(
             "SELECT Stud_ID, Stud_name, Gender, Programme_of_Study, Intern_batch, Personal_emailAddress FROM Student ORDER BY Stud_name"
         )
@@ -897,11 +841,8 @@ def adminStudent():
 
 @app.route('/adminDeleteStudent/<string:student_id>', methods=["GET"])
 def admin_delete_student(student_id):
-    # Implement code to delete the student with the given student_id from the database or list
-    # You can use a database ORM or manipulate the list directly
     cursor = db_conn.cursor()
 
-    # Example using a list:
     delete_query = "DELETE FROM Student WHERE Stud_ID = %s"
     cursor.execute(delete_query, (student_id,))
     db_conn.commit()
@@ -913,18 +854,14 @@ def admin_delete_student(student_id):
 def adminLecturer():
     cursor = db_conn.cursor()
 
-    # Get the search query from the URL parameter
     query = request.args.get("query", "")
 
-    # Use the search query to filter the student data
     if query:
-        # Execute a SQL query to retrieve matching students
         cursor.execute(
             "SELECT Lect_name, Lect_ID, Lect_emailAddress, Lect_IC, Lect_position FROM Lecturer WHERE Lect_name LIKE %s OR Lect_ID LIKE %s",
             ("%" + query + "%", "%" + query + "%"),
         )
     else:
-        # If no query provided, retrieve all students
         cursor.execute(
             "SELECT Lect_name, Lect_ID, Lect_emailAddress, Lect_IC, Lect_position FROM Lecturer ORDER BY Lect_name"
         )
@@ -938,11 +875,8 @@ def adminLecturer():
 
 @app.route('/adminDeleteLecturer/<string:lecturer_id>', methods=["GET"])
 def admin_delete_lecturer(lecturer_id):
-    # Implement code to delete the lecturer with the given lecturer_id from the database or list
-    # You can use a database ORM or manipulate the list directly
     cursor = db_conn.cursor()
 
-    # Example using a list:
     delete_query = "DELETE FROM Lecturer WHERE Lect_ID = %s"
     cursor.execute(delete_query, (lecturer_id,))
     db_conn.commit()
@@ -953,22 +887,18 @@ def admin_delete_lecturer(lecturer_id):
 @app.route('/view_student_progress', methods=['GET'])
 def view_student_progress():
     if 'lecturer_id' in session and session['role'] == 'lecturer':
-        # Retrieve student data and file status from your database
         cursor = db_conn.cursor()
         cursor.execute("SELECT Stud_ID, Stud_name FROM Student")
         students = cursor.fetchall()
 
-        # Dictionary to store file status and presigned URLs
         student_files = {}
 
         for student in students:
             student_id = student[0]
 
-            # Initialize the file status as 'Completed' (green color)
             status = {'text': 'Completed', 'status': 'completed'}
-            all_files_found = True  # Flag to track if all files are found
+            all_files_found = True  
 
-            # Generate presigned URLs for each file (if they exist)
             for file_name in ['letter_of_indemnity', 'company_acceptance_letter', 'parents_acknowledgment_form', 'progress-report', 'final-report']:
                 file_key = f"student-{student_id}-{file_name}.pdf"
                 presigned_url = None
@@ -978,30 +908,25 @@ def view_student_progress():
                     s3_object = s3_client.head_object(Bucket=bucket, Key=file_key)
 
                     if 'ContentLength' in s3_object:
-                        # File exists, generate a presigned URL
                         presigned_url = s3_client.generate_presigned_url(
                             'get_object',
                             Params={'Bucket': bucket, 'Key': file_key},
                             ExpiresIn=3600
                         )
                     else:
-                        # File does not exist, set the flag to False
                         all_files_found = False
                 except NoCredentialsError:
                     flash('S3 credentials are missing or incorrect.', 'error')
                 except ClientError as e:
                     if e.response['Error']['Code'] == '404':
-                        # File does not exist, set the flag to False
                         all_files_found = False
 
                 student_files.setdefault(student_id, {})[file_name] = {'url': presigned_url}
 
-            # Update the status to 'Completed' only if all files are found
             if not all_files_found:
                 status['text'] = 'Pending'
                 status['status'] = 'pending'
 
-            # Store the status in the student_files dictionary
             student_files[student_id]['Status'] = status
 
         cursor.close()
@@ -1023,7 +948,7 @@ def student_company_jobs_posting():
 
     if job_company_data:
         for row in job_company_data:
-            print(row)  # Add this line for debugging
+            print(row) 
         return render_template('student_company_jobs_posting.html', job_company_data=job_company_data)
     else:
         return "No job postings available"
@@ -1032,7 +957,6 @@ def student_company_jobs_posting():
 def company_database():
     cursor = db_conn.cursor()
 
-    # Retrieve data for new applications
     cursor.execute(
         "SELECT Comp_name, EmailAddress, Contact_number, Comp_address, Person_in_charge, Status FROM Company WHERE Status = 'Pending' ORDER BY Comp_name"
     )
@@ -1040,7 +964,6 @@ def company_database():
     num_of_new = len(new_applications)
     enumerated_new = enumerate(new_applications)
 
-    # Retrieve data for approved companies
     cursor.execute(
         "SELECT Comp_name, EmailAddress, Contact_number, Comp_address, Person_in_charge, Status FROM Company WHERE Status = 'Approved' ORDER BY Comp_name"
     )
@@ -1048,7 +971,6 @@ def company_database():
     num_of_approved = len(approved_companies)
     enumerated_approved = enumerate(approved_companies)
 
-    # Retrieve data for rejected companies
     cursor.execute(
         "SELECT Comp_name, EmailAddress, Contact_number, Comp_address, Person_in_charge, Status FROM Company WHERE Status = 'Rejected' ORDER BY Comp_name"
     )
@@ -1068,11 +990,8 @@ def company_database():
 
 @app.route('/adminDeleteCompany/<string:company_name>', methods=["GET"])
 def admin_delete_company(company_name):
-    # Implement code to delete the student with the given student_id from the database or list
-    # You can use a database ORM or manipulate the list directly
     cursor = db_conn.cursor()
 
-    # Example using a list:
     delete_query = "DELETE FROM Company WHERE Comp_name = %s"
     cursor.execute(delete_query, (company_name,))
     db_conn.commit()
@@ -1083,7 +1002,6 @@ def admin_delete_company(company_name):
 @app.route('/update_company_status', methods=['POST'])
 def update_company_status():
     cursor = db_conn.cursor()
-    # Get the company ID from the submitted form
     company_name = str(request.form.get('company_name'))
     action = str(request.form.get('action'))
 
