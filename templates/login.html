@@ -44,18 +44,6 @@
                         <a href="/" class="logo">
                             <h4>TAR UMT<img src="{{ url_for('static', filename='assets/images/logo-icon.png') }}" alt=""></h4>
                         </a>
-                        <!-- <ul class="nav">
-                            <li class="scroll-to-section"><a href="index.html">Home</a></li>
-                            <li class="scroll-to-section"><a href="#features">Features</a></li>
-                            <li class="scroll-to-section"><a href="#about">About Us</a></li>
-                            <li class="scroll-to-section"><a href="#services">Services</a></li>
-                            <li class="scroll-to-section"><a href="#portfolio">Portfolio</a></li>
-                            <li class="scroll-to-section"><a href="#contact">Contact Us</a></li>
-                            <li class="scroll-to-section"><div class="main-blue-button"><a href="#contact">Get Your Quote</a></div></li>
-                        </ul>
-                        <a class='menu-trigger'>
-                            <span>Menu</span>
-                        </a> -->
                     </nav>
                 </div>
             </div>
@@ -78,7 +66,6 @@
                                 <div class="col-lg-12">
                                     <!-- Login Form -->
                                     <form id="loginForm" action="/login" method="POST">
-                                        <!-- Select Role -->
                                         <div class="form-group">
                                             <label for="role">Select Role:</label>
                                             <select class="form-control" id="role" name="role">
@@ -86,11 +73,9 @@
                                                 <option value="lecturer">Lecturer</option>
                                                 <option value="company">Company</option>
                                                 <option value="admin">Admin</option>
-                                                <!-- Add more roles as needed -->
                                             </select>
                                         </div>
                                         
-                                        <!-- Username and Password -->
                                         <div class="form-group">
                                             <label for="username">Username:</label>
                                             <input type="text" class="form-control" name="username" id="username" placeholder="Username" required>
@@ -99,13 +84,11 @@
                                             <label for="password">Password:</label>
                                             <input type="password" class="form-control" name="password" id="password" placeholder="Password" required>
                                         </div>
-                                        <!-- End Username and Password -->
                                     
                                         <div class="form-group mt-3">
                                             <button type="submit" class="main-green-button btn btn-primary">Login</button>
                                         </div>
                                     
-                                        <!-- Display error message if login fails -->
                                         {% if error %}
                                         <p class="text-danger">{{ error }}</p>
                                         {% endif %}
@@ -136,22 +119,6 @@
     </div>
 </div>
 <!-- ***** Login Area End ***** -->
-
-<!-- ... (remaining HTML code) ... -->
-
-<!-- ***** Login Area End ***** -->
-
-    <footer>
-        <div class="container">
-            <div class="row">
-                <div class="col-lg-12">
-                    <p>Copyright © 2021 SEO Dream Co., Ltd. All Rights Reserved.
-
-                        <br>Web Designed by <a rel="nofollow" href="https://templatemo.com" title="free CSS templates">TemplateMo</a></p>
-                </div>
-            </div>
-        </div>
-    </footer>
 
     <!-- Scripts -->
     <script src="{{ url_for('static', filename='vendor/jquery/jquery.min.js') }}"></script>
