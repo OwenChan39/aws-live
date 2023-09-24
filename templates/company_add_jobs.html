@@ -8,26 +8,21 @@
     <link rel="preconnect" href="https://fonts.gstatic.com">
     <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@300;400;600;700;800&display=swap" rel="stylesheet">
     <title>Login - ITP System</title>
-    <!-- Bootstrap core CSS -->
     <link href="{{ url_for('static', filename='vendor/bootstrap/css/bootstrap.min.css') }}" rel="stylesheet">
-    <!-- Additional CSS Files -->
     <link href="{{ url_for('static', filename='assets/css/fontawesome.css') }}" rel="stylesheet">
     <link href="{{ url_for('static', filename='assets/css/templatemo-seo-dream.css') }}" rel="stylesheet">
     <link href="{{ url_for('static', filename='assets/css/animated.css') }}" rel="stylesheet">
     <link href="{{ url_for('static', filename='assets/css/owl.css') }}" rel="stylesheet">
     <style>
-        /* Reset some default styles */
         body, html {
             margin: 0;
             padding: 0;
         }
-        /* Main container for content */
         .main-container {
             display: flex;
             flex-direction: column;
             min-height: 100vh;
         }
-        /* Header Area */
         .header {
             background-color: #33ccc5;
             color: #fff;
@@ -37,14 +32,12 @@
         .header h1 {
             margin: 0;
         }
-        /* Right container styles */
         .right-container {
             background-color: #ffffff;
             padding: 20px;
             box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
             border-radius: 10px;
         }
-        /* Content styles */
         .content {
             padding: 100px;
         }
@@ -70,7 +63,6 @@
             font-weight: bold;
             color: #e74c3c;
         }
-        /* Edit Button styles */
         .infoHead {
             display: flex;
             justify-content: flex-end; /* Align to the right */
@@ -102,7 +94,6 @@
             border-radius: 10px;
             margin-top: 10px;
         }
-        /* Additional CSS for the new dashboard sections */
         .sub-section {
             background-color: #f2f2f2;
             padding: 10px;
@@ -116,7 +107,6 @@
             font-weight: bold;
             color: #555;
         }
-        /* Center the logo and links horizontally within the banner */
         .logo-banner-container {
             display: flex;
             justify-content: space-between;
@@ -140,7 +130,6 @@
             color: #1e8c8b; /* Change the color on hover to your desired color */
         }
         
-        /* Make the banner text responsive */
         @media (max-width: 768px) {
             .main-banner {
                 padding: 50px 0; /* Adjust for smaller screens */
@@ -171,10 +160,8 @@
 
         .job-offer ul li {
             margin-right: 10px;
-            /* Add space between job name and delete button */
         }
 
-        /* Additional styles for job position input fields */
         .job-inputs {
             margin-top: 20px;
         }
@@ -204,12 +191,10 @@
             <div class="row">
                 <div class="col-12">
                     <nav class="main-nav">
-                        <!-- ***** Logo and Banner Links Start ***** -->
                         <div class="logo-banner-container">
                             <a href="/login" class="logo">
                                 <h4>TAR UMT <img src="{{ url_for('static', filename='assets/images/logo-icon.png') }}" alt=""></h4>
                             </a>
-                             <!-- Banner Links -->
                             <div class="banner-links">
                                 <a href="/company_dashboard">Company Dashboard</a>
                                 <a href="/company_jobs_offers">Job Offers</a>
@@ -228,7 +213,6 @@
         <div class="company-info" id="company-info">
             <div class="job-offer" id='job-offer'>
     
-                <!-- Additional input fields for job positions -->
                 <div class="job-inputs">
                     <div class="container">
                         <h4>Add Job Position</h4>
@@ -271,29 +255,19 @@
                             <div class="form-group">
                                 <button type="submit" class="main-green-button">Add</button>
                             </div>
-                            <!-- ... (other form fields for additional job positions can be added here) ... -->
                         </form>
                     </div>
                 </div>
     
-                <!-- Button to add another job position -->
             </div>
     
         </div>
-    
         <!-- ***** Company Information Form End ***** -->
-    
-        <!-- ***** Footer Start ***** -->
-        <footer>
-            <!-- Add your footer content here, such as copyright information or links -->
-        </footer>
+        
         <script src="{{ url_for('static', filename='vendor/jquery/jquery.min.js') }}"></script>
         <script src="{{ url_for('static', filename='vendor/bootstrap/js/bootstrap.bundle.min.js') }}"></script>
         <script src="{{ url_for('static', filename='assets/js/owl-carousel.js') }}"></script>
         <script src="{{ url_for('static', filename='assets/js/animation.js') }}"></script>
         <script src="{{ url_for('static', filename='assets/js/imagesloaded.js') }}"></script>
         <script src="{{ url_for('static', filename='assets/js/custom.js') }}"></script>
-    
-    
     </html>
-    
