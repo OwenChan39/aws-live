@@ -21,38 +21,13 @@
     <link href="{{ url_for('static', filename='assets/css/owl.css') }}" rel="stylesheet">
 
     <style>
-        /* Add custom CSS styles for your student profile edit page */
-        /* Example styles for the header */
-        .sidebar {
-            width: 250px;
-            background-color: #333; /* Change this color to match your design */
-            color: #fff;
-            position: fixed;
-            height: 100%;
-            overflow: auto;
-        }
-
-        .sidebar a {
-            padding: 15px;
-            text-decoration: none;
-            font-size: 18px;
-            color: #fff;
-            display: block;
-        }
-
-        .sidebar a:hover {
-            background-color: #555;
-        }
-
-        /* Example styles for the main content */
         .content {
             margin-left: 50px;
             padding: 150px;
         }
 
-        /* Header styles */
         .header {
-            background-color: #33ccc5; /* Change this color to match your design */
+            background-color: #33ccc5;
             color: #fff;
             padding: 10px 0;
             text-align: center;
@@ -71,7 +46,6 @@
             font-weight: bold;
         }
 
-        /* Student Profile Edit styles */
         .student-profile-edit {
             background-color: #f2f2f2;
             padding: 20px;
@@ -115,16 +89,14 @@
             background-color: #1e8c8b;
         }
     
-                /* Banner styles */
         .main-banner {
             background-image: url('{{ url_for('static', filename='assets/images/banner-right-image.png') }}');
             background-size: cover;
             background-position: center;
             background-repeat: no-repeat;
-            padding: 150px 0; /* Adjust the top and bottom padding as needed */
+            padding: 150px 0; 
         }
 
-        /* Center the logo and links horizontally within the banner */
         .logo-banner-container {
             display: flex;
             justify-content: space-between;
@@ -137,7 +109,7 @@
         }
     
         .banner-links a {
-            margin-left: 40px; /* Add spacing between banner links */
+            margin-left: 40px; 
             text-decoration: none;
             color: #fff;
             font-size: 18px;
@@ -145,13 +117,12 @@
         }
 
         .banner-links a:hover {
-            color: #1e8c8b; /* Change the color on hover to your desired color */
+            color: #1e8c8b; 
         }
         
-        /* Make the banner text responsive */
         @media (max-width: 768px) {
             .main-banner {
-                padding: 50px 0; /* Adjust for smaller screens */
+                padding: 50px 0; 
             }
 
             .banner-links {
@@ -163,8 +134,6 @@
                 margin: 10px 0;
             }
         }
-
-        /* ... (other styles) ... */
     </style>
 </head>
 
@@ -188,12 +157,10 @@
             <div class="row">
                 <div class="col-12">
                     <nav class="main-nav">
-                        <!-- ***** Logo and Banner Links Start ***** -->
                         <div class="logo-banner-container">
                             <a href="index.html" class="logo">
                                 <h4>TAR UMT <img src="{{ url_for('static', filename='assets/images/logo-icon.png') }}" alt=""></h4>
                             </a>
-                            <!-- Banner Links -->
                             <div class="banner-links">
                                 <a href="/student_dashboard">Student Profile</a>
                                 <a href="/student_company_jobs_posting">Job Postings</a>
@@ -210,7 +177,6 @@
 
     <!-- ***** Student Profile Edit Start ***** -->
     <div class="content">
-        <!-- Student Profile Edit Form -->
         <div class="student-profile-edit">
             <form action="/student_profile_edit" method="POST">
                 <label for="cgpa">CGPA:</label>
@@ -236,19 +202,6 @@
         </div>
     </div>
     <!-- ***** Student Profile Edit End ***** -->
-
-    <!-- ***** Footer Start ***** -->
-    <footer>
-        <div class="container">
-            <div class="row">
-                <div class="col-lg-12">
-                    <!-- Add your footer content here -->
-                    <!-- ... -->
-                </div>
-            </div>
-        </div>
-    </footer>
-    <!-- ***** Footer End ***** -->
 
     <!-- Scripts -->
     <script src="{{ url_for('static', filename='vendor/jquery/jquery.min.js') }}"></script>
