@@ -16,18 +16,15 @@
     <link href="{{ url_for('static', filename='assets/css/animated.css') }}" rel="stylesheet">
     <link href="{{ url_for('static', filename='assets/css/owl.css') }}" rel="stylesheet">
     <style>
-        /* Reset some default styles */
         body, html {
             margin: 0;
             padding: 0;
         }
-        /* Main container for content */
         .main-container {
             display: flex;
             flex-direction: column;
             min-height: 100vh;
         }
-        /* Header Area */
         .header {
             background-color: #33ccc5;
             color: #fff;
@@ -37,14 +34,12 @@
         .header h1 {
             margin: 0;
         }
-        /* Right container styles */
         .right-container {
             background-color: #ffffff;
             padding: 20px;
             box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
             border-radius: 10px;
         }
-        /* Content styles */
         .content {
             padding: 150px;
         }
@@ -58,7 +53,7 @@
         .logo img {
             width: 180px;
             height: auto;
-            margin: 0 auto; /* Center the logo horizontally */
+            margin: 0 auto; 
         }
         .status {
             background-color: #f0f0f0;
@@ -70,30 +65,28 @@
             font-weight: bold;
             color: #e74c3c;
         }
-        /* Edit Button styles */
         .infoHead {
             display: flex;
-            justify-content: flex-end; /* Align to the right */
+            justify-content: flex-end; 
             align-items: center;
-            /* Add some space to the top-right corner */
             position: relative;
-            margin-bottom: 10px; /* Add margin to separate from the content */
+            margin-bottom: 10px; 
         }
         
         .edit-button {
-            font-size: 14px; /* Adjust the font size as needed */
+            font-size: 14px; 
             background-color: transparent;
-            border: 2px solid #1500ffb7; /* Add a border */
+            border: 2px solid #1500ffb7; 
             color: #1500ffb7;
-            border-radius: 5px; /* Rounded corners */
-            padding: 5px 10px; /* Adjust the padding as needed */
+            border-radius: 5px;
+            padding: 5px 10px; 
             cursor: pointer;
             transition: background-color 0.3s, color 0.3s;
         }
         
         .edit-button:hover {
-            background-color: #1500ffb7; /* Change the background color on hover */
-            color: #fff; /* Change the text color on hover */
+            background-color: #1500ffb7; 
+            color: #fff; 
         }
         .info .info-container {
             background-color: #f2f2f2;
@@ -101,7 +94,6 @@
             border-radius: 10px;
             margin-top: 10px;
         }
-        /* Additional CSS for the new dashboard sections */
         .sub-section {
             background-color: #f2f2f2;
             padding: 10px;
@@ -115,7 +107,6 @@
             font-weight: bold;
             color: #555;
         }
-        /* Center the logo and links horizontally within the banner */
         .logo-banner-container {
             display: flex;
             justify-content: space-between;
@@ -128,7 +119,7 @@
         }
     
         .banner-links a {
-            margin-left: 40px; /* Add spacing between banner links */
+            margin-left: 40px;
             text-decoration: none;
             color: #fff;
             font-size: 18px;
@@ -136,13 +127,12 @@
         }
 
         .banner-links a:hover {
-            color: #1e8c8b; /* Change the color on hover to your desired color */
+            color: #1e8c8b;
         }
         
-        /* Make the banner text responsive */
         @media (max-width: 768px) {
             .main-banner {
-                padding: 50px 0; /* Adjust for smaller screens */
+                padding: 50px 0; 
             }
 
             .banner-links {
@@ -185,7 +175,6 @@
             <div class="row">
                 <div class="col-12">
                     <nav class="main-nav">
-                        <!-- ***** Logo and Banner Links Start ***** -->
                         <div class="logo-banner-container">
                             <a href="/login" class="logo">
                                 <h4>TAR UMT <img src="{{ url_for('static', filename='assets/images/logo-icon.png') }}" alt=""></h4>
@@ -207,7 +196,6 @@
                 <h3>Update <strong>{{ company_name }}</strong> Information</h3>
                 <form action="/company_profile_edit" method="POST">
                     <br>
-                    <!-- Total Staff -->
                     <div class="form-group">
                         <label for="total_staff">Total Staff:</label>
                         <input type="number" class="form-control" id="total_staff" name="total_staff"
@@ -215,7 +203,6 @@
                     </div>
 
                     <br>
-                    <!-- Product or Service -->
                     <div class="form-group">
                         <label for="product_service">Product or Service:</label>
                         <textarea class="form-control" id="product_service" name="product_service" rows="4"
@@ -223,7 +210,6 @@
                     </div>
 
                     <br>
-                    <!-- Company Website -->
                     <div class="form-group">
                         <label for="company_website">Company Website:</label>
                         <input type="url" class="form-control" id="company_website" name="company_website"
@@ -231,7 +217,6 @@
                     </div>
 
                     <br>
-                    <!-- OT Claim (YES/NO) -->
                     <div class="form-group">
                         <label for="ot_claim">OT Claim (YES/NO):</label>
                         <select class="form-control" id="ot_claim" name="ot_claim" required>
@@ -241,14 +226,12 @@
                     </div>
 
                     <br>
-                    <!-- Remarks -->
                     <div class="form-group">
                         <label for="remarks">Remarks:</label>
                         <textarea class="form-control" id="remarks" name="remarks" rows="4">{{ remarks }}</textarea>
                     </div>
 
                     <br>
-                    <!-- Person in Charge -->
                     <div class="form-group">
                         <label for="person_in_charge">Person in Charge Name:</label>
                         <input type="text" class="form-control" id="person_in_charge" name="person_in_charge"
@@ -256,7 +239,6 @@
                     </div>
 
                     <br>
-                    <!-- Contact Number -->
                     <div class="form-group">
                         <label for="contact_number">Contact Number:</label>
                         <input type="tel" class="form-control" id="contact_number" name="contact_number"
@@ -264,7 +246,6 @@
                     </div>
 
                     <br>
-                    <!-- Email -->
                     <div class="form-group">
                         <label for="email">Email:</label>
                         <input type="email" class="form-control" id="email" name="email" value="{{ email }}" required>
@@ -282,13 +263,6 @@
         </div>
     </div>
 
-    <!-- ***** Company Information Form End ***** -->
-
-    <!-- ***** Footer Start ***** -->
-    <footer>
-        <!-- Add your footer content here, such as copyright information or links -->
-    </footer>
-    <!-- ***** Footer End ***** -->
     <script src="{{ url_for('static', filename='vendor/jquery/jquery.min.js') }}"></script>
     <script src="{{ url_for('static', filename='vendor/bootstrap/js/bootstrap.bundle.min.js') }}"></script>
     <script src="{{ url_for('static', filename='assets/js/owl-carousel.js') }}"></script>
