@@ -15,7 +15,6 @@
     <!-- Bootstrap core CSS -->
     <link href="{{ url_for('static', filename='vendor/bootstrap/css/bootstrap.min.css') }}" rel="stylesheet">
 
-    <!-- Additional CSS Files -->
     <link href="{{ url_for('static', filename='assets/css/fontawesome.css') }}" rel="stylesheet">
     <link href="{{ url_for('static', filename='assets/css/templatemo-seo-dream.css') }}" rel="stylesheet">
     <link href="{{ url_for('static', filename='assets/css/animated.css') }}" rel="stylesheet">
@@ -60,9 +59,6 @@
                                 <div class="main-blue-button"><a href="/login">Back to Login</a></div>
                             </li>
                         </ul>
-                        <!-- <a class='menu-trigger'>
-                            <span>Menu</span>
-                        </a> -->
                     </nav>
                 </div>
             </div>
@@ -85,25 +81,21 @@
                                             <h2>Student Sign Up</h2>
                                         </div>
                                         <div class="col-lg-6">
-                                            <!-- Student Name -->
                                             <div class="form-group">
                                                 <label for="studentName">Student Name:</label>
                                                 <input type="text" class="form-control" name="Stud_name"
                                                     id="studentName" required>
                                             </div>
-                                            <!-- Student ID -->
                                             <div class="form-group">
                                                 <label for="studentID">Student ID:</label>
                                                 <input type="text" class="form-control" name="Stud_ID" id="studentID"
                                                     required>
                                             </div>
-                                            <!-- NRIC Number -->
                                             <div class="form-group">
                                                 <label for="nricNumber">NRIC Number:</label>
                                                 <input type="text" class="form-control" name="NRIC_Number"
                                                     id="nricNumber" required>
                                             </div>
-                                            <!-- Gender -->
                                             <div class="form-group">
                                                 <label for="gender">Gender:</label>
                                                 <select class="form-control" name="Gender" id="Gender" required>
@@ -111,32 +103,27 @@
                                                     <option value="female">Female</option>
                                                 </select>
                                             </div>
-                                            <!-- Programme of Study -->
                                             <div class="form-group">
                                                 <label for="ProgrammeOfStudy">Programme of Study:</label>
                                                 <input type="text" class="form-control" name="Programme_of_Study"
                                                     id="ProgrammeOfStudy" required>
                                             </div>
-                                            <!-- CGPA -->
                                             <div class="form-group">
                                                 <label for="CGPA">CGPA:</label>
                                                 <input type="text" class="form-control" name="CGPA" id="CGPA" required>
                                             </div>
                                         </div>
                                         <div class="col-lg-6">
-                                            <!-- Student Email -->
                                             <div class="form-group">
                                                 <label for="studentEmail">TARUMT Email:</label>
                                                 <input type="email" class="form-control" name="TARUMT_emailAddress"
                                                     id="studentEmail" required>
                                             </div>
-                                            <!-- Mobile Number -->
                                             <div class="form-group">
                                                 <label for="mobileNumber">Mobile Number:</label>
                                                 <input type="tel" class="form-control" name="Mobile_number"
                                                     id="mobileNumber" required>
                                             </div>
-                                            <!-- Intern Batch -->
                                             <div class="form-group">
                                                 <label for="internBatch">Intern <span style="color: white;">Batch:</span></label>
                                                 <select class="form-control" name="Intern_batch" id="internBatch"
@@ -151,26 +138,22 @@
                                                     <option value="JULY2021">NOV 2023</option>
                                                 </select>
                                             </div>
-                                            <!-- Home Address -->
                                             <div class="form-group">
                                                 <label for="homeAddress">Home Address:</label>
                                                 <input type="text" class="form-control" name="Home_Address"
                                                     id="homeAddress" required>
                                             </div>
-                                            <!-- Personal Email -->
                                             <div class="form-group">
                                                 <label for="personalEmail">Personal Email:</label>
                                                 <input type="email" class="form-control" name="Personal_emailAddress"
                                                     id="personalEmail" required>
                                             </div>
-                                            <!-- Select Image File to Upload -->
                                             <div class="form-group">
                                                 <br>
                                                 <label for="studentImage">Upload Student Image:</label>
                                                 <input type="file" class="form-control-file" name="studentImage"
                                                     id="studentImage" required>
                                             </div>
-                                            <!-- End Student Information Upload Form -->
                                         </div>
                                         <div class="form-group submitbutton">
                                             <button type="submit" class="main-green-button btn btn-primary"
@@ -186,20 +169,6 @@
         </div>
     </div>
     <!-- ***** Student Information Upload Area End ***** -->
-
-    <footer>
-        <div class="container">
-            <div class="row">
-                <div class="col-lg-12">
-                    <p>Copyright © 2021 SEO Dream Co., Ltd. All Rights Reserved.
-
-                        <br>Web Designed by <a rel="nofollow" href="https://templatemo.com"
-                            title="free CSS templates">TemplateMo</a>
-                    </p>
-                </div>
-            </div>
-        </div>
-    </footer>
 
     <!-- Scripts -->
     <script src="{{ url_for('static', filename='vendor/jquery/jquery.min.js') }}"></script>
