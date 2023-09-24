@@ -20,17 +20,14 @@
     <link href="{{ url_for('static', filename='assets/css/animated.css') }}" rel="stylesheet">
     <link href="{{ url_for('static', filename='assets/css/owl.css') }}" rel="stylesheet">
 
-    <!-- Your custom CSS styles here -->
     <style>
-        /* Example styles for the main content */
         .content {
             margin-left: 50px;
             padding: 150px;
         }
 
-        /* Header styles */
         .header {
-            background-color: #33ccc5; /* Change this color to match your design */
+            background-color: #33ccc5; 
             color: #fff;
             padding: 10px 0;
             text-align: center;
@@ -49,7 +46,6 @@
             font-weight: bold;
         }
 
-        /* Custom styles for the Quote of the day and program boxes */
         .quote {
             background-color: #f2f2f2;
             padding: 20px;
@@ -64,7 +60,6 @@
             margin-bottom: 20px;
         }
 
-        /* Styling for Quote of the Day */
         .quote h3 {
             color: #333;
             margin-bottom: 10px;
@@ -75,7 +70,6 @@
             font-style: italic;
         }
 
-        /* Styling for Total Number of Students */
         .program-box h3 {
             color: #1D5B79;
             margin-bottom: 10px;
@@ -88,17 +82,16 @@
 
         .program-box-container {
             display: flex;
-            flex-direction: row; /* Display program boxes in a horizontal line */
-            justify-content: space-between; /* Distribute the space between program boxes evenly */
-            flex-wrap: wrap; /* Allow boxes to wrap to the next line if the screen is too narrow */
+            flex-direction: row; 
+            justify-content: space-between; 
+            flex-wrap: wrap; 
         }
 
         .program-box {
-            width: calc(33.33% - 20px); /* Adjust the width as needed */
+            width: calc(33.33% - 20px);
             margin-bottom: 20px;
         }
 
-        /* Additional CSS for the new dashboard sections */
         .sub-section {
             background-color: #f2f2f2;
             padding: 10px;
@@ -114,7 +107,6 @@
             font-weight: bold;
             color: #555;
         }
-                /* Center the logo and links horizontally within the banner */
         .logo-banner-container {
             display: flex;
             justify-content: space-between;
@@ -127,7 +119,7 @@
         }
     
         .banner-links a {
-            margin-left: 40px; /* Add spacing between banner links */
+            margin-left: 40px;
             text-decoration: none;
             color: #fff;
             font-size: 18px;
@@ -135,13 +127,12 @@
         }
 
         .banner-links a:hover {
-            color: #1e8c8b; /* Change the color on hover to your desired color */
+            color: #1e8c8b; 
         }
         
-        /* Make the banner text responsive */
         @media (max-width: 768px) {
             .main-banner {
-                padding: 50px 0; /* Adjust for smaller screens */
+                padding: 50px 0; 
             }
 
             .banner-links {
@@ -176,12 +167,10 @@
             <div class="row">
                 <div class="col-12">
                     <nav class="main-nav">
-                        <!-- ***** Logo and Banner Links Start ***** -->
                         <div class="logo-banner-container">
                             <a href="/login" class="logo">
                                 <h4>TAR UMT <img src="{{ url_for('static', filename='assets/images/logo-icon.png') }}" alt=""></h4>
                             </a>
-                            <!-- Banner Links -->
                             <div class="banner-links">
                                 <a href="/lecturer_dashboard">Lecturer Dashboard</a>
                                 <a href="/studentdatabase">Student Database</a>
@@ -202,7 +191,6 @@
 
         <br>
     
-        <!-- Quote of the Day -->
         <div class="quote">
             <h3>Quote of the Day:</h3>
             <blockquote>
@@ -210,9 +198,7 @@
             </blockquote>
         </div>
     
-        <!-- Program Boxes with Student Counts -->
         <div class="program-box-container">
-            <!-- Program Boxes for Total Number of Students (You can keep these) -->
             <div class="program-box">
                 <h3>RDS</h3>
                 <p>Total Number of Students: 150</p>
@@ -244,16 +230,13 @@
             </div>
         </div>
     
-        <!-- Other Dashboard Content Goes Here -->
     
-        <!-- Online Application Section -->
         <div class="dashboard-section">
             <div class="dashboard-column">
                 <h3>Online Application</h3>
                 <div class="application-box">
                     <div class="sub-section">
                         <h5>Pre-Register</h5>
-                        <!-- Add anchor links for Pending and Printed Application Letters -->
                         <p>
                             <a href="pending_application.html">Pending Application Letters:</a>
                             <span>350</span>
@@ -289,22 +272,7 @@
     </div>
 
     
-        <!-- Other Dashboard Content Goes Here -->
     </div>
-    <!-- ***** Lecturer Dashboard End ***** -->
-
-    <!-- ... (remaining HTML code) ... -->
-
-    <footer>
-        <div class="container">
-            <div class="row">
-                <div class="col-lg-12">
-                    <!-- Add your footer content here -->
-                    <!-- ... -->
-                </div>
-            </div>
-        </div>
-    </footer>
 
     <!-- Scripts -->
     <script src="{{ url_for('static', filename='vendor/jquery/jquery.min.js') }}"></script>
